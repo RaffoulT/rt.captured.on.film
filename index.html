@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raffoul Traboulsy — Photography Catalogue</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raffoul Traboulsy — Photography Catalogue</title>
+<!-- Linked your custom favicon mark -->
+<link rel="icon" type="image/png" href="images/favicon-mark.png">
+<link rel="apple-touch-icon" href="images/favicon-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
   :root{
     --paper:#E9E1CB;
     --paper-card:#F3EDDC;
@@ -72,13 +75,23 @@
     margin-bottom:1.6rem;
   }
   .hero-eyebrow::before, .hero-eyebrow::after{ content:''; width:26px; height:1px; background:var(--stamp); }
-  h1.name{
-    font-family:'Archivo Black', sans-serif;
-    font-size:clamp(2.6rem, 7vw, 5.4rem);
-    line-height:0.98; letter-spacing:-0.01em; text-transform:uppercase;
+  
+  /* Hero Logo Container styling */
+  .hero-logo-container {
+    display: block;
+    margin: 0 auto 1.5rem;
+    max-width: 320px;
+    width: 80%;
   }
+  .hero-logo-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    mix-blend-mode: multiply; /* Blends nicely with paper textured background */
+  }
+
   .role{
-    margin-top:1.1rem; font-family:'IBM Plex Mono', monospace;
+    margin-top:0.5rem; font-family:'IBM Plex Mono', monospace;
     font-size:clamp(.85rem, 1.6vw, 1.05rem); letter-spacing:.12em; text-transform:uppercase; color:var(--teal);
   }
   .tagline{ max-width:520px; margin:1.6rem auto 2.4rem; color:var(--ink-muted); font-size:1.05rem; }
@@ -136,7 +149,7 @@
   }
   .section-head span{ font-family:'IBM Plex Mono', monospace; font-size:.75rem; color:var(--ink-muted); }
 
-  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:1.6rem; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:1.6rem; justify-content: center; max-width: 480px; margin: 0 auto; }
 
   .card{
     background:var(--paper-card); border:1px solid var(--line); border-radius:var(--radius);
@@ -163,21 +176,20 @@
     .stamp-badge{ transition:opacity .3s ease, transform .3s ease; }
   }
   .card:hover .stamp-badge{ opacity:1; transform:rotate(-6deg) scale(1.04); }
-  [data-category="session"]:hover .stamp-badge{ transform:rotate(5deg) scale(1.04); }
 
-  /* ---- Filmstrip thumbnail: Formatted to show the FULL picture ---- */
+  /* ---- Filmstrip thumbnail ---- */
   .thumb{
     position:relative;
-    aspect-ratio:4/3; /* Keeps container at 4:3 shape */
+    aspect-ratio:4/3;
     border:1px solid var(--ink);
     margin-bottom:1rem;
     overflow:hidden;
-    background:#1a1713; /* Sleek darkroom black background to frame any margins cleanly */
+    background:#1a1713;
   }
-  .frame{
-    position:absolute;
-    inset:9px 0;
-    object-fit:contain; /* Shows the FULL, uncropped photo */
+  .frame{ 
+    position:absolute; 
+    inset:9px 0; 
+    object-fit:contain;
     width:100%;
     height:calc(100% - 18px);
   }
@@ -186,7 +198,7 @@
     position:absolute; left:0; right:0; height:9px;
     background-color:var(--ink);
     background-image:repeating-linear-gradient(90deg, var(--paper-card) 0 4px, transparent 4px 14px);
-    z-index:2; /* Renders film sprockets directly over the image edges */
+    z-index:2;
   }
   .thumb::before{ top:0; }
   .thumb::after{ bottom:0; }
@@ -196,10 +208,7 @@
     color:rgba(243,237,220,0.85); text-shadow:0 1px 2px rgba(0,0,0,0.4);
     z-index:3;
   }
-  .card:nth-of-type(4n+1) .frame{ background:linear-gradient(155deg,#3B3A35,#8F8873); }
-  .card:nth-of-type(4n+2) .frame{ background:linear-gradient(155deg,#1E2A2C,#54706C); }
-  .card:nth-of-type(4n+3) .frame{ background:linear-gradient(155deg,#2A2420,#6B5A44); }
-  .card:nth-of-type(4n+4) .frame{ background:linear-gradient(155deg,#23201C,#746A58); }
+  .frame { background:linear-gradient(155deg,#1E2A2C,#54706C); }
 
   .perf{ position:relative; border-top:2px dashed var(--line); margin:0 0 .9rem; }
   .perf::before, .perf::after{
@@ -286,7 +295,12 @@
   </div>
   <div class="wrap hidden">
     <p class="hero-eyebrow mono">Browse the collection</p>
-    <h1 class="name">Raffoul<br>Traboulsy</h1>
+    
+    <!-- Logo replaced the text title -->
+    <div class="hero-logo-container">
+      <img src="images/logo.png" alt="Raffoul Traboulsy Logo" class="hero-logo-img">
+    </div>
+    
     <p class="role">Photographer</p>
     <p class="tagline">A catalogue of series and sessions — light, grain, and a few good frames.</p>
     <div class="hero-ctas">
@@ -314,6 +328,7 @@
       <span class="mono">Sample entries — swap in your own frames</span>
     </div>
 
+    <!-- The single card grid layout -->
     <div class="grid" id="cardGrid">
 
       <article class="card hidden" data-category="series">
@@ -322,7 +337,7 @@
           <span class="stamp-badge">Series</span>
         </div>
         <div class="thumb">
-          <!-- Swapped thumbnail image with a Canon EOS 300 camera -->
+          <!-- Canon EOS 300 Visual -->
           <img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQ1h7xq4gg1pCIR3VFJ6jwD8FHl1FD2cyRorQvBK_28W7pcFddxHJsNpjwXgvy5f9XhQsjfCPJPKIZyl-k" alt="Canon EOS 300 SLR film camera" class="frame">
           <span class="frame-num">14A</span>
         </div>
