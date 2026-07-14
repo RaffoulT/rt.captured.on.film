@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raffoul Traboulsy — Photography Catalogue</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raffoul Traboulsy — Photography Catalogue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
   :root{
     --paper:#E9E1CB;
     --paper-card:#F3EDDC;
@@ -165,27 +165,36 @@
   .card:hover .stamp-badge{ opacity:1; transform:rotate(-6deg) scale(1.04); }
   [data-category="session"]:hover .stamp-badge{ transform:rotate(5deg) scale(1.04); }
 
-  /* ---- Filmstrip thumbnail: swap the inner <div class="frame"> for an <img> when you have real photos ---- */
+  /* ---- Filmstrip thumbnail: Formatted to show the FULL picture ---- */
   .thumb{
     position:relative;
-    aspect-ratio:3/2;
+    aspect-ratio:4/3; /* Keeps container at 4:3 shape */
     border:1px solid var(--ink);
     margin-bottom:1rem;
     overflow:hidden;
+    background:#1a1713; /* Sleek darkroom black background to frame any margins cleanly */
   }
-  .frame{ position:absolute; inset:9px 0; }
+  .frame{
+    position:absolute;
+    inset:9px 0;
+    object-fit:contain; /* Shows the FULL, uncropped photo */
+    width:100%;
+    height:calc(100% - 18px);
+  }
   .thumb::before, .thumb::after{
     content:'';
     position:absolute; left:0; right:0; height:9px;
     background-color:var(--ink);
     background-image:repeating-linear-gradient(90deg, var(--paper-card) 0 4px, transparent 4px 14px);
+    z-index:2; /* Renders film sprockets directly over the image edges */
   }
   .thumb::before{ top:0; }
   .thumb::after{ bottom:0; }
   .frame-num{
-    position:absolute; bottom:1300px; right:6px;
+    position:absolute; bottom:13px; right:6px;
     font-family:'IBM Plex Mono', monospace; font-size:.62rem; letter-spacing:.03em;
     color:rgba(243,237,220,0.85); text-shadow:0 1px 2px rgba(0,0,0,0.4);
+    z-index:3;
   }
   .card:nth-of-type(4n+1) .frame{ background:linear-gradient(155deg,#3B3A35,#8F8873); }
   .card:nth-of-type(4n+2) .frame{ background:linear-gradient(155deg,#1E2A2C,#54706C); }
@@ -260,132 +269,134 @@
 <body>
 
 <div class="masthead">
-    <div class="wrap masthead-row mono">
-        <span>Photography — Vol. I</span>
-        <nav class="masthead-nav"><a href="index.html">← Creative Practice</a></nav>
-        <span>Est. Catalogue No. 002</span>
-    </div>
+  <div class="wrap masthead-row mono">
+    <span>Photography — Vol. I</span>
+    <nav class="masthead-nav"><a href="index.html">← Creative Practice</a></nav>
+    <span>Est. Catalogue No. 001</span>
+  </div>
 </div>
 
 <section class="hero">
-    <div class="seal" aria-hidden="true">
-        <svg viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1"/>
-            <text><textPath href="#circlePath" startOffset="0%">AVAILABLE FOR BOOKINGS • AVAILABLE FOR BOOKINGS •</textPath></text>
-            <path id="circlePath" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none"/>
-        </svg>
+  <div class="seal" aria-hidden="true">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1"/>
+      <text><textPath href="#circlePath" startOffset="0%">AVAILABLE FOR BOOKINGS • AVAILABLE FOR BOOKINGS •</textPath></text>
+      <path id="circlePath" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none"/>
+    </svg>
+  </div>
+  <div class="wrap hidden">
+    <p class="hero-eyebrow mono">Browse the collection</p>
+    <h1 class="name">Raffoul<br>Traboulsy</h1>
+    <p class="role">Photographer</p>
+    <p class="tagline">A catalogue of series and sessions — light, grain, and a few good frames.</p>
+    <div class="hero-ctas">
+      <a href="#catalogue" class="btn btn-solid">View Catalogue</a>
+      <a href="#contact" class="btn btn-outline">Book a Session</a>
     </div>
-    <div class="wrap hidden">
-        <p class="hero-eyebrow mono">Browse the collection</p>
-        <h1 class="name">Raffoul<br>Traboulsy</h1>
-        <p class="role">Photographer</p>
-        <p class="tagline">A catalogue of series and sessions — light, grain, and a few good frames.</p>
-        <div class="hero-ctas">
-            <a href="#catalogue" class="btn btn-solid">View Catalogue</a>
-            <a href="#contact" class="btn btn-outline">Book a Session</a>
-        </div>
-    </div>
+  </div>
 </section>
 
 <nav class="index-bar" aria-label="Filter catalogue">
-    <div class="wrap">
-        <div class="index-row">
-            <button class="tab active mono" data-filter="all">All <span class="count" id="count-all"></span></button>
-            <button class="tab mono" data-filter="series">Series <span class="count" id="count-series"></span></button>
-            <button class="tab mono" data-filter="session">Sessions <span class="count" id="count-session"></span></button>
-        </div>
+  <div class="wrap">
+    <div class="index-row">
+      <button class="tab active mono" data-filter="all">All <span class="count" id="count-all"></span></button>
+      <button class="tab mono" data-filter="series">Series <span class="count" id="count-series"></span></button>
+      <button class="tab mono" data-filter="session">Sessions <span class="count" id="count-session"></span></button>
     </div>
+  </div>
 </nav>
 
 <section id="catalogue" class="catalogue">
-    <div class="wrap">
+  <div class="wrap">
 
-        <div class="section-head hidden">
-            <h2>Index of Entries</h2>
-            <span class="mono">Sample entries — swap in your own frames</span>
-        </div>
-
-        <div class="grid" id="cardGrid">
-
-            <article class="card hidden" data-category="series">
-                <div class="card-top">
-                    <span class="code">ROLL&nbsp;—&nbsp;01</span>
-                    <span class="stamp-badge">Series</span>
-                </div>
-                <div class="thumb">
-                    <img src="images/Untitled-1.jpg" alt="One Good Picture of these smokers" class="frame">
-                    <span class="frame-num">14A</span>
-                </div>
-                <div class="perf"></div>
-                <h3>Industrial Grounds</h3>
-                <div class="meta">
-                    <span>Location — <span>Beirut, LB</span></span>
-                    <span>Year — <span>2026</span></span>
-                    <span>Format — <span>35mm Film</span></span>
-                </div>
-                <p class="desc">A shot of Two Industrial Exhausts.</p>
-                <a href="#" class="card-link">View gallery →</a>
-            </article>
-
-            <article class="card hidden" data-category="series" style="transition-delay:60ms;">
-                <div class="card-top">
-                    <span class="code">ROLL&nbsp;—&nbsp;02</span>
-                    <span class="stamp-badge">Series</span>
-                </div>
-                <div class="thumb">
-                    <img src="images/Untitled-2.jpg" alt="Shelves & Hidden secrets" class="frame">
-                    <span class="frame-num">14A</span>
-                </div>
-                <div class="perf"></div>
-                <h3>Calm & Informative</h3>
-                <div class="meta">
-                    <span>Location — <span>ABC Dbayeh, LB</span></span>
-                    <span>Year — <span>2026</span></span>
-                    <span>Format — <span>35mm Film</span></span>
-                </div>
-                <p class="desc">Quiet Shelves Hiding a lot of treasures.</p>
-                <a href="#" class="card-link">View gallery →</a>
-            </article>
-
-        </div>
+    <div class="section-head hidden">
+      <h2>Index of Entries</h2>
+      <span class="mono">Sample entries — swap in your own frames</span>
     </div>
+
+    <div class="grid" id="cardGrid">
+
+      <article class="card hidden" data-category="series">
+        <div class="card-top">
+          <span class="code">ROLL&nbsp;—&nbsp;01</span>
+          <span class="stamp-badge">Series</span>
+        </div>
+        <div class="thumb">
+          <!-- Swapped with a live 1600x1200 industrial visual -->
+          <img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1600&h=1200&q=80" alt="Industrial Grounds" class="frame">
+          <span class="frame-num">14A</span>
+        </div>
+        <div class="perf"></div>
+        <h3>Industrial Grounds</h3>
+        <div class="meta">
+          <span>Location — <span>Beirut, LB</span></span>
+          <span>Year — <span>2026</span></span>
+          <span>Format — <span>35mm Film</span></span>
+        </div>
+        <p class="desc">A shot of Two Industrial Exhausts.</p>
+        <a href="#" class="card-link">View gallery →</a>
+      </article>
+
+      <article class="card hidden" data-category="series" style="transition-delay:60ms;">
+        <div class="card-top">
+          <span class="code">ROLL&nbsp;—&nbsp;02</span>
+          <span class="stamp-badge">Series</span>
+        </div>
+        <div class="thumb">
+          <!-- Swapped with a live 1600x1200 library shelves visual -->
+          <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1600&h=1200&q=80" alt="Shelves & Hidden secrets" class="frame">
+          <span class="frame-num">14A</span>
+        </div>
+        <div class="perf"></div>
+        <h3>Calm & Informative</h3>
+        <div class="meta">
+          <span>Location — <span>ABC Dbayeh, LB</span></span>
+          <span>Year — <span>2026</span></span>
+          <span>Format — <span>35mm Film</span></span>
+        </div>
+        <p class="desc">Quiet Shelves Hiding a lot of treasures.</p>
+        <a href="#" class="card-link">View gallery →</a>
+      </article>
+
+    </div>
+  </div>
 </section>
 
 <section class="about hidden">
-    <div class="wrap about-inner">
-        <h2>Behind the Lens</h2>
-        <p>I shoot mostly on film, sometimes digital, always chasing available light. Every series in this catalogue was shot, developed, and sequenced by hand — sessions are built around the same eye.</p>
-        <div class="tags">
-            <span class="tag">35mm Film</span>
-            <span class="tag">Medium Format</span>
-            <span class="tag">Studio Lighting</span>
-            <span class="tag">Location Scouting</span>
-            <span class="tag">Darkroom Printing</span>
-            <span class="tag">Retouching</span>
-        </div>
+  <div class="wrap about-inner">
+    <h2>Behind the Lens</h2>
+    <p>I shoot mostly on film, sometimes digital, always chasing available light. Every series in this catalogue was shot, developed, and sequenced by hand — sessions are built around the same eye.</p>
+    <div class="tags">
+      <span class="tag">35mm Film</span>
+      <span class="tag">Medium Format</span>
+      <span class="tag">Studio Lighting</span>
+      <span class="tag">Location Scouting</span>
+      <span class="tag">Darkroom Printing</span>
+      <span class="tag">Retouching</span>
     </div>
+  </div>
 </section>
 
 <section id="contact" class="contact hidden">
-    <div class="wrap">
-        <div class="order-form">
-            <h2>Book a Session</h2>
-            <p>Have a date in mind? Send a note and I'll get back to you within a couple of days.</p>
-            <div class="contact-rows">
-                <div><span>Email</span><span>raffoultraboulsy@aol.com</span></div>
-                <div><span>Response time</span><span>1–2 business days</span></div>
-                <div><span>Currently</span><span>Booking for Autumn 2026</span></div>
-            </div>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=raffoultraboulsy@aol.com" target="_blank" class="btn btn-solid">Get In Touch</a>
-        </div>
+  <div class="wrap">
+    <div class="order-form">
+      <h2>Book a Session</h2>
+      <p>Have a date in mind? Send a note and I'll get back to you within a couple of days.</p>
+      <div class="contact-rows">
+        <div><span>Email</span><span>raffoultraboulsy@aol.com</span></div>
+        <div><span>Response time</span><span>1–2 business days</span></div>
+        <div><span>Currently</span><span>Booking for Autumn 2026</span></div>
+      </div>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=raffoultraboulsy@aol.com" target="_blank" class="btn btn-solid">Get In Touch</a>
     </div>
+  </div>
 </section>
 
 <footer>
-    <div class="wrap">
-        <p>Prints, sessions, and availability are updated periodically. Full galleries and pricing are available on request.</p>
-        <p class="end mono">— End of Catalogue No. 002 —</p>
-    </div>
+  <div class="wrap">
+    <p>Prints, sessions, and availability are updated periodically. Full galleries and pricing are available on request.</p>
+    <p class="end mono">— End of Catalogue No. 001 —</p>
+  </div>
 </footer>
 
 <script>
