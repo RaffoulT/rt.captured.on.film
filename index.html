@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raffoul Traboulsy — Catalogue Vol. I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+  :root{
+    --paper:#E9E1CB;
+    --paper-card:#F3EDDC;
+    --paper-dark:#D8CCA9;
+    --ink:#201C15;
+    --ink-muted:#6E6353;
+    --stamp:#AC3B2C;
+    --teal:#2B554F;
+    --line:#B7A97F;
+    --radius:2px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(32,28,21,0.045) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+  }
+
+  a{ color:inherit; }
+
+  ::selection{ background:var(--stamp); color:var(--paper-card); }
+
+  :focus-visible{
+    outline:2px solid var(--stamp);
+    outline-offset:3px;
+  }
+
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 1.75rem;
+  }
+
+  /* ---------- Reveal ---------- */
+  .hidden{ opacity:0; transform:translateY(28px); }
+  @media (prefers-reduced-motion: no-preference){
+    .hidden{ transition:opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1); }
+  }
+  .show{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    border-bottom:2px solid var(--ink);
+    padding:0.9rem 0;
+  }
+  .masthead-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:0.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:4.5rem 0 3.5rem;
+    text-align:center;
+    position:relative;
+  }
+  .hero-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    font-size:.72rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--stamp);
+    margin-bottom:1.6rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after{
+    content:'';
+    width:26px; height:1px;
+    background:var(--stamp);
+  }
+  h1.name{
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(2.6rem, 7vw, 5.4rem);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+    text-transform:uppercase;
+  }
+  .role{
+    margin-top:1.1rem;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:clamp(.85rem, 1.6vw, 1.05rem);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--teal);
+  }
+  .tagline{
+    max-width:520px;
+    margin:1.6rem auto 2.4rem;
+    color:var(--ink-muted);
+    font-size:1.05rem;
+  }
+  .hero-ctas{
+    display:flex;
+    gap:1rem;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.85rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:.85rem 1.6rem;
+    border-radius:var(--radius);
+    text-decoration:none;
+    display:inline-block;
+    border:2px solid var(--ink);
+    cursor:pointer;
+    background:none;
+  }
+  .btn-solid{
+    background:var(--ink);
+    color:var(--paper-card);
+  }
+  .btn-solid:hover{ background:var(--stamp); border-color:var(--stamp); }
+  .btn-outline:hover{ background:var(--ink); color:var(--paper-card); }
+  @media (prefers-reduced-motion: no-preference){
+    .btn{ transition:background .25s ease, border-color .25s ease, color .25s ease; }
+  }
+
+  /* rotating seal, decorative */
+  .seal{
+    position:absolute;
+    top:1.5rem; right:1.5rem;
+    width:88px; height:88px;
+    border:1.5px dashed var(--stamp);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--stamp);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.58rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-align:center;
+    opacity:.85;
+  }
+  .seal svg{ width:100%; height:100%; }
+  @media (prefers-reduced-motion: no-preference){
+    .seal{ animation: spin 26s linear infinite; }
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  @media (max-width:720px){ .seal{ display:none; } }
+
+  /* ---------- Index / filter tabs ---------- */
+  .index-bar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--paper);
+    border-top:2px solid var(--ink);
+    border-bottom:2px solid var(--ink);
+  }
+  .index-row{
+    display:flex;
+    gap:0;
+  }
+  .tab{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.78rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:.9rem 1.3rem;
+    background:none;
+    border:none;
+    border-right:1px solid var(--line);
+    cursor:pointer;
+    color:var(--ink-muted);
+  }
+  .tab:last-child{ border-right:none; }
+  .tab .count{ color:var(--stamp); margin-left:.35rem; }
+  .tab.active{
+    color:var(--ink);
+    background:var(--paper-card);
+    font-weight:600;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .tab{ transition:background .2s ease, color .2s ease; }
+  }
+
+  /* ---------- Catalogue grid ---------- */
+  .catalogue{
+    padding:3.5rem 0 1rem;
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:2rem;
+    border-bottom:1px solid var(--line);
+    padding-bottom:.75rem;
+  }
+  .section-head h2{
+    font-family:'Archivo', sans-serif;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+    font-size:1.4rem;
+  }
+  .section-head span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.75rem;
+    color:var(--ink-muted);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(270px, 1fr));
+    gap:1.6rem;
+  }
+
+  .card{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:1.1rem 1.1rem 1.3rem;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .card{ transition:transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s ease, border-color .35s ease; }
+  }
+  .card:hover{
+    transform:translateY(-6px) rotate(-0.3deg);
+    box-shadow:0 14px 24px -14px rgba(32,28,21,0.35);
+    border-color:var(--ink);
+  }
+
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:.85rem;
+  }
+  .code{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    color:var(--ink-muted);
+    letter-spacing:.05em;
+  }
+  .stamp-badge{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.62rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    border:1.5px solid var(--stamp);
+    color:var(--stamp);
+    padding:.2rem .5rem;
+    border-radius:var(--radius);
+    transform:rotate(-4deg);
+    opacity:0;
+  }
+  [data-category="service"] .stamp-badge{
+    border-color:var(--teal);
+    color:var(--teal);
+    transform:rotate(3deg);
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .stamp-badge{ transition:opacity .3s ease, transform .3s ease; }
+  }
+  .card:hover .stamp-badge{ opacity:1; transform:rotate(-6deg) scale(1.04); }
+  [data-category="service"]:hover .stamp-badge{ transform:rotate(5deg) scale(1.04); }
+
+  .thumb{
+    height:118px;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    margin-bottom:1rem;
+    background-color:var(--paper-dark);
+  }
+  .card:nth-of-type(4n+1) .thumb{
+    background-image:repeating-linear-gradient(45deg, rgba(32,28,21,0.09) 0 2px, transparent 2px 12px);
+  }
+  .card:nth-of-type(4n+2) .thumb{
+    background-image:radial-gradient(rgba(172,59,44,0.16) 1.5px, transparent 1.5px);
+    background-size:11px 11px;
+  }
+  .card:nth-of-type(4n+3) .thumb{
+    background-image:repeating-linear-gradient(0deg, rgba(43,85,79,0.14) 0 1px, transparent 1px 9px),
+                      repeating-linear-gradient(90deg, rgba(43,85,79,0.14) 0 1px, transparent 1px 9px);
+  }
+  .card:nth-of-type(4n+4) .thumb{
+    background-image:repeating-linear-gradient(-45deg, rgba(32,28,21,0.09) 0 2px, transparent 2px 14px);
+  }
+
+  .perf{
+    position:relative;
+    border-top:2px dashed var(--line);
+    margin:0 0 .9rem;
+  }
+  .perf::before, .perf::after{
+    content:'';
+    position:absolute; top:-6px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--paper);
+    border:1px solid var(--line);
+  }
+  .perf::before{ left:-1.1rem; }
+  .perf::after{ right:-1.1rem; }
+
+  .card h3{
+    font-family:'Archivo', sans-serif;
+    font-weight:800;
+    font-size:1.12rem;
+    margin-bottom:.6rem;
+    letter-spacing:-0.005em;
+  }
+  .meta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    color:var(--ink-muted);
+    display:grid;
+    gap:.28rem;
+    margin-bottom:.8rem;
+  }
+  .meta span{ color:var(--ink); }
+  .desc{
+    font-size:.9rem;
+    color:var(--ink-muted);
+    margin-bottom:1rem;
+    flex-grow:1;
+  }
+  .card-link{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.75rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    text-decoration:none;
+    border-bottom:1px solid var(--ink);
+    align-self:flex-start;
+    padding-bottom:2px;
+  }
+  .card-link:hover{ color:var(--stamp); border-color:var(--stamp); }
+
+  /* ---------- About / manufacturer note ---------- */
+  .about{
+    padding:5rem 0;
+    border-top:2px solid var(--ink);
+    border-bottom:2px solid var(--ink);
+    margin-top:4rem;
+  }
+  .about-inner{
+    max-width:680px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .about h2{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.75rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--stamp);
+    margin-bottom:1.3rem;
+  }
+  .about p{
+    font-size:1.15rem;
+    color:var(--ink);
+  }
+  .tags{
+    margin-top:2rem;
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.7rem;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    border:1px solid var(--line);
+    padding:.4rem .7rem;
+    border-radius:var(--radius);
+    color:var(--ink-muted);
+  }
+
+  /* ---------- Contact ---------- */
+  .contact{
+    padding:5rem 0 4rem;
+  }
+  .order-form{
+    max-width:640px;
+    margin:0 auto;
+    border:1.5px solid var(--ink);
+    border-radius:var(--radius);
+    padding:2.4rem 2rem;
+    text-align:center;
+    background:var(--paper-card);
+  }
+  .order-form h2{
+    font-family:'Archivo Black', sans-serif;
+    text-transform:uppercase;
+    font-size:1.8rem;
+    margin-bottom:.9rem;
+  }
+  .order-form p{
+    color:var(--ink-muted);
+    margin-bottom:1.8rem;
+  }
+  .contact-rows{
+    display:grid;
+    gap:.5rem;
+    margin-bottom:2rem;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.82rem;
+  }
+  .contact-rows div{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px dotted var(--line);
+    padding:.4rem .1rem;
+  }
+  .contact-rows span:first-child{ color:var(--ink-muted); text-transform:uppercase; letter-spacing:.06em; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:2px solid var(--ink);
+    padding:1.6rem 0 2.4rem;
+    text-align:center;
+  }
+  footer p{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.68rem;
+    color:var(--ink-muted);
+    letter-spacing:.03em;
+    max-width:520px;
+    margin:0 auto .5rem;
+  }
+  footer .end{
+    font-size:.7rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin-top:1rem;
+  }
+
+  @media (max-width:600px){
+    .index-row{ flex-wrap:wrap; }
+    .about, .contact, .catalogue{ padding-left:0; padding-right:0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap masthead-row mono">
+    <span>Creative Practice — Vol. I</span>
+    <span>Est. Catalogue No. 001</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="seal" aria-hidden="true">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1"/>
+      <text>
+        <textPath href="#circlePath" startOffset="0%">AVAILABLE FOR WORK • AVAILABLE FOR WORK •</textPath>
+      </text>
+      <path id="circlePath" d="M 50,50 m -36,0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" fill="none"/>
+    </svg>
+  </div>
+  <div class="wrap hidden">
+    <p class="hero-eyebrow mono">Browse the collection</p>
+    <h1 class="name">Raffoul<br>Traboulsy</h1>
+    <p class="role">Creative Developer &amp; Designer</p>
+    <p class="tagline">A catalogue of projects and services — interfaces, interactions, and the occasional strong opinion about type.</p>
+    <div class="hero-ctas">
+      <a href="#catalogue" class="btn btn-solid">View Catalogue</a>
+      <a href="#contact" class="btn btn-outline">Request a Quote</a>
+    </div>
+  </div>
+</section>
+
+<nav class="index-bar" aria-label="Filter catalogue">
+  <div class="wrap">
+    <div class="index-row">
+      <button class="tab active mono" data-filter="all">All <span class="count" id="count-all"></span></button>
+      <button class="tab mono" data-filter="project">Projects <span class="count" id="count-project"></span></button>
+      <button class="tab mono" data-filter="service">Services <span class="count" id="count-service"></span></button>
+    </div>
+  </div>
+</nav>
+
+<section id="catalogue" class="catalogue">
+  <div class="wrap">
+
+    <div class="section-head hidden">
+      <h2>Index of Entries</h2>
+      <span class="mono">Sample entries — swap in your own work</span>
+    </div>
+
+    <div class="grid" id="cardGrid">
+
+      <article class="card hidden" data-category="project">
+        <div class="card-top">
+          <span class="code">PRJ&nbsp;—&nbsp;01</span>
+          <span class="stamp-badge">Project</span>
+        </div>
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="perf"></div>
+        <h3>Nocturne — Editorial Redesign</h3>
+        <div class="meta">
+          <span>Role — <span>Design &amp; Front-end</span></span>
+          <span>Year — <span>2025</span></span>
+          <span>Stack — <span>React, GSAP</span></span>
+        </div>
+        <p class="desc">A ground-up redesign of a long-form editorial site, built around a variable-width grid and a custom reading mode.</p>
+        <a href="#" class="card-link">View case study →</a>
+      </article>
+
+      <article class="card hidden" data-category="project" style="transition-delay:60ms;">
+        <div class="card-top">
+          <span class="code">PRJ&nbsp;—&nbsp;02</span>
+          <span class="stamp-badge">Project</span>
+        </div>
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="perf"></div>
+        <h3>Fieldnote — Product Site</h3>
+        <div class="meta">
+          <span>Role — <span>Full-stack Dev</span></span>
+          <span>Year — <span>2024</span></span>
+          <span>Stack — <span>Next.js, WebGL</span></span>
+        </div>
+        <p class="desc">Marketing site for a field-recording app, with an interactive waveform hero and a component library shipped alongside it.</p>
+        <a href="#" class="card-link">View case study →</a>
+      </article>
+
+      <article class="card hidden" data-category="service" style="transition-delay:120ms;">
+        <div class="card-top">
+          <span class="code">SVC&nbsp;—&nbsp;01</span>
+          <span class="stamp-badge">Service</span>
+        </div>
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="perf"></div>
+        <h3>Brand &amp; Web Design</h3>
+        <div class="meta">
+          <span>Scope — <span>Identity to launch</span></span>
+          <span>Timeline — <span>4–6 weeks</span></span>
+          <span>From — <span>Inquire</span></span>
+        </div>
+        <p class="desc">End-to-end design for a new site or product, from moodboard through to a shipped, responsive build.</p>
+        <a href="#contact" class="card-link">Inquire →</a>
+      </article>
+
+      <article class="card hidden" data-category="project" style="transition-delay:60ms;">
+        <div class="card-top">
+          <span class="code">PRJ&nbsp;—&nbsp;03</span>
+          <span class="stamp-badge">Project</span>
+        </div>
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="perf"></div>
+        <h3>Hearth — Motion System</h3>
+        <div class="meta">
+          <span>Role — <span>Motion Design</span></span>
+          <span>Year — <span>2024</span></span>
+          <span>Stack — <span>After Effects, Lottie</span></span>
+        </div>
+        <p class="desc">A motion language and component set for a home-goods brand, tuned for slow, tactile transitions.</p>
+        <a href="#" class="card-link">View case study →</a>
+      </article>
+
+      <article class="card hidden" data-category="service" style="transition-delay:120ms;">
+        <div class="card-top">
+          <span class="code">SVC&nbsp;—&nbsp;02</span>
+          <span class="stamp-badge">Service</span>
+        </div>
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="perf"></div>
+        <h3>Front-end Build</h3>
+        <div class="meta">
+          <span>Scope — <span>Design to code</span></span>
+          <span>Timeline — <span>1–3 weeks</span></span>
+          <span>From — <span>Inquire</span></span>
+        </div>
+        <p class="desc">Hand off a finished design and get back a fast, accessible, pixel-accurate build — no template shortcuts.</p>
+        <a href="#contact" class="card-link">Inquire →</a>
+      </article>
+
+      <article class="card hidden" data-category="project" style="transition-delay:180ms;">
+        <div class="card-top">
+          <span class="code">PRJ&nbsp;—&nbsp;04</span>
+          <span class="stamp-badge">Project</span>
+        </div>
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="perf"></div>
+        <h3>Almanac — Internal Tool</h3>
+        <div class="meta">
+          <span>Role — <span>Product Design</span></span>
+          <span>Year — <span>2023</span></span>
+          <span>Stack — <span>Vue, D3</span></span>
+        </div>
+        <p class="desc">A data-dense internal dashboard rebuilt for clarity, with custom charting and a keyboard-first workflow.</p>
+        <a href="#" class="card-link">View case study →</a>
+      </article>
+
+      <article class="card hidden" data-category="service" style="transition-delay:180ms;">
+        <div class="card-top">
+          <span class="code">SVC&nbsp;—&nbsp;03</span>
+          <span class="stamp-badge">Service</span>
+        </div>
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="perf"></div>
+        <h3>Design Audit</h3>
+        <div class="meta">
+          <span>Scope — <span>Review &amp; roadmap</span></span>
+          <span>Timeline — <span>1 week</span></span>
+          <span>From — <span>Inquire</span></span>
+        </div>
+        <p class="desc">A structured pass over an existing product — usability, accessibility, and visual consistency — with a prioritized fix list.</p>
+        <a href="#contact" class="card-link">Inquire →</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="about hidden">
+  <div class="wrap about-inner">
+    <h2>Manufacturer's Note</h2>
+    <p>I design and build things for the web — mostly interfaces that need to feel considered, and the occasional experiment that doesn't need to be justified at all. Every entry in this catalogue was designed and shipped end to end.</p>
+    <div class="tags">
+      <span class="tag">UI Design</span>
+      <span class="tag">Front-end Dev</span>
+      <span class="tag">Motion</span>
+      <span class="tag">Design Systems</span>
+      <span class="tag">Prototyping</span>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact hidden">
+  <div class="wrap">
+    <div class="order-form">
+      <h2>Request a Quote</h2>
+      <p>Have a project in mind? Send a note, and I'll get back to you within a couple of days.</p>
+      <div class="contact-rows">
+        <div><span>Email</span><span>raffoultraboulsy@aol.com</span></div>
+        <div><span>Response time</span><span>1–2 business days</span></div>
+        <div><span>Currently</span><span>Open for new work</span></div>
+      </div>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=raffoultraboulsy@aol.com" target="_blank" class="btn btn-solid">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>This catalogue is issued for reference and updated periodically. Availability and turnaround times are approximate and confirmed on inquiry.</p>
+    <p class="end mono">— End of Catalogue No. 001 —</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+
+  // Filtering
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+
+  function updateCounts(){
+    document.getElementById('count-all').textContent = cards.length;
+    document.getElementById('count-project').textContent = cards.filter(c => c.dataset.category === 'project').length;
+    document.getElementById('count-service').textContent = cards.filter(c => c.dataset.category === 'service').length;
+  }
+  updateCounts();
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      cards.forEach((card) => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
