@@ -1,192 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sceneries — Raffoul Traboulsy</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#E9E1CB;
-    --paper-card:#F3EDDC;
-    --paper-dark:#D8CCA9;
-    --ink:#201C15;
-    --ink-muted:#6E6353;
-    --stamp:#AC3B2C;
-    --teal:#2B554F;
-    --line:#B7A97F;
-    --radius:2px;
-  }
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=gallery.html?i=0">
+  <link rel="canonical" href="gallery.html?i=0">
+  <title>Redirecting… — Raffoul Traboulsy</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #E9E1CB;
+      color: #201C15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
 
-  *{ margin:0; padding:0; box-sizing:border-box; }
-  body{
-    background:var(--paper);
-    background-image:radial-gradient(circle at 1px 1px, rgba(32,28,21,0.045) 1px, transparent 0);
-    background-size:22px 22px;
-    color:var(--ink);
-    font-family:'IBM Plex Sans', sans-serif;
-    line-height:1.55;
-  }
-
-  .wrap{ max-width:1180px; margin:0 auto; padding:0 1.75rem; }
-  .mono{ font-family:'IBM Plex Mono', monospace; }
-
-  /* ---------- Navigation Bar ---------- */
-  .gallery-nav{
-    border-bottom:2px solid var(--ink);
-    padding:1rem 0;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.75rem;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-  }
-  .nav-flex{ display:flex; justify-content:space-between; align-items:center; }
-  .back-btn{ text-decoration:none; color:var(--stamp); font-weight:600; }
-  .back-btn:hover{ text-decoration:underline; }
-
-  /* ---------- Header ---------- */
-  .gallery-header{ padding:4rem 0 3rem; text-align:center; }
-  .gallery-header h1{
-    font-family:'Archivo Black', sans-serif;
-    font-size:clamp(2rem, 5vw, 3.8rem);
-    text-transform:uppercase;
-    line-height:1.1;
-    margin-bottom:1rem;
-  }
-  .gallery-meta{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.8rem;
-    color:var(--ink-muted);
-    display:flex;
-    justify-content:center;
-    gap:2rem;
-    flex-wrap:wrap;
-  }
-  .gallery-meta span strong{ color:var(--ink); }
-
-  /* ---------- Gallery Grid ---------- */
-  .photo-stream{ display:grid; grid-template-columns:1fr; gap:3rem; padding-bottom:6rem; }
-  
-  /* Large Analog Film Container */
-  .film-frame{
-    background:var(--paper-card);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:1.5rem;
-    box-shadow:0 8px 20px -10px rgba(0,0,0,0.15);
-  }
-  .sprocket-wrapper{
-    position:relative;
-    width:100%;
-    aspect-ratio:4/3;
-    background:#1a1713;
-    border:1px solid var(--ink);
-    overflow:hidden;
-  }
-  .sprocket-wrapper::before, .sprocket-wrapper::after{
-    content:'';
-    position:absolute; left:0; right:0; height:12px;
-    background-color:var(--ink);
-    background-image:repeating-linear-gradient(90deg, var(--paper-card) 0 6px, transparent 6px 18px);
-    z-index:2;
-  }
-  .sprocket-wrapper::before{ top:0; }
-  .sprocket-wrapper::after{ bottom:0; }
-  
-  .sprocket-wrapper img{
-    position:absolute;
-    inset:12px 0;
-    width:100%;
-    height:calc(100% - 24px);
-    object-fit:contain; /* Ensures 100% of your photo remains visible */
-  }
-
-  .caption{
-    margin-top:1.2rem;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.8rem;
-    color:var(--ink-muted);
-    display:flex;
-    justify-content:space-between;
-    border-top:1px dotted var(--line);
-    padding-top:0.8rem;
-  }
-
-  /* ---------- Footer ---------- */
-  footer{
-    border-top:2px solid var(--ink);
-    padding:2.5rem 0;
-    text-align:center;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:.7rem;
-    color:var(--ink-muted);
-  }
-</style>
+    a {
+      color: #AC3B2C;
+    }
+  </style>
 </head>
+
 <body>
-
-<nav class="gallery-nav">
-  <div class="wrap nav-flex">
-    <a href="index.html" class="back-btn">← Back to Catalogue</a>
-    <span>Catalogue No. 001</span>
-  </div>
-</nav>
-
-<header class="gallery-header">
-  <div class="wrap">
-    <h1>Sceneries</h1>
-    <div class="gallery-meta">
-      <span>Location: <strong>Beirut, LB</strong></span>
-      <span>Format: <strong>35mm Film</strong></span>
-      <span>Roll: <strong>01</strong></span>
-    </div>
-  </div>
-</header>
-
-<main class="wrap">
-  <div class="photo-stream">
-
-    <!-- Frame 1 -->
-    <div class="film-frame">
-      <div class="sprocket-wrapper">
-        <img src="images/Untitled-1.jpg" alt="Just the exhausts poluting the air">
-      </div>
-      <div class="caption">
-        <span>Frame // 01A</span>
-        <span>Pollution In An Artistic Way</span>
-      </div>
-    </div>
-
-    <!-- Frame 2 -->
-    <div class="film-frame">
-      <div class="sprocket-wrapper">
-        <img src="images/Untitled-2.jpg" alt="Hidden inside these books are secrets">
-      </div>
-      <div class="caption">
-        <span>Frame // 02A</span>
-        <span>Knowledge hidden within the shelves</span>
-      </div>
-    </div>
-    <!-- Frame 3 -->
-    <div class="film-frame">
-      <div class="sprocket-wrapper">
-        <img src="images/Untitled-3.jpg" alt="Music Speaks Louder than Words ">
-      </div>
-      <div class="caption">
-        <span>Frame // 03A</span>
-        <span>Music Speaks Louder Than Words</span>
-      </div>
-    </div>
-  </div>
-</main>
-
-<footer>
-  <div class="wrap">
-    <p>All photographs captured on location in Lebanon • Catalogue No. 001</p>
-  </div>
-</footer>
-
+  <p>This gallery has moved. Redirecting to <a href="gallery.html?i=0">gallery.html</a>…</p>
+  <script>window.location.replace('gallery.html?i=0');</script>
 </body>
+
 </html>

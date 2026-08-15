@@ -7,8 +7,14 @@
         image: 'images/kodak-gold-200.jpg', alt: 'Kodak Gold 200 film retail package', frameNum: '14A',
         location: 'Beirut, LB', year: '2026', format: '35mm Film',
         description: 'Quiet Shelves Hiding a lot of treasures.',
-        link: 'calm-and-informative.html', linkText: 'View gallery →'
+        link: 'gallery.html?i=0', linkText: 'View gallery →',
+        photos: [
+            { image: 'images/Untitled-1.jpg', alt: 'Just the exhausts poluting the air', caption: 'Pollution In An Artistic Way' },
+            { image: 'images/Untitled-2.jpg', alt: 'Hidden inside these books are secrets', caption: 'Knowledge hidden within the shelves' },
+            { image: 'images/Untitled-3.jpg', alt: 'Music Speaks Louder than Words', caption: 'Music Speaks Louder Than Words' }
+        ]
     }];
+
 
     function load() {
         var raw;
