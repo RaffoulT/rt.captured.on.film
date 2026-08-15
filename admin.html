@@ -718,10 +718,13 @@
                 photos.forEach(function (p, pi) {
                     var row = document.createElement('div');
                     row.className = 'row';
+                    row.style.alignItems = 'flex-start';
                     row.innerHTML =
                         '<img class="thumb" src="' + escapeHtml(p.image) + '" alt="">' +
                         '<div class="info"><span class="t">Photo ' + (pi + 1) + '</span>' +
-                        '<div class="m">' + escapeHtml(p.caption || p.alt || '') + '</div></div>' +
+                        '<label style="margin:.4rem 0 .2rem;">Caption</label>' +
+                        '<input type="text" class="pg-caption-input" data-pi="' + pi + '" value="' + escapeHtml(p.caption || '') + '" placeholder="Caption for this photo…" style="width:100%;padding:.5rem .6rem;font-family:\'IBM Plex Mono\',monospace;font-size:.78rem;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:var(--radius);">' +
+                        '</div>' +
                         '<div class="btns">' +
                         '<button class="btn btn-outline btn-small" data-act="up" title="Move up">↑</button>' +
                         '<button class="btn btn-outline btn-small" data-act="down" title="Move down">↓</button>' +
@@ -730,10 +733,23 @@
                     row.querySelector('[data-act="up"]').addEventListener('click', function () { pgMovePhoto(pi, -1); });
                     row.querySelector('[data-act="down"]').addEventListener('click', function () { pgMovePhoto(pi, 1); });
                     row.querySelector('[data-act="del"]').addEventListener('click', function () { pgRemovePhoto(pi); });
+                    var capInput = row.querySelector('.pg-caption-input');
+                    capInput.addEventListener('change', function () { pgUpdateCaption(pi, capInput.value); });
+                    capInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') capInput.blur(); });
                     wrap.appendChild(row);
                 });
             }
+            function pgUpdateCaption(pi, value) {
+                var i = pgSelectedIndex();
+                var cards = loadCards();
+                var card = cards[i];
+                if (!card || !Array.isArray(card.photos) || !card.photos[pi]) return;
+                card.photos[pi].caption = value;
+                saveCards(cards);
+                renderList(cards);
+            }
             function pgSaveCardsAndRefresh(cards) {
+
                 saveCards(cards);
                 renderStats(cards);
                 renderList(cards);
