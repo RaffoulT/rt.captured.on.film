@@ -519,9 +519,32 @@
             <p class="msg" id="formMsg"></p>
         </div>
 
+        <!-- Manage photos for an existing card -->
+        <div class="panel">
+            <h2>Manage Card Photos</h2>
+            <div class="form-grid">
+                <div class="full">
+                    <label for="pgCardSelect">Choose a card</label>
+                    <select id="pgCardSelect"></select>
+                </div>
+                <div class="full">
+                    <label for="pgFiles">Add photos to this card (select one or more)</label>
+                    <input type="file" id="pgFiles" accept="image/*" multiple>
+                </div>
+            </div>
+            <p class="msg" id="pgMsg"></p>
+            <div id="pgPhotoList" style="margin-top:1rem;"></div>
+            <p class="hint" style="text-align:left;margin-top:.8rem;">
+                Photos added here appear on this card's dedicated gallery page
+                (<code class="mono">gallery.html</code>). The card's "Gallery link" will be set automatically
+                to open that page the first time you add a photo, unless you've already set a custom link.
+            </p>
+        </div>
+
         <!-- Change password -->
         <div class="panel">
             <h2>Change Password</h2>
+
             <div class="pw-grid">
                 <div><label for="curPass">Current password</label><input type="password" id="curPass"
                         autocomplete="off"></div>
@@ -655,7 +678,115 @@
             }
 
 
+            /* ---------- manage card photos ---------- */
+            var pgMsgEl = $('pgMsg');
+            function pgPopulateSelect() {
+                var cards = loadCards();
+                var sel = $('pgCardSelect');
+                var prevValue = sel.value;
+                sel.innerHTML = cards.length
+                    ? cards.map(function (c, i) {
+                        return '<option value="' + i + '">' + escapeHtml(c.title || 'Untitled') + (c.code ? ' — ' + escapeHtml(c.code) : '') + '</option>';
+                    }).join('')
+                    : '<option value="">No cards yet</option>';
+                if (prevValue && cards[prevValue]) sel.value = prevValue;
+                pgRenderPhotoList();
+            }
+            function pgSelectedIndex() {
+                var v = $('pgCardSelect').value;
+                return v === '' ? -1 : parseInt(v, 10);
+            }
+            function pgRenderPhotoList() {
+                var wrap = $('pgPhotoList');
+                var i = pgSelectedIndex();
+                var cards = loadCards();
+                var card = cards[i];
+                if (!card) { wrap.innerHTML = ''; return; }
+                var photos = Array.isArray(card.photos) ? card.photos : [];
+                if (!photos.length) {
+                    wrap.innerHTML = '<div class="empty">No extra photos yet for this card. Use the field above to add some.</div>';
+                    return;
+                }
+                wrap.innerHTML = '';
+                photos.forEach(function (p, pi) {
+                    var row = document.createElement('div');
+                    row.className = 'row';
+                    row.innerHTML =
+                        '<img class="thumb" src="' + escapeHtml(p.image) + '" alt="">' +
+                        '<div class="info"><span class="t">Photo ' + (pi + 1) + '</span>' +
+                        '<div class="m">' + escapeHtml(p.caption || p.alt || '') + '</div></div>' +
+                        '<div class="btns">' +
+                        '<button class="btn btn-outline btn-small" data-act="up" title="Move up">↑</button>' +
+                        '<button class="btn btn-outline btn-small" data-act="down" title="Move down">↓</button>' +
+                        '<button class="btn btn-outline btn-small" data-act="del" title="Remove" style="border-color:var(--stamp);color:var(--stamp);">Remove</button>' +
+                        '</div>';
+                    row.querySelector('[data-act="up"]').addEventListener('click', function () { pgMovePhoto(pi, -1); });
+                    row.querySelector('[data-act="down"]').addEventListener('click', function () { pgMovePhoto(pi, 1); });
+                    row.querySelector('[data-act="del"]').addEventListener('click', function () { pgRemovePhoto(pi); });
+                    wrap.appendChild(row);
+                });
+            }
+            function pgSaveCardsAndRefresh(cards) {
+                saveCards(cards);
+                renderStats(cards);
+                renderList(cards);
+                pgPopulateSelect();
+            }
+            function pgMovePhoto(pi, dir) {
+                var i = pgSelectedIndex();
+                var cards = loadCards();
+                var card = cards[i];
+                if (!card || !Array.isArray(card.photos)) return;
+                var pj = pi + dir;
+                if (pj < 0 || pj >= card.photos.length) return;
+                var tmp = card.photos[pi]; card.photos[pi] = card.photos[pj]; card.photos[pj] = tmp;
+                pgSaveCardsAndRefresh(cards);
+            }
+            function pgRemovePhoto(pi) {
+                var i = pgSelectedIndex();
+                var cards = loadCards();
+                var card = cards[i];
+                if (!card || !Array.isArray(card.photos)) return;
+                if (!confirm('Remove this photo from the card?')) return;
+                card.photos.splice(pi, 1);
+                pgSaveCardsAndRefresh(cards);
+            }
+            function pgAddPhotos(files) {
+                var i = pgSelectedIndex();
+                var cards = loadCards();
+                var card = cards[i];
+                if (!card) { showMsg(pgMsgEl, 'Choose a card first.', false); return; }
+                if (!Array.isArray(card.photos)) card.photos = [];
+                // If this card has no custom gallery link yet, point it at the new multi-photo gallery page.
+                if (!card.link || card.link === '#' || card.link === '') {
+                    card.link = 'gallery.html?i=' + i;
+                    if (!card.linkText) card.linkText = 'View gallery →';
+                }
+                var remaining = files.length;
+                var addedCount = 0;
+                showMsg(pgMsgEl, 'Processing ' + files.length + ' photo(s)…', true);
+                Array.prototype.forEach.call(files, function (file) {
+                    if (!/^image\//.test(file.type)) { remaining--; return; }
+                    fileToResizedDataURL(file, 1800, 0.85, function (dataUrl) {
+                        card.photos.push({
+                            image: dataUrl,
+                            alt: file.name.replace(/\.[^.]+$/, ''),
+                            caption: ''
+                        });
+                        addedCount++;
+                        remaining--;
+                        if (remaining <= 0) {
+                            var freshCards = loadCards();
+                            freshCards[i] = card;
+                            pgSaveCardsAndRefresh(freshCards);
+                            showMsg(pgMsgEl, 'Added ' + addedCount + ' photo(s) to "' + (card.title || 'card') + '".', true);
+                        }
+                    });
+                });
+            }
+
             /* ---------- login / logout ---------- */
+
             function login() {
                 var val = $('passInput').value;
                 if (val === getPass()) {
@@ -719,7 +850,9 @@
                 renderStats(cards);
                 renderList(cards);
                 resetForm();
+                pgPopulateSelect();
             }
+
 
             /* ---------- form ---------- */
             function resetForm() {
@@ -875,7 +1008,14 @@
             $('fImage').addEventListener('input', function () { updateImagePreview($('fImage').value.trim()); });
             $('resetBtn').addEventListener('click', resetDefaults);
 
+            $('pgCardSelect').addEventListener('change', pgRenderPhotoList);
+            $('pgFiles').addEventListener('change', function (e) {
+                if (e.target.files && e.target.files.length) pgAddPhotos(e.target.files);
+                e.target.value = '';
+            });
+
             $('pwBtn').addEventListener('click', changePassword);
+
             $('curPass').addEventListener('keydown', function (e) { if (e.key === 'Enter') changePassword(); });
             $('newPass').addEventListener('keydown', function (e) { if (e.key === 'Enter') changePassword(); });
             $('confPass').addEventListener('keydown', function (e) { if (e.key === 'Enter') changePassword(); });

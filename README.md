@@ -7,9 +7,16 @@ A static photography portfolio/catalogue website — "Raffoul Traboulsy — Phot
 - **`index.html`** — Main landing page / photography catalogue with filterable card grid (Series / Session).
 - **`photography.html`** — Photography section page.
 - **`calm-and-informative.html`** — A themed gallery page.
-- **`admin.html`** — A lightweight, client-side admin panel to add/edit/remove catalogue cards. Data is persisted in the browser's `localStorage` (no backend/server required).
+- **`admin.html`** — A lightweight, client-side admin panel to add/edit/remove catalogue cards, upload cover images from your computer, and manage a multi-photo gallery per card. Data is persisted in the browser's `localStorage` (no backend/server required).
 - **`admin-cards.js`** — Renders catalogue cards saved by the admin panel onto the main page.
+- **`gallery.html`** — A dynamic gallery page that displays every photo added to a given card (linked via `?i=<index>` or `?code=<card-code>`).
 - **`images/`** — All image assets used across the site.
+
+### Managing photos in the admin panel
+
+- **Add Card** section — upload a single cover image directly from your computer (auto-resized, no server needed) for a new or existing card.
+- **Manage Card Photos** section — pick any existing card from the dropdown and upload one or more photos to build out its dedicated gallery page. Photos can be reordered or removed individually, and the card's "Gallery link" is wired up automatically to `gallery.html`.
+
 
 ## 🚀 Getting Started
 
