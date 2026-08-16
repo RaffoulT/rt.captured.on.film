@@ -231,14 +231,36 @@
                     .replace(/"/g, '"').replace(/'/g, '&#39;');
             }
 
+            var DEFAULT_CARDS = [
+                {
+                    code: 'ROLL — 01',
+                    category: 'series',
+                    title: 'Gold 200',
+                    image: 'images/kodak-gold-200.jpg',
+                    alt: 'Kodak Gold 200 film retail package',
+                    frameNum: '14A',
+                    location: 'Beirut, LB',
+                    year: '2026',
+                    format: '35mm Film',
+                    description: 'Quiet Shelves Hiding a lot of treasures.',
+                    link: 'gallery.html?i=0',
+                    linkText: 'View gallery →',
+                    photos: [
+                        { image: 'images/Untitled-1.jpg', alt: 'Just the exhausts poluting the air', caption: 'Pollution In An Artistic Way' },
+                        { image: 'images/Untitled-2.jpg', alt: 'Hidden inside these books are secrets', caption: 'Knowledge hidden within the shelves' },
+                        { image: 'images/Untitled-3.jpg', alt: 'Music Speaks Louder than Words', caption: 'Music Speaks Louder Than Words' }
+                    ]
+                }
+            ];
+
             function loadCards() {
                 var raw;
                 try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { raw = null; }
-                if (!raw) return [];
+                if (!raw) return JSON.parse(JSON.stringify(DEFAULT_CARDS));
                 try {
                     var arr = JSON.parse(raw);
-                    return Array.isArray(arr) ? arr : [];
-                } catch (e) { return []; }
+                    return Array.isArray(arr) ? arr : JSON.parse(JSON.stringify(DEFAULT_CARDS));
+                } catch (e) { return JSON.parse(JSON.stringify(DEFAULT_CARDS)); }
             }
 
             function getParam(name) {
