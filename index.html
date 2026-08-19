@@ -168,7 +168,6 @@
       background: var(--stamp);
     }
 
-    /* Hero Logo Container styling */
     .hero-logo-container {
       display: block;
       margin: 0 auto 1.5rem;
@@ -181,7 +180,6 @@
       height: auto;
       display: block;
       mix-blend-mode: multiply;
-      /* Blends nicely with paper textured background */
     }
 
     .role {
@@ -212,7 +210,7 @@
       font-size: .85rem;
       letter-spacing: .06em;
       text-transform: uppercase;
-      padding: .85rem 1.6rem;
+      padding: 1.2rem; /* FIXED: Equal padding on all sides */
       border-radius: var(--radius);
       text-decoration: none;
       display: inline-block;
@@ -294,7 +292,7 @@
 
     .index-row {
       display: flex;
-      justify-content: center; /* FIXED: Added to center the tabs */
+      justify-content: center;
       gap: 0;
     }
 
@@ -303,7 +301,7 @@
       font-size: .78rem;
       letter-spacing: .08em;
       text-transform: uppercase;
-      padding: .9rem 1.3rem;
+      padding: .9rem 1.3rem; /* Kept standard for typography balance */
       background: none;
       border: none;
       border-right: 1px solid var(--line);
@@ -373,7 +371,7 @@
       background: var(--paper-card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 1.1rem 1.1rem 1.3rem;
+      padding: 1.2rem; /* FIXED: Equal padding on all sides */
       position: relative;
       display: flex;
       flex-direction: column;
@@ -438,7 +436,7 @@
     /* ---- Filmstrip thumbnail ---- */
     .thumb {
       position: relative;
-      aspect-ratio: 4/3;
+      aspect-ratio: 1 / 1; /* FIXED: Perfect square dimensions */
       border: 1px solid var(--ink);
       margin-bottom: 1rem;
       overflow: hidden;
@@ -612,7 +610,7 @@
       margin: 0 auto;
       border: 1.5px solid var(--ink);
       border-radius: var(--radius);
-      padding: 2.4rem 2rem;
+      padding: 2.4rem; /* FIXED: Equal padding on all sides */
       text-align: center;
       background: var(--paper-card);
     }
@@ -650,7 +648,6 @@
       letter-spacing: .06em;
     }
 
-    /* FIXED: Added wrapper for the contact buttons */
     .order-form-actions {
       display: flex;
       gap: 1rem;
@@ -714,7 +711,6 @@
     <div class="wrap hidden">
       <p class="hero-eyebrow mono">Browse the collection</p>
 
-      <!-- Logo replaced the text title -->
       <div class="hero-logo-container">
         <img src="images/001.png" alt="Raffoul Traboulsy Logo" class="hero-logo-img">
       </div>
@@ -746,7 +742,6 @@
         <span class="mono">A History Of My Capturing</span>
       </div>
 
-      <!-- The single card grid layout -->
       <div class="grid" id="cardGrid">
 
         <article class="card hidden" data-category="series">
@@ -755,7 +750,6 @@
             <span class="stamp-badge">Series</span>
           </div>
           <div class="thumb">
-            <!-- Canon EOS 300 Visual -->
             <img src="images/kodak-gold-200.jpg" alt="Kodak Gold 200 film retail package" class="frame">
             <span class="frame-num">14A</span>
           </div>
@@ -769,7 +763,6 @@
           <p class="desc">My First Film Roll.</p>
           <a href="gallery.html?i=0" class="card-link">View gallery →</a>
         </article>
-
 
       </div>
     </div>
@@ -802,7 +795,6 @@
           <div><span>Currently</span><span>Booking for Autumn 2026</span></div>
         </div>
         
-        <!-- FIXED: Button syntax corrected and wrapped in a flex layout to stack properly with a gap -->
         <div class="order-form-actions">
           <a href="mailto:raffoultraboulsy@aol.com?subject=Booking%20Inquiry%3A%20Film%20Camera%20Shoot&body=Hello%2C%0A%0AI%20am%20reaching%20out%20to%20inquire%20about%20booking%20a%20film%20camera%20shoot.%20Please%20let%20me%20know%20your%20availability%20and%20rates.%0A%0AThank%20you!" target="_blank" class="btn btn-solid">Get In Touch</a>
           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=raffoultraboulsy@aol.com&su=Booking%20Inquiry:%20Film%20Camera%20Shoot&body=Hi%20Raffoul,%0D%0A%0D%0AI%20am%20reaching%20out%20to%20inquire%20about%20booking%20a%20film%20camera%20shoot.%20Please%20let%20me%20know%20your%20availability%20and%20rates.%0D%0A%0D%0AThank%20you!" target="_blank" class="btn btn-solid">Get In Touch (For Desktop)</a>
