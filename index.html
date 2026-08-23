@@ -747,6 +747,100 @@
         flex-wrap: wrap;
       }
     }
+    
+    /* ---------- Camera Modal & Animation ---------- */
+    .camera-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none; 
+    }
+
+    .camera-modal.active {
+      pointer-events: all;
+    }
+
+    .shutter {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50vh;
+      background: #111; 
+      z-index: 101;
+      transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1);
+    }
+
+    .shutter-top {
+      top: 0;
+      transform: translateY(-100%);
+    }
+
+    .shutter-bottom {
+      bottom: 0;
+      transform: translateY(100%);
+    }
+
+    .camera-modal.active .shutter-top,
+    .camera-modal.active .shutter-bottom {
+      transform: translateY(0);
+    }
+
+    .camera-modal-content {
+      position: relative;
+      z-index: 102;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.3s ease 0.4s, transform 0.3s ease 0.4s;
+      text-align: center;
+      color: var(--paper);
+    }
+
+    .camera-modal.active .camera-modal-content {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .camera-modal-content img {
+      max-width: 90vw;
+      max-height: 55vh;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      margin-bottom: 1.5rem;
+    }
+
+    .flash-overlay {
+      position: fixed;
+      inset: 0;
+      background: white;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .flash-overlay.flash-active {
+      animation: flashAnim 0.7s ease-out forwards;
+    }
+
+    @keyframes flashAnim {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -2.5rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: var(--line);
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    
+    .close-modal:hover { color: white; }
   </style>
 </head>
 
@@ -806,7 +900,7 @@
       </div>
 
       <!-- TINY CAMERA SPACE -->
-      <a href="#about" class="tiny-camera-space hidden" style="text-decoration: none;">
+      <a href="#" class="tiny-camera-space hidden" style="text-decoration: none;">
         <div class="tiny-camera-thumb">
           <img src="images/cam.avif" alt="Canon EOS 300">
         </div>
@@ -886,6 +980,23 @@
     </div>
   </footer>
 
+  <!-- Fullscreen Camera Shutter Overlay -->
+  <div id="camera-modal" class="camera-modal">
+    <div class="shutter shutter-top"></div>
+    <div class="shutter shutter-bottom"></div>
+    <div class="camera-modal-content">
+      <button class="close-modal mono">Close [X]</button>
+      <img src="images/cam.avif" alt="Canon EOS 300 Enlarged">
+      <div class="camera-modal-details mono">
+        <h3 style="font-family: 'Archivo', sans-serif; font-size: 1.5rem; margin-bottom: 0.2rem;">Canon EOS 300</h3>
+        <p style="color: var(--line);">35mm SLR Film Camera</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="shutter-audio" src="audio/shutter.mp3" preload="auto"></audio>
+
   <script>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('show'); });
@@ -912,6 +1023,41 @@
           card.style.display = match ? '' : 'none';
         });
       });
+    });
+
+    // Camera Shutter Modal Logic
+    const cameraBadge = document.querySelector('.tiny-camera-space');
+    const cameraModal = document.getElementById('camera-modal');
+    const closeModalBtn = document.querySelector('.close-modal');
+    const shutterAudio = document.getElementById('shutter-audio');
+
+    // Create the flash div dynamically
+    const flash = document.createElement('div');
+    flash.className = 'flash-overlay';
+    document.body.appendChild(flash);
+
+    cameraBadge.addEventListener('click', (e) => {
+      e.preventDefault(); 
+      
+      // Close the shutter blades
+      cameraModal.classList.add('active');
+      
+      // Play sound and trigger flash as blades finish closing
+      setTimeout(() => {
+        flash.classList.add('flash-active');
+        // Reset audio to start in case clicked rapidly
+        shutterAudio.currentTime = 0; 
+        shutterAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
+      }, 350); 
+      
+      // Reset flash state so it works on subsequent clicks
+      setTimeout(() => {
+        flash.classList.remove('flash-active');
+      }, 1100);
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      cameraModal.classList.remove('active');
     });
   </script>
 
