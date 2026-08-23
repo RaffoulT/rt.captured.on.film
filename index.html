@@ -609,6 +609,7 @@
       border-bottom: 1px solid var(--ink);
       align-self: flex-start;
       padding-bottom: 2px;
+      cursor: pointer;
     }
 
     .card-link:hover {
@@ -803,6 +804,11 @@
       transform: scale(1);
     }
 
+    /* Hide the content if we are only using the shutter for a page transition */
+    .camera-modal.shutter-only .camera-modal-content {
+      display: none;
+    }
+
     .camera-modal-content img {
       max-width: 90vw;
       max-height: 55vh;
@@ -910,6 +916,7 @@
         </div>
       </a>
 
+      <!-- ID added here so we can target dynamically generated cards -->
       <div class="grid" id="cardGrid">
 
         <article class="card hidden" data-category="series">
@@ -1030,35 +1037,73 @@
     const cameraModal = document.getElementById('camera-modal');
     const closeModalBtn = document.querySelector('.close-modal');
     const shutterAudio = document.getElementById('shutter-audio');
+    const cardGrid = document.getElementById('cardGrid');
 
     // Create the flash div dynamically
     const flash = document.createElement('div');
     flash.className = 'flash-overlay';
     document.body.appendChild(flash);
 
+    // 1. Logic for clicking the small camera badge (shows camera details)
     cameraBadge.addEventListener('click', (e) => {
       e.preventDefault(); 
-      
-      // Close the shutter blades
+      cameraModal.classList.remove('shutter-only'); // Ensure content is visible
       cameraModal.classList.add('active');
       
-      // Play sound and trigger flash as blades finish closing
       setTimeout(() => {
         flash.classList.add('flash-active');
-        // Reset audio to start in case clicked rapidly
         shutterAudio.currentTime = 0; 
         shutterAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
       }, 350); 
       
-      // Reset flash state so it works on subsequent clicks
       setTimeout(() => {
         flash.classList.remove('flash-active');
       }, 1100);
     });
 
+    // 2. Logic for clicking a card link (page transition)
+    cardGrid.addEventListener('click', (e) => {
+      const link = e.target.closest('.card-link');
+      if (!link) return;
+      
+      // Allow normal behavior if opening in a new tab (Ctrl/Cmd/Middle click)
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+
+      e.preventDefault(); 
+      const targetUrl = link.href;
+
+      // Add shutter-only to hide the camera content during transition
+      cameraModal.classList.add('shutter-only');
+      cameraModal.classList.add('active');
+
+      setTimeout(() => {
+        flash.classList.add('flash-active');
+        shutterAudio.currentTime = 0; 
+        shutterAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
+        
+        // Wait just a moment for the flash to burst before navigating away
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 150);
+      }, 350);
+    });
+
+    // Logic for closing the modal
     closeModalBtn.addEventListener('click', () => {
       cameraModal.classList.remove('active');
+      setTimeout(() => {
+        cameraModal.classList.remove('shutter-only');
+      }, 400); // Clean up class after animation finishes
     });
+
+    // Cleanup when returning to page via the browser's Back button
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        cameraModal.classList.remove('active', 'shutter-only');
+        flash.classList.remove('flash-active');
+      }
+    });
+
   </script>
 
   <script src="admin-cards.js"></script>
