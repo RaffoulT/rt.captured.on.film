@@ -118,6 +118,7 @@
       color: inherit;
       text-decoration: none;
       border-bottom: 1px solid transparent;
+      cursor: pointer;
     }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -855,7 +856,8 @@
   <div class="masthead">
     <div class="wrap masthead-row mono">
       <span>Photography — Vol. I</span>
-      <nav class="masthead-nav"><a href="index.html">← Creative Practice</a></nav>
+      <!-- This is the link we are targeting for the film roll sound -->
+      <nav class="masthead-nav"><a href="index.html" class="masthead-back-link">← Creative Practice</a></nav>
       <span>Est. Catalogue No. 001</span>
     </div>
   </div>
@@ -1001,8 +1003,9 @@
     </div>
   </div>
 
-  <!-- Audio Element -->
+  <!-- Audio Elements -->
   <audio id="shutter-audio" src="audio/shutter.mp3" preload="auto"></audio>
+  <audio id="roll-audio" src="audio/film-roll.mp3" preload="auto"></audio>
 
   <script>
     const observer = new IntersectionObserver((entries) => {
@@ -1032,12 +1035,14 @@
       });
     });
 
-    // Camera Shutter Modal Logic
+    // Audio & Modal Elements
     const cameraBadge = document.querySelector('.tiny-camera-space');
     const cameraModal = document.getElementById('camera-modal');
     const closeModalBtn = document.querySelector('.close-modal');
     const shutterAudio = document.getElementById('shutter-audio');
+    const rollAudio = document.getElementById('roll-audio');
     const cardGrid = document.getElementById('cardGrid');
+    const backLink = document.querySelector('.masthead-back-link');
 
     // Create the flash div dynamically
     const flash = document.createElement('div');
@@ -1061,7 +1066,7 @@
       }, 1100);
     });
 
-    // 2. Logic for clicking a card link (page transition)
+    // 2. Logic for clicking a card link (shutter page transition)
     cardGrid.addEventListener('click', (e) => {
       const link = e.target.closest('.card-link');
       if (!link) return;
@@ -1087,6 +1092,26 @@
         }, 150);
       }, 350);
     });
+    
+    // 3. Logic for the "back to main page" link (film winding sound)
+    if (backLink) {
+      backLink.addEventListener('click', (e) => {
+        // Allow normal behavior if opening in a new tab
+        if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+
+        e.preventDefault();
+        const targetUrl = backLink.href;
+
+        // Play the winding sound
+        rollAudio.currentTime = 0;
+        rollAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
+
+        // Delay navigation to let the sound play out slightly (adjust the 700ms to fit your audio file)
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 700); 
+      });
+    }
 
     // Logic for closing the modal
     closeModalBtn.addEventListener('click', () => {
