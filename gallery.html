@@ -315,6 +315,29 @@
         })();
     </script>
 
+    <!-- Audio -->
+    <audio id="roll-audio" src="audio/film-roll.mp3" preload="auto"></audio>
+
+    <script>
+        const rollAudio = document.getElementById('roll-audio');
+        const backBtn = document.querySelector('.back-btn');
+
+        if (backBtn) {
+            backBtn.addEventListener('click', (e) => {
+                if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+                e.preventDefault();
+                const targetUrl = backBtn.href;
+
+                rollAudio.currentTime = 0;
+                rollAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
+
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 700);
+            });
+        }
+    </script>
+
 </body>
 
 </html>
