@@ -210,7 +210,7 @@
       font-size: .85rem;
       letter-spacing: .06em;
       text-transform: uppercase;
-      padding: 1.2rem; /* FIXED: Equal padding on all sides */
+      padding: 1.2rem;
       border-radius: var(--radius);
       text-decoration: none;
       display: inline-block;
@@ -301,7 +301,7 @@
       font-size: .78rem;
       letter-spacing: .08em;
       text-transform: uppercase;
-      padding: .9rem 1.3rem; /* Kept standard for typography balance */
+      padding: .9rem 1.3rem;
       background: none;
       border: none;
       border-right: 1px solid var(--line);
@@ -328,6 +328,69 @@
       .tab {
         transition: background .2s ease, color .2s ease;
       }
+    }
+
+    /* ---- Tiny Camera Badge ---- */
+    .tiny-camera-space {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--paper-card);
+      border: 1px solid var(--line);
+      border-radius: 40px; 
+      padding: 0.3rem 1.2rem 0.3rem 0.3rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .tiny-camera-space {
+        transition: transform .35s ease, border-color .35s ease;
+      }
+    }
+
+    .tiny-camera-space:hover {
+      transform: translateY(-2px);
+      border-color: var(--ink);
+    }
+
+    .tiny-camera-thumb {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--ink);
+      overflow: hidden;
+      background: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .tiny-camera-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tiny-camera-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .tiny-camera-details span.label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--stamp);
+      margin-bottom: 0.15rem;
+    }
+
+    .tiny-camera-details span.model {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--ink);
+      text-transform: uppercase;
+      line-height: 1;
     }
 
     /* ---------- Catalogue grid ---------- */
@@ -371,7 +434,7 @@
       background: var(--paper-card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 1.2rem; /* FIXED: Equal padding on all sides */
+      padding: 1.2rem;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -436,7 +499,7 @@
     /* ---- Filmstrip thumbnail ---- */
     .thumb {
       position: relative;
-      aspect-ratio: 1 / 1; /* FIXED: Perfect square dimensions */
+      aspect-ratio: 1 / 1;
       border: 1px solid var(--ink);
       margin-bottom: 1rem;
       overflow: hidden;
@@ -610,7 +673,7 @@
       margin: 0 auto;
       border: 1.5px solid var(--ink);
       border-radius: var(--radius);
-      padding: 2.4rem; /* FIXED: Equal padding on all sides */
+      padding: 2.4rem;
       text-align: center;
       background: var(--paper-card);
     }
@@ -742,6 +805,17 @@
         <span class="mono">A History Of My Capturing</span>
       </div>
 
+      <!-- TINY CAMERA SPACE -->
+      <a href="#about" class="tiny-camera-space hidden" style="text-decoration: none;">
+        <div class="tiny-camera-thumb">
+          <img src="images/cam.jpeg" alt="Canon EOS 300">
+        </div>
+        <div class="tiny-camera-details">
+          <span class="label">Currently Loaded</span>
+          <span class="model">Canon EOS 300</span>
+        </div>
+      </a>
+
       <div class="grid" id="cardGrid">
 
         <article class="card hidden" data-category="series">
@@ -768,7 +842,7 @@
     </div>
   </section>
 
-  <section class="about hidden">
+  <section id="about" class="about hidden">
     <div class="wrap about-inner">
       <h2>Behind the Lens</h2>
       <p>I shoot mostly on film, sometimes digital, always chasing available light. Every series in this catalogue was
