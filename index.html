@@ -750,35 +750,37 @@
       }
     }
 
-    /* ---------- Page Load Iris Aperture Overlay ---------- */
+    /* ---------- Page Load Shutter Overlay ---------- */
     #page-load-shutter {
       position: fixed;
       inset: 0;
       z-index: 9999;
       pointer-events: none;
-      width: 100vw;
-      height: 100vh;
-      transition: opacity 0.3s ease 0.85s;
+      display: flex;
+      flex-direction: column;
     }
 
-    #page-load-shutter.fade-out {
-      opacity: 0;
-    }
-
-    .aperture-svg {
+    .load-blade {
+      flex: 1; /* Each takes exactly half the height */
+      background-color: var(--ink); 
+      background-image: linear-gradient(to bottom, var(--ink), #15120d);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* subtle edge */
+      transition: transform 0.85s cubic-bezier(0.8, 0, 0.2, 1);
       width: 100%;
-      height: 100%;
-      display: block;
     }
 
-    #page-iris-hole {
-      transform-origin: 50px 50px;
-      transform: scale(0) rotate(0deg);
-      transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+    .load-blade.bottom {
+      background-image: linear-gradient(to top, var(--ink), #15120d);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: none;
     }
 
-    #page-load-shutter.open #page-iris-hole {
-      transform: scale(3.5) rotate(45deg);
+    #page-load-shutter.open .load-blade.top {
+      transform: translateY(-100%);
+    }
+    
+    #page-load-shutter.open .load-blade.bottom {
+      transform: translateY(100%);
     }
 
     /* ---------- Camera Modal & Animation ---------- */
@@ -796,21 +798,29 @@
       pointer-events: all;
     }
 
-    .modal-iris-bg {
+    .shutter {
       position: absolute;
-      inset: 0;
+      left: 0;
+      width: 100%;
+      height: 50vh;
+      background: var(--ink); /* Changed from #111 to var(--ink) */
       z-index: 101;
-      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1);
     }
 
-    #modal-iris-hole {
-      transform-origin: 50px 50px;
-      transform: scale(3.5) rotate(45deg);
-      transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+    .shutter-top {
+      top: 0;
+      transform: translateY(-100%);
     }
 
-    .camera-modal.active #modal-iris-hole {
-      transform: scale(0) rotate(0deg);
+    .shutter-bottom {
+      bottom: 0;
+      transform: translateY(100%);
+    }
+
+    .camera-modal.active .shutter-top,
+    .camera-modal.active .shutter-bottom {
+      transform: translateY(0);
     }
 
     .camera-modal-content {
@@ -876,17 +886,10 @@
 
 <body>
 
-  <!-- Initial Page Load Iris Shutter -->
+  <!-- Initial Page Load Shutter -->
   <div id="page-load-shutter">
-    <svg class="aperture-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-      <defs>
-        <mask id="page-iris-mask">
-          <rect width="100" height="100" fill="white" />
-          <polygon id="page-iris-hole" points="50,12 77,20 88,45 80,75 55,88 23,80 12,55 20,25" fill="black" />
-        </mask>
-      </defs>
-      <rect width="100" height="100" fill="#201C15" mask="url(#page-iris-mask)" />
-    </svg>
+    <div class="load-blade top"></div>
+    <div class="load-blade bottom"></div>
   </div>
 
   <div class="masthead">
@@ -1025,19 +1028,10 @@
     </div>
   </footer>
 
-  <!-- Fullscreen Camera Iris Shutter Overlay & Modal -->
+  <!-- Fullscreen Camera Shutter Overlay -->
   <div id="camera-modal" class="camera-modal">
-    <div class="modal-iris-bg">
-      <svg class="aperture-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <defs>
-          <mask id="modal-iris-mask">
-            <rect width="100" height="100" fill="white" />
-            <polygon id="modal-iris-hole" points="50,12 77,20 88,45 80,75 55,88 23,80 12,55 20,25" fill="black" />
-          </mask>
-        </defs>
-        <rect width="100" height="100" fill="#201C15" mask="url(#modal-iris-mask)" />
-      </svg>
-    </div>
+    <div class="shutter shutter-top"></div>
+    <div class="shutter shutter-bottom"></div>
     <div class="camera-modal-content">
       <button class="close-modal mono">Close [X]</button>
       <img src="images/cam.avif" alt="Canon EOS 300 Enlarged">
@@ -1151,7 +1145,7 @@
         rollAudio.currentTime = 0;
         rollAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
 
-        // Delay navigation to let the sound play out slightly
+        // Delay navigation to let the sound play out slightly (adjust the 700ms to fit your audio file)
         setTimeout(() => {
           window.location.href = targetUrl;
         }, 700); 
@@ -1174,18 +1168,17 @@
       }
     });
 
-    // --- Page Load Iris Shutter Trigger ---
+    // --- Page Load Shutter Trigger ---
     window.addEventListener('load', () => {
+      // Small delay ensures the page is painted before opening
       setTimeout(() => {
         const loadShutter = document.getElementById('page-load-shutter');
         loadShutter.classList.add('open');
         
-        setTimeout(() => {
-          loadShutter.classList.add('fade-out');
-        }, 850);
-        
+        // Optional: Attempt to play the shutter sound on load
+        // Note: Some browsers block audio on load unless the user has interacted with the page first
         const shutterAudio = document.getElementById('shutter-audio');
-        shutterAudio.volume = 0.5;
+        shutterAudio.volume = 0.5; // Slightly quieter for the opening
         shutterAudio.play().catch(e => console.log("Autoplay prevented for load sound."));
       }, 300);
     });
