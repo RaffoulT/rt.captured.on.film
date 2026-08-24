@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raffoul Traboulsy — Photography Catalogue</title>
+  <title>RT CAPTURED ON FILM</title>
   <!-- Linked your custom favicon mark -->
   <link rel="icon" type="image/png" href="images/favicon-mark.png">
   <link rel="apple-touch-icon" href="images/favicon-mark.png">
@@ -749,7 +749,40 @@
         flex-wrap: wrap;
       }
     }
+
+    /* ---------- Page Load Shutter Overlay ---------- */
+    #page-load-shutter {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .load-blade {
+      flex: 1; /* Each takes exactly half the height */
+      background-color: var(--ink); 
+      background-image: linear-gradient(to bottom, var(--ink), #15120d);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* subtle edge */
+      transition: transform 0.85s cubic-bezier(0.8, 0, 0.2, 1);
+      width: 100%;
+    }
+
+    .load-blade.bottom {
+      background-image: linear-gradient(to top, var(--ink), #15120d);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: none;
+    }
+
+    #page-load-shutter.open .load-blade.top {
+      transform: translateY(-100%);
+    }
     
+    #page-load-shutter.open .load-blade.bottom {
+      transform: translateY(100%);
+    }
+
     /* ---------- Camera Modal & Animation ---------- */
     .camera-modal {
       position: fixed;
@@ -770,7 +803,7 @@
       left: 0;
       width: 100%;
       height: 50vh;
-      background: #111; 
+      background: var(--ink); /* Changed from #111 to var(--ink) */
       z-index: 101;
       transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1);
     }
@@ -852,6 +885,12 @@
 </head>
 
 <body>
+
+  <!-- Initial Page Load Shutter -->
+  <div id="page-load-shutter">
+    <div class="load-blade top"></div>
+    <div class="load-blade bottom"></div>
+  </div>
 
   <div class="masthead">
     <div class="wrap masthead-row mono">
@@ -1127,6 +1166,21 @@
         cameraModal.classList.remove('active', 'shutter-only');
         flash.classList.remove('flash-active');
       }
+    });
+
+    // --- Page Load Shutter Trigger ---
+    window.addEventListener('load', () => {
+      // Small delay ensures the page is painted before opening
+      setTimeout(() => {
+        const loadShutter = document.getElementById('page-load-shutter');
+        loadShutter.classList.add('open');
+        
+        // Optional: Attempt to play the shutter sound on load
+        // Note: Some browsers block audio on load unless the user has interacted with the page first
+        const shutterAudio = document.getElementById('shutter-audio');
+        shutterAudio.volume = 0.5; // Slightly quieter for the opening
+        shutterAudio.play().catch(e => console.log("Autoplay prevented for load sound."));
+      }, 300);
     });
 
   </script>
