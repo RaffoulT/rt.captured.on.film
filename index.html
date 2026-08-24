@@ -1175,11 +1175,25 @@
         const loadShutter = document.getElementById('page-load-shutter');
         loadShutter.classList.add('open');
         
-        // Optional: Attempt to play the shutter sound on load
-        // Note: Some browsers block audio on load unless the user has interacted with the page first
+        // Play the shutter sound on page load (shutter transition into homepage)
         const shutterAudio = document.getElementById('shutter-audio');
-        shutterAudio.volume = 0.5; // Slightly quieter for the opening
-        shutterAudio.play().catch(e => console.log("Autoplay prevented for load sound."));
+        shutterAudio.volume = 1.0; // Full volume for the entrance
+        const playPromise = shutterAudio.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(e => {
+            console.log("Autoplay prevented for load sound, will play on first user interaction");
+            // Fallback: play on first user interaction
+            const playOnInteraction = () => {
+              shutterAudio.currentTime = 0;
+              shutterAudio.play().catch(err => console.log("Audio play failed:", err));
+              document.removeEventListener('click', playOnInteraction);
+              document.removeEventListener('keydown', playOnInteraction);
+            };
+            document.addEventListener('click', playOnInteraction, { once: true });
+            document.addEventListener('keydown', playOnInteraction, { once: true });
+          });
+        }
       }, 300);
     });
 
