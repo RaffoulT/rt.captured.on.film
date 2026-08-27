@@ -513,13 +513,12 @@
     }
 
     .frame {
-      position: absolute;
-      inset: 9px 0;
-      object-fit: contain;
-      width: 100%;
-      height: calc(100% - 18px);
-    }
-
+  position: absolute;
+  inset: 9px 0;
+  width: 100%;
+  height: calc(100% - 18px);
+  object-fit: cover; 
+}
     .thumb::before,
     .thumb::after {
       content: '';
