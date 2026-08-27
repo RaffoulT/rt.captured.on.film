@@ -36,6 +36,11 @@
       scroll-behavior: smooth;
     }
 
+    /* Strictly prevent the page from stretching horizontally on mobile */
+    html, body {
+      overflow-x: hidden;
+    }
+
     body {
       background: var(--paper);
       background-image: radial-gradient(circle at 1px 1px, rgba(32, 28, 21, 0.045) 1px, transparent 0);
@@ -744,9 +749,35 @@
       margin-top: 1rem;
     }
 
-    @media (max-width:600px) {
+    /* ---------- Mobile Overrides ---------- */
+    @media (max-width: 600px) {
       .index-row {
         flex-wrap: wrap;
+      }
+      
+      .wrap {
+        padding: 0 1rem; 
+      }
+      
+      .hero-logo-container {
+        width: 90%; 
+        max-width: 280px; 
+      }
+      
+      .hero-logo-img {
+        transform: translateX(6px); 
+      }
+      
+      .order-form {
+        padding: 1.5rem 1rem;
+      }
+      
+      .contact-rows div {
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+        gap: 0.2rem;
+        padding: 0.8rem 0;
       }
     }
 
@@ -881,36 +912,6 @@
     }
     
     .close-modal:hover { color: white; }
-    /* 1. Strictly prevent the page from stretching horizontally */
-html, body {
-  overflow-x: hidden;
-}
-
-@media (max-width: 600px) {
-  /* 2. Reduce the master padding so elements have room to breathe */
-  .wrap {
-    padding: 0 1rem; 
-  }
-  
-  /* 3. The logo container can take up more width on tiny screens */
-  .hero-logo-container {
-    width: 90%; 
-    max-width: 280px; 
-  }
-
-  /* 4. Prevent the long email address from breaking the screen width */
-  .order-form {
-    padding: 1.5rem 1rem;
-  }
-  
-  .contact-rows div {
-    flex-direction: column; 
-    align-items: center;
-    text-align: center;
-    gap: 0.2rem;
-    padding: 0.8rem 0;
-  }
-}
   </style>
 </head>
 
