@@ -1,2714 +1,1246 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Gallery — Raffoul Traboulsy</title>
-
-    <link rel="icon" type="image/png" href="images/favicon-mark.png">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap"
-        rel="stylesheet">
-
-    <style>
-
-        :root {
-            --paper: #E9E1CB;
-            --paper-card: #F3EDDC;
-            --paper-dark: #D8CCA9;
-            --ink: #201C15;
-            --ink-muted: #6E6353;
-            --stamp: #AC3B2C;
-            --teal: #2B554F;
-            --line: #B7A97F;
-            --radius: 2px;
-        }
-
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-
-        body {
-            background: var(--paper);
-
-            background-image:
-                radial-gradient(
-                    circle at 1px 1px,
-                    rgba(32, 28, 21, 0.045) 1px,
-                    transparent 0
-                );
-
-            background-size: 22px 22px;
-
-            color: var(--ink);
-
-            font-family: 'IBM Plex Sans', sans-serif;
-
-            line-height: 1.55;
-        }
-
-
-        body.lightbox-open {
-            overflow: hidden;
-        }
-
-
-        .wrap {
-            max-width: 1180px;
-
-            margin: 0 auto;
-
-            padding: 0 1.75rem;
-        }
-
-
-        /* =========================================================
-           NAVIGATION
-           ========================================================= */
-
-        .gallery-nav {
-            border-bottom: 2px solid var(--ink);
-
-            padding: 1rem 0;
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 0.75rem;
-
-            letter-spacing: .1em;
-
-            text-transform: uppercase;
-        }
-
-
-        .nav-flex {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-        }
-
-
-        .back-btn {
-            text-decoration: none;
-
-            color: var(--stamp);
-
-            font-weight: 600;
-        }
-
-
-        .back-btn:hover {
-            text-decoration: underline;
-        }
-
-
-        /* =========================================================
-           HEADER
-           ========================================================= */
-
-        .gallery-header {
-            padding: 4rem 0 3rem;
-
-            text-align: center;
-        }
-
-
-        .gallery-header h1 {
-            font-family: 'Archivo Black', sans-serif;
-
-            font-size: clamp(2rem, 5vw, 3.8rem);
-
-            text-transform: uppercase;
-
-            line-height: 1.1;
-
-            margin-bottom: 1rem;
-        }
-
-
-        .gallery-meta {
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 0.8rem;
-
-            color: var(--ink-muted);
-
-            display: flex;
-
-            justify-content: center;
-
-            gap: 2rem;
-
-            flex-wrap: wrap;
-        }
-
-
-        .gallery-meta span strong {
-            color: var(--ink);
-        }
-
-
-        /* =========================================================
-           CATEGORY NAVIGATION
-           ========================================================= */
-
-        .gallery-navigation {
-            margin-bottom: 3rem;
-
-            text-align: center;
-        }
-
-
-        .category-level {
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            gap: 0.75rem;
-
-            flex-wrap: wrap;
-        }
-
-
-        .category-level.hidden {
-            display: none;
-        }
-
-
-        .filter-btn {
-            appearance: none;
-
-            background: transparent;
-
-            border: 1px solid var(--ink);
-
-            color: var(--ink);
-
-            padding: 0.65rem 1.25rem;
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 0.7rem;
-
-            font-weight: 600;
-
-            letter-spacing: 0.08em;
-
-            cursor: pointer;
-
-            transition:
-                background 0.2s ease,
-                color 0.2s ease;
-        }
-
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--ink);
-
-            color: var(--paper);
-        }
-
-
-        .current-category {
-            margin-top: 1rem;
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 0.7rem;
-
-            color: var(--ink-muted);
-
-            letter-spacing: 0.12em;
-
-            text-transform: uppercase;
-        }
-
-
-        /* =========================================================
-           BACK BUTTON
-           ========================================================= */
-
-        .subcategory-back {
-            display: none;
-
-            margin-bottom: 1rem;
-
-            border: 0;
-
-            background: none;
-
-            color: var(--stamp);
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 0.7rem;
-
-            letter-spacing: 0.08em;
-
-            cursor: pointer;
-
-            text-transform: uppercase;
-        }
-
-
-        .subcategory-back.visible {
-            display: inline-block;
-        }
-
-
-        .subcategory-back:hover {
-            text-decoration: underline;
-        }
-
-
-        /* =========================================================
-           PHOTO STREAM
-           ========================================================= */
-
-        .photo-stream {
-            display: grid;
-
-            grid-template-columns: 1fr;
-
-            gap: 3rem;
-
-            padding-bottom: 6rem;
-        }
-
-
-        /* =========================================================
-           FILM FRAME
-           ========================================================= */
-
-        .film-frame {
-            background: var(--paper-card);
-
-            border: 1px solid var(--line);
-
-            border-radius: var(--radius);
-
-            padding: 1.5rem;
-
-            box-shadow:
-                0 8px 20px -10px rgba(0, 0, 0, 0.15);
-        }
-
-
-        /* =========================================================
-           CLICKABLE PHOTO AREA
-           ========================================================= */
-
-        .photo-trigger {
-            display: block;
-
-            width: 100%;
-
-            padding: 0;
-
-            border: 0;
-
-            background: transparent;
-
-            cursor: zoom-in;
-
-            text-align: left;
-        }
-
-
-        /* =========================================================
-           HORIZONTAL FILM STRIP
-           ========================================================= */
-
-        .sprocket-wrapper {
-            position: relative;
-
-            width: 100%;
-
-            aspect-ratio: 4 / 3;
-
-            background: #1a1713;
-
-            border: 1px solid var(--ink);
-
-            overflow: hidden;
-        }
-
-
-        .sprocket-wrapper::before,
-        .sprocket-wrapper::after {
-
-            content: '';
-
-            position: absolute;
-
-            left: 0;
-            right: 0;
-
-            height: 12px;
-
-            background-color: var(--ink);
-
-            background-image:
-                repeating-linear-gradient(
-                    90deg,
-                    var(--paper-card) 0 6px,
-                    transparent 6px 18px
-                );
-
-            z-index: 2;
-        }
-
-
-        .sprocket-wrapper::before {
-            top: 0;
-        }
-
-
-        .sprocket-wrapper::after {
-            bottom: 0;
-        }
-
-
-        .sprocket-wrapper img {
-
-            position: absolute;
-
-            inset: 12px 0;
-
-            width: 100%;
-
-            height: calc(100% - 24px);
-
-            object-fit: contain;
-
-            display: block;
-
-            transition:
-                transform 0.35s ease;
-        }
-
-
-        .photo-trigger:hover
-        .sprocket-wrapper img {
-            transform: scale(1.015);
-        }
-
-
-        /* =========================================================
-           VERTICAL FILM STRIP
-           ========================================================= */
-
-        .sprocket-wrapper.portrait {
-
-            width: min(100%, 650px);
-
-            aspect-ratio: 2 / 3;
-
-            margin: 0 auto;
-        }
-
-
-        .sprocket-wrapper.portrait::before,
-        .sprocket-wrapper.portrait::after {
-
-            top: 0;
-            bottom: 0;
-
-            left: auto;
-            right: auto;
-
-            width: 12px;
-
-            height: 100%;
-
-            background-image:
-                repeating-linear-gradient(
-                    180deg,
-                    var(--paper-card) 0 6px,
-                    transparent 6px 18px
-                );
-        }
-
-
-        .sprocket-wrapper.portrait::before {
-            left: 0;
-        }
-
-
-        .sprocket-wrapper.portrait::after {
-            right: 0;
-        }
-
-
-        .sprocket-wrapper.portrait img {
-
-            inset: 0 12px;
-
-            width: calc(100% - 24px);
-
-            height: 100%;
-
-            object-fit: contain;
-        }
-
-
-        /* =========================================================
-           CAPTION
-           ========================================================= */
-
-        .caption {
-            margin-top: 1.2rem;
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 0.8rem;
-
-            color: var(--ink-muted);
-
-            display: flex;
-
-            justify-content: space-between;
-
-            gap: 1rem;
-
-            border-top: 1px dotted var(--line);
-
-            padding-top: 0.8rem;
-        }
-
-
-        /* =========================================================
-           EMPTY STATE
-           ========================================================= */
-
-        .empty {
-            text-align: center;
-
-            padding: 4rem 0;
-
-            color: var(--ink-muted);
-
-            font-family: 'IBM Plex Mono', monospace;
-        }
-
-
-        /* =========================================================
-           FOOTER
-           ========================================================= */
-
-        footer {
-            border-top: 2px solid var(--ink);
-
-            padding: 2.5rem 0;
-
-            text-align: center;
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: .7rem;
-
-            color: var(--ink-muted);
-        }
-
-
-        /* =========================================================
-           FULL-SCREEN LIGHTBOX
-           ========================================================= */
-
-        .lightbox {
-
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 9999;
-
-            display: none;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 2rem;
-
-            background:
-                rgba(20, 17, 13, 0.96);
-        }
-
-
-        .lightbox.open {
-            display: flex;
-        }
-
-
-        .lightbox-content {
-
-            position: relative;
-
-            width: 100%;
-
-            height: 100%;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: center;
-
-            align-items: center;
-
-            gap: 1.25rem;
-        }
-
-
-        .lightbox-image {
-
-            max-width: 92vw;
-
-            max-height: 78vh;
-
-            width: auto;
-
-            height: auto;
-
-            object-fit: contain;
-
-            display: block;
-
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.45);
-        }
-
-
-        .lightbox-caption {
-
-            max-width: 800px;
-
-            width: 100%;
-
-            text-align: center;
-
-            color: var(--paper);
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 0.8rem;
-
-            line-height: 1.6;
-
-            padding: 0 1rem;
-        }
-
-
-        .lightbox-caption-main {
-
-            display: block;
-
-            font-size: 0.9rem;
-
-            margin-bottom: 0.25rem;
-
-            color: #fff;
-        }
-
-
-        .lightbox-caption-meta {
-
-            display: block;
-
-            color: rgba(233, 225, 203, 0.65);
-
-            font-size: 0.7rem;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.08em;
-        }
-
-
-        /* =========================================================
-           LIGHTBOX CLOSE BUTTON
-           ========================================================= */
-
-        .lightbox-close {
-
-            position: fixed;
-
-            top: 1.5rem;
-
-            right: 1.75rem;
-
-            z-index: 10001;
-
-            width: 42px;
-
-            height: 42px;
-
-            border: 1px solid rgba(233, 225, 203, 0.7);
-
-            background: transparent;
-
-            color: var(--paper);
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 1.2rem;
-
-            cursor: pointer;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            transition:
-                background 0.2s ease,
-                color 0.2s ease;
-        }
-
-
-        .lightbox-close:hover {
-
-            background: var(--paper);
-
-            color: var(--ink);
-        }
-
-
-        /* =========================================================
-           LIGHTBOX FRAME NUMBER
-           ========================================================= */
-
-        .lightbox-frame {
-
-            position: fixed;
-
-            top: 1.75rem;
-
-            left: 1.75rem;
-
-            color: rgba(233, 225, 203, 0.65);
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            font-size: 0.65rem;
-
-            letter-spacing: 0.1em;
-
-            text-transform: uppercase;
-        }
-
-
-        /* =========================================================
-           LIGHTBOX MOBILE
-           ========================================================= */
-
-        @media (max-width: 600px) {
-
-            .lightbox {
-
-                padding: 1rem;
-            }
-
-
-            .lightbox-image {
-
-                max-width: 94vw;
-
-                max-height: 75vh;
-            }
-
-
-            .lightbox-caption {
-
-                font-size: 0.7rem;
-            }
-
-
-            .lightbox-caption-main {
-
-                font-size: 0.8rem;
-            }
-
-
-            .lightbox-close {
-
-                top: 1rem;
-
-                right: 1rem;
-            }
-
-
-            .lightbox-frame {
-
-                top: 1.25rem;
-
-                left: 1rem;
-            }
-
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Gallery — Raffoul Traboulsy</title>
+
+  <link rel="icon" type="image/png" href="images/favicon-mark.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --paper: #E9E1CB;
+      --paper-card: #F3EDDC;
+      --paper-dark: #D8CCA9;
+      --ink: #201C15;
+      --ink-muted: #6E6353;
+      --stamp: #AC3B2C;
+      --teal: #2B554F;
+      --line: #B7A97F;
+      --radius: 2px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--paper);
+      background-image:
+        radial-gradient(
+          circle at 1px 1px,
+          rgba(32, 28, 21, 0.045) 1px,
+          transparent 0
+        );
+      background-size: 22px 22px;
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      line-height: 1.55;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+    }
+
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ---------- Navigation Bar ---------- */
+
+    .gallery-nav {
+      border-bottom: 2px solid var(--ink);
+      padding: 1rem 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .nav-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: var(--stamp);
+      font-weight: 600;
+    }
+
+    .back-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- Header ---------- */
+
+    .gallery-header {
+      padding: 4rem 0 3rem;
+      text-align: center;
+    }
+
+    .gallery-header h1 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .gallery-meta span strong {
+      color: var(--ink);
+    }
+
+    /* ---------- Gallery Grid ---------- */
+
+    .photo-stream {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding-bottom: 6rem;
+    }
+
+    /* ---------- Film Frame ---------- */
+
+    .film-frame {
+      background: var(--paper-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    .sprocket-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #1a1713;
+      border: 1px solid var(--ink);
+      overflow: hidden;
+    }
+
+    .sprocket-wrapper::before,
+    .sprocket-wrapper::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 12px;
+      background-color: var(--ink);
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          var(--paper-card) 0 6px,
+          transparent 6px 18px
+        );
+      z-index: 2;
+    }
+
+    .sprocket-wrapper::before {
+      top: 0;
+    }
+
+    .sprocket-wrapper::after {
+      bottom: 0;
+    }
+
+    .sprocket-wrapper img {
+      position: absolute;
+      inset: 12px 0;
+      width: 100%;
+      height: calc(100% - 24px);
+      object-fit: contain;
+    }
+
+    /* ---------- Expand Button ---------- */
+
+    .expand-btn {
+      width: 100%;
+      margin-top: 0.8rem;
+      padding: 0.7rem 1rem;
+
+      background: transparent;
+      color: var(--ink);
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+    }
+
+    .expand-btn:hover {
+      background: var(--ink);
+      color: var(--paper-card);
+      border-color: var(--ink);
+      transform: translateY(-1px);
+    }
+
+    .expand-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ---------- Caption ---------- */
+
+    .caption {
+      margin-top: 1.2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+
+      border-top: 1px dotted var(--line);
+      padding-top: 0.8rem;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 4rem 0;
+      color: var(--ink-muted);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ---------- Fullscreen Image Viewer ---------- */
+
+    .image-viewer {
+      position: fixed;
+      inset: 0;
+
+      z-index: 9999;
+
+      background: rgba(20, 17, 13, 0.96);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 2rem;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity .25s ease,
+        visibility .25s ease;
+    }
+
+    .image-viewer.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .viewer-content {
+      position: relative;
+
+      width: min(94vw, 1400px);
+      height: min(94vh, 1000px);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .viewer-image {
+      max-width: 100%;
+      max-height: calc(100% - 70px);
+
+      width: auto;
+      height: auto;
+
+      object-fit: contain;
+
+      border: 1px solid rgba(243, 237, 220, 0.25);
+
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.55);
+
+      transition: transform .25s ease;
+    }
+
+    .viewer-caption {
+      margin-top: 1rem;
+
+      max-width: 90%;
+
+      color: var(--paper-card);
+
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .8rem;
+
+      text-align: center;
+      letter-spacing: .04em;
+    }
+
+    .viewer-frame {
+      color: var(--line);
+
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .65rem;
+
+      text-transform: uppercase;
+      letter-spacing: .1em;
+
+      margin-bottom: .3rem;
+    }
+
+    .viewer-close {
+      position: absolute;
+
+      top: 0;
+      right: 0;
+
+      border: 1px solid var(--line);
+
+      background: var(--paper-card);
+      color: var(--ink);
+
+      padding: .55rem .8rem;
+
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+
+      letter-spacing: .06em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      z-index: 3;
+
+      transition:
+        background .2s ease,
+        color .2s ease;
+    }
+
+    .viewer-close:hover {
+      background: var(--stamp);
+      color: white;
+      border-color: var(--stamp);
+    }
+
+    /* ---------- Footer ---------- */
+
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: 2.5rem 0;
+      text-align: center;
+
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      color: var(--ink-muted);
+    }
+
+    /* ---------- Mobile ---------- */
+
+    @media (max-width: 600px) {
+
+      .wrap {
+        padding: 0 1rem;
+      }
+
+      .nav-flex {
+        gap: 1rem;
+      }
+
+      .gallery-header {
+        padding: 3rem 0 2.5rem;
+      }
+
+      .gallery-meta {
+        gap: .8rem 1.2rem;
+      }
+
+      .film-frame {
+        padding: 1rem;
+      }
+
+      .photo-stream {
+        gap: 2rem;
+      }
+
+      .caption {
+        flex-direction: column;
+        gap: .3rem;
+      }
+
+      .image-viewer {
+        padding: 1rem;
+      }
+
+      .viewer-content {
+        width: 100%;
+        height: 100%;
+      }
+
+      .viewer-image {
+        max-width: 100%;
+        max-height: calc(100% - 80px);
+      }
+
+      .viewer-close {
+        top: .5rem;
+        right: .5rem;
+      }
+
+      .viewer-caption {
+        font-size: .7rem;
+      }
+    }
+
+    /* ---------- Reduced Motion ---------- */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .image-viewer,
+      .expand-btn {
+        transition: none;
+      }
+    }
+  </style>
 
 </head>
 
-
 <body>
 
+  <!-- Navigation -->
 
-    <!-- =========================================================
-         NAVIGATION
-         ========================================================= -->
+  <nav class="gallery-nav">
 
-    <nav class="gallery-nav">
+```
+<div class="wrap nav-flex">
 
-        <div class="wrap nav-flex">
+  <a href="index.html" class="back-btn">
+    ← Back to Catalogue
+  </a>
 
-            <a
-                href="index.html"
-                class="back-btn"
-            >
-                ← Back to Catalogue
-            </a>
+  <span id="navCode">
+    Catalogue No. 001
+  </span>
 
+</div>
+```
 
-            <span id="navCode">
-                Catalogue No. 001
-            </span>
+  </nav>
 
-        </div>
+  <!-- Gallery Header -->
 
-    </nav>
+  <header class="gallery-header">
 
+```
+<div class="wrap">
 
-    <!-- =========================================================
-         HEADER
-         ========================================================= -->
+  <h1 id="galTitle">
+    Gallery
+  </h1>
 
-    <header class="gallery-header">
+  <div class="gallery-meta">
 
-        <div class="wrap">
+    <span>
+      Location:
+      <strong id="galLocation">—</strong>
+    </span>
 
-            <h1 id="galTitle">
-                Gallery
-            </h1>
+    <span>
+      Format:
+      <strong id="galFormat">—</strong>
+    </span>
 
+    <span>
+      Year:
+      <strong id="galYear">—</strong>
+    </span>
 
-            <div class="gallery-meta">
+  </div>
 
-                <span>
-                    Location:
-                    <strong id="galLocation">—</strong>
-                </span>
+</div>
+```
 
+  </header>
 
-                <span>
-                    Format:
-                    <strong id="galFormat">—</strong>
-                </span>
+  <!-- Gallery -->
 
+  <main class="wrap">
 
-                <span>
-                    Year:
-                    <strong id="galYear">—</strong>
-                </span>
+```
+<div
+  class="photo-stream"
+  id="photoStream">
 
-            </div>
+  <!-- Rendered by JavaScript -->
 
-        </div>
+</div>
+```
 
-    </header>
+  </main>
 
+  <!-- Footer -->
 
-    <!-- =========================================================
-         CATEGORY NAVIGATION
-         ========================================================= -->
+  <footer>
 
-    <div class="wrap">
+```
+<div class="wrap">
 
-        <div class="gallery-navigation">
+  <p>
+    All photographs captured on location in Lebanon •
+    <span id="footCode">
+      Catalogue No. 001
+    </span>
+  </p>
 
+</div>
+```
 
-            <!-- MAIN CATEGORIES -->
+  </footer>
 
-            <div
-                class="category-level"
-                id="mainCategories"
-            >
+  <!-- Fullscreen Image Viewer -->
 
-                <button
-                    type="button"
-                    class="filter-btn active"
-                    data-set="all"
-                >
-                    ALL
-                </button>
+  <div
+    class="image-viewer"
+    id="imageViewer"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Fullscreen photograph viewer">
 
+```
+<div class="viewer-content">
 
-                <button
-                    type="button"
-                    class="filter-btn"
-                    data-set="people"
-                >
-                    PEOPLE
-                </button>
+  <button
+    class="viewer-close mono"
+    id="viewerClose"
+    type="button"
+    aria-label="Close fullscreen image">
 
+    Close [X]
 
-                <button
-                    type="button"
-                    class="filter-btn"
-                    data-set="details"
-                >
-                    DETAILS
-                </button>
+  </button>
 
-            </div>
+  <img
+    class="viewer-image"
+    id="viewerImage"
+    src=""
+    alt="">
 
-
-            <!-- PEOPLE ORIENTATION SUB-CATEGORIES -->
-
-            <div
-                class="category-level hidden"
-                id="peopleOrientations"
-            >
-
-                <button
-                    type="button"
-                    class="filter-btn active"
-                    data-orientation="all"
-                >
-                    ALL PEOPLE
-                </button>
-
-
-                <button
-                    type="button"
-                    class="filter-btn"
-                    data-orientation="landscape"
-                >
-                    LANDSCAPE
-                </button>
-
-
-                <button
-                    type="button"
-                    class="filter-btn"
-                    data-orientation="portrait"
-                >
-                    PORTRAIT
-                </button>
-
-            </div>
-
-
-            <!-- BACK -->
-
-            <button
-                type="button"
-                class="subcategory-back"
-                id="subcategoryBack"
-            >
-                ← Back to Categories
-            </button>
-
-
-            <div
-                class="current-category"
-                id="currentCategory"
-            >
-                All photographs
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================================================
-         GALLERY
-         ========================================================= -->
-
-    <main class="wrap">
-
-        <div
-            class="photo-stream"
-            id="photoStream"
-        >
-        </div>
-
-    </main>
-
-
-    <!-- =========================================================
-         FOOTER
-         ========================================================= -->
-
-    <footer>
-
-        <div class="wrap">
-
-            <p>
-                All photographs captured on location in Lebanon
-                •
-                <span id="footCode">
-                    Catalogue No. 001
-                </span>
-            </p>
-
-        </div>
-
-    </footer>
-
-
-    <!-- =========================================================
-         FULL-SCREEN LIGHTBOX
-         ========================================================= -->
+  <div class="viewer-caption">
 
     <div
-        class="lightbox"
-        id="lightbox"
-        aria-hidden="true"
-    >
-
-        <div
-            class="lightbox-frame"
-            id="lightboxFrame"
-        >
-            Frame // 01A
-        </div>
-
-
-        <button
-            type="button"
-            class="lightbox-close"
-            id="lightboxClose"
-            aria-label="Close photo viewer"
-        >
-            ×
-        </button>
-
-
-        <div
-            class="lightbox-content"
-            id="lightboxContent"
-        >
-
-            <img
-                src=""
-                alt=""
-                class="lightbox-image"
-                id="lightboxImage"
-            >
-
-
-            <div
-                class="lightbox-caption"
-                id="lightboxCaption"
-            >
-
-                <span
-                    class="lightbox-caption-main"
-                    id="lightboxCaptionMain"
-                >
-                </span>
-
-
-                <span
-                    class="lightbox-caption-meta"
-                    id="lightboxCaptionMeta"
-                >
-                </span>
-
-            </div>
-
-        </div>
-
+      class="viewer-frame"
+      id="viewerFrame">
     </div>
 
+    <div
+      id="viewerCaption">
+    </div>
 
-    <!-- =========================================================
-         AUDIO
-         ========================================================= -->
+  </div>
 
-    <audio
-        id="roll-audio"
-        src="audio/film-roll.mp3"
-        preload="auto"
-    ></audio>
+</div>
+```
 
+  </div>
 
-    <!-- =========================================================
-         JAVASCRIPT
-         ========================================================= -->
+  <!-- Audio -->
 
-    <script>
+<audio
+ id="roll-audio"
+ src="audio/film-roll.mp3"
+ preload="auto"> </audio>
 
-        (() => {
+  <script>
 
-            'use strict';
+    (() => {
 
+      'use strict';
 
-            /* =====================================================
-               STORAGE
-               ===================================================== */
 
-            const STORAGE_KEY =
-                'rtCatalogCards';
+      /* =========================================================
+         BASIC HELPERS
+      ========================================================= */
 
+      const STORAGE_KEY = 'rtCatalogCards';
 
-            const $ =
-                id => document.getElementById(id);
+      const $ = id =>
+        document.getElementById(id);
 
 
-            /* =====================================================
-               HTML ESCAPING
-               ===================================================== */
+      const escapeHtml = (s) => {
 
-            const escapeHtml = (s) => {
+        return String(s == null ? '' : s)
 
-                return String(
-                    s == null ? '' : s
-                )
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
 
-                    .replace(
-                        /&/g,
-                        '&amp;'
-                    )
+      };
 
-                    .replace(
-                        /</g,
-                        '&lt;'
-                    )
 
-                    .replace(
-                        />/g,
-                        '&gt;'
-                    )
+      /* =========================================================
+         DEFAULT CARD
+      ========================================================= */
 
-                    .replace(
-                        /"/g,
-                        '&quot;'
-                    )
+      const DEFAULT_CARDS = [
 
-                    .replace(
-                        /'/g,
-                        '&#39;'
-                    );
+        {
 
-            };
+          code: 'ROLL — 01',
 
+          category: 'series',
 
-            /* =====================================================
-               DEFAULT CARD
-               ===================================================== */
+          title: 'Gold 200',
 
-            const DEFAULT_CARDS = [
+          image: 'images/kodak-gold-200.jpg',
 
-                {
+          alt: 'Kodak Gold 200 film retail package',
 
-                    code: 'ROLL — 01',
+          frameNum: '14A',
 
-                    category: 'series',
+          location: 'Beirut, LB',
 
-                    title: 'Gold 200',
+          year: '2026',
 
-                    image:
-                        'images/kodak-gold-200.jpg',
+          format: '35mm Film',
 
-                    alt:
-                        'Kodak Gold 200 film retail package',
+          description:
+            'Quiet Shelves Hiding a lot of treasures.',
 
-                    frameNum:
-                        '14A',
+          link:
+            'gallery.html?i=0',
 
-                    location:
-                        'Beirut, LB',
+          linkText:
+            'View gallery →',
 
-                    year:
-                        '2026',
 
-                    format:
-                        '35mm Film',
+          photos: [
 
-                    description:
-                        'Quiet Shelves Hiding a lot of treasures.',
+            {
+              image: 'images/a-9.avif',
+              alt: 'CEO',
+              caption: 'The Madman Behind The Lens'
+            },
 
-                    link:
-                        'gallery.html?i=0',
+            {
+              image: 'images/a-4.avif',
+              alt: 'Jen',
+              caption: '10452 km² of heart.'
+            },
 
-                    linkText:
-                        'View gallery →',
+            {
+              image: 'images/Untitled-2.avif',
+              alt: 'Hidden inside these books are secrets',
+              caption: 'Knowledge hidden within the shelves'
+            },
 
+            {
+              image: 'images/Untitled-3.avif',
+              alt: 'Music Speaks Louder than Words',
+              caption: 'Music Speaks Louder Than Words'
+            },
 
-                    sets: [
+            {
+              image: 'images/Untitled-4.avif',
+              alt: 'brrrrrrrrrrrrrrr',
+              caption: 'Arguing With The Wind'
+            },
 
-                        /* ---------------------------------------------
-                           PEOPLE
-                           --------------------------------------------- */
+            {
+              image: 'images/Untitled-1.avif',
+              alt: 'Just the exhausts poluting the air',
+              caption: 'Pollution In An Artistic Way'
+            }
 
-                        {
+          ]
 
-                            id: 'people',
+        }
 
-                            title: 'People',
+      ];
 
-                            photos: [
 
-                                {
+      /* =========================================================
+         LOAD CARDS
+      ========================================================= */
 
-                                    image:
-                                        'images/a-9.avif',
+      const loadCards = () => {
 
-                                    alt:
-                                        'CEO',
+        let raw;
 
-                                    caption:
-                                        'The Madman Behind The Lens'
+        try {
 
-                                },
+          raw =
+            localStorage.getItem(STORAGE_KEY);
 
+        } catch (e) {
 
-                                {
+          raw = null;
 
-                                    image:
-                                        'images/a-4.avif',
+        }
 
-                                    alt:
-                                        'Jen',
 
-                                    caption:
-                                        '10452 km² of heart.'
+        if (!raw) {
 
-                                },
+          return JSON.parse(
+            JSON.stringify(DEFAULT_CARDS)
+          );
 
+        }
 
-                                {
 
-                                    image:
-                                        'images/Untitled-4.avif',
+        try {
 
-                                    alt:
-                                        'Brrrrrrrrrrrrrrr',
+          const arr =
+            JSON.parse(raw);
 
-                                    caption:
-                                        'Arguing With The Wind'
+          return Array.isArray(arr)
+            ? arr
+            : JSON.parse(
+                JSON.stringify(DEFAULT_CARDS)
+              );
 
-                                },
+        } catch (e) {
 
+          return JSON.parse(
+            JSON.stringify(DEFAULT_CARDS)
+          );
 
-                                {
+        }
 
-                                    image:
-                                        'images/Untitled-3.avif',
+      };
 
-                                    alt:
-                                        'Music Speaks Louder Than Words',
 
-                                    caption:
-                                        'Music Speaks Louder Than Words'
+      /* =========================================================
+         URL PARAMETER
+      ========================================================= */
 
-                                }
+      const getParam = (name) => {
 
-                            ]
+        const params =
+          new URLSearchParams(
+            window.location.search
+          );
 
-                        },
+        return params.get(name);
 
+      };
 
-                        /* ---------------------------------------------
-                           DETAILS
-                           --------------------------------------------- */
 
-                        {
+      /* =========================================================
+         GET CURRENT CARD
+      ========================================================= */
 
-                            id: 'details',
+      const cards =
+        loadCards();
 
-                            title: 'Details',
 
-                            photos: [
+      let idx =
+        parseInt(
+          getParam('i'),
+          10
+        );
 
-                                {
 
-                                    image:
-                                        'images/Untitled-2.avif',
+      let card =
+        (!isNaN(idx) && cards[idx])
+          ? cards[idx]
+          : null;
 
-                                    alt:
-                                        'Hidden inside these books are secrets',
 
-                                    caption:
-                                        'Knowledge hidden within the shelves'
+      if (!card) {
 
-                                },
+        const code =
+          getParam('code');
 
 
-                                {
+        if (code) {
 
-                                    image:
-                                        'images/Untitled-1.avif',
+          for (
+            let k = 0;
+            k < cards.length;
+            k++
+          ) {
 
-                                    alt:
-                                        'Just the exhausts polluting the air',
+            if (
+              cards[k].code === code
+            ) {
 
-                                    caption:
-                                        'Pollution In An Artistic Way'
+              card = cards[k];
+              idx = k;
 
-                                }
+              break;
 
-                            ]
+            }
 
-                        }
+          }
 
-                    ]
+        }
 
-                }
+      }
 
-            ];
 
+      /* =========================================================
+         GALLERY INFORMATION
+      ========================================================= */
 
-            /* =====================================================
-               LOAD CARDS
-               ===================================================== */
+      if (card) {
 
-            const loadCards = () => {
+        document.title =
+          `${card.title || 'Gallery'} — Raffoul Traboulsy`;
 
-                let raw;
 
+        $('galTitle').textContent =
+          card.title || 'Gallery';
 
-                try {
 
-                    raw =
-                        localStorage.getItem(
-                            STORAGE_KEY
-                        );
+        $('galLocation').textContent =
+          card.location || '—';
 
-                }
 
-                catch (e) {
+        $('galFormat').textContent =
+          card.format || '—';
 
-                    raw = null;
 
-                }
+        $('galYear').textContent =
+          card.year || '—';
 
 
-                if (!raw) {
+        $('navCode').textContent =
+          card.code || 'Catalogue';
 
-                    return JSON.parse(
-                        JSON.stringify(
-                            DEFAULT_CARDS
-                        )
-                    );
 
-                }
+        $('footCode').textContent =
+          card.code || 'Catalogue';
 
 
-                try {
+        let photos =
+          Array.isArray(card.photos)
+            ? [...card.photos]
+            : [];
 
-                    const arr =
-                        JSON.parse(raw);
 
+        /* ---------------------------------------------------------
+           FALLBACK TO COVER IMAGE
+        --------------------------------------------------------- */
 
-                    if (
-                        Array.isArray(arr)
-                    ) {
+        if (
+          !photos.length &&
+          card.image
+        ) {
 
-                        return arr;
+          photos = [
 
-                    }
+            {
+              image: card.image,
+              alt: card.alt || card.title || '',
+              caption: card.title || ''
+            }
 
+          ];
 
-                    return JSON.parse(
-                        JSON.stringify(
-                            DEFAULT_CARDS
-                        )
-                    );
+        }
 
-                }
 
-                catch (e) {
+        const stream =
+          $('photoStream');
 
-                    return JSON.parse(
-                        JSON.stringify(
-                            DEFAULT_CARDS
-                        )
-                    );
 
-                }
+        /* ---------------------------------------------------------
+           NO PHOTOS
+        --------------------------------------------------------- */
 
-            };
+        if (!photos.length) {
 
+          stream.innerHTML =
+            '<div class="empty">No photos have been added to this card yet.</div>';
 
-            /* =====================================================
-               URL PARAMETERS
-               ===================================================== */
+        }
 
-            const getParam = (name) => {
 
-                const params =
-                    new URLSearchParams(
-                        window.location.search
-                    );
+        /* ---------------------------------------------------------
+           RENDER PHOTOS
+        --------------------------------------------------------- */
 
+        else {
 
-                return params.get(name);
+          stream.innerHTML =
+            photos.map((p, i) => {
 
-            };
+              const frameLabel =
+                `Frame // ${String(i + 1).padStart(2, '0')}A`;
 
 
-            /* =====================================================
-               LOAD CURRENT CARD
-               ===================================================== */
+              return `
 
-            const cards =
-                loadCards();
+                <div class="film-frame">
 
+                  <div class="sprocket-wrapper">
 
-            let idx =
-                parseInt(
-                    getParam('i'),
-                    10
-                );
+                    <img
+                      src="${escapeHtml(p.image)}"
+                      alt="${escapeHtml(p.alt || '')}"
+                      loading="lazy">
 
+                  </div>
 
-            let card =
-                (
-                    !isNaN(idx) &&
-                    cards[idx]
-                )
-                    ? cards[idx]
-                    : null;
 
+                  <!-- EXPAND BUTTON -->
 
-            /* =====================================================
-               CODE FALLBACK
-               ===================================================== */
+                  <button
+                    type="button"
+                    class="expand-btn"
+                    data-image="${escapeHtml(p.image)}"
+                    data-alt="${escapeHtml(p.alt || '')}"
+                    data-caption="${escapeHtml(p.caption || '')}"
+                    data-frame="${escapeHtml(frameLabel)}">
 
-            if (!card) {
+                    ⛶ Expand
 
-                const code =
-                    getParam('code');
+                  </button>
 
 
-                if (code) {
+                  <!-- CAPTION -->
 
-                    for (
-                        let k = 0;
-                        k < cards.length;
-                        k++
-                    ) {
+                  <div class="caption">
 
-                        if (
-                            cards[k].code === code
-                        ) {
+                    <span>
+                      ${escapeHtml(frameLabel)}
+                    </span>
 
-                            card =
-                                cards[k];
+                    <span>
+                      ${escapeHtml(p.caption || '')}
+                    </span>
 
-                            idx =
-                                k;
+                  </div>
 
-                            break;
+                </div>
 
-                        }
+              `;
 
-                    }
+            }).join('');
 
-                }
+        }
+
+      }
+
+
+      /* =========================================================
+         GALLERY NOT FOUND
+      ========================================================= */
+
+      else {
+
+        $('galTitle').textContent =
+          'Gallery not found';
+
+
+        $('photoStream').innerHTML =
+          '<div class="empty">This gallery link is missing or the card no longer exists.</div>';
+
+      }
+
+
+      /* =========================================================
+         FULLSCREEN IMAGE VIEWER
+      ========================================================= */
+
+      const imageViewer =
+        $('imageViewer');
+
+
+      const viewerImage =
+        $('viewerImage');
+
+
+      const viewerCaption =
+        $('viewerCaption');
+
+
+      const viewerFrame =
+        $('viewerFrame');
+
+
+      const viewerClose =
+        $('viewerClose');
+
+
+      /* ---------------------------------------------------------
+         OPEN VIEWER
+      --------------------------------------------------------- */
+
+      const openViewer = (
+        image,
+        alt,
+        caption,
+        frame
+      ) => {
+
+        viewerImage.src =
+          image;
+
+
+        viewerImage.alt =
+          alt || '';
+
+
+        viewerCaption.textContent =
+          caption || '';
+
+
+        viewerFrame.textContent =
+          frame || '';
+
+
+        imageViewer.classList.add(
+          'active'
+        );
+
+
+        document.body.style.overflow =
+          'hidden';
+
+
+        viewerClose.focus();
+
+      };
+
+
+      /* ---------------------------------------------------------
+         CLOSE VIEWER
+      --------------------------------------------------------- */
+
+      const closeViewer = () => {
+
+        imageViewer.classList.remove(
+          'active'
+        );
+
+
+        document.body.style.overflow =
+          '';
+
+
+        setTimeout(() => {
+
+          if (
+            !imageViewer.classList.contains(
+              'active'
+            )
+          ) {
+
+            viewerImage.src = '';
+
+          }
+
+        }, 250);
+
+      };
+
+
+      /* ---------------------------------------------------------
+         EXPAND BUTTON LISTENER
+      --------------------------------------------------------- */
+
+      document.addEventListener(
+        'click',
+        (e) => {
+
+          const button =
+            e.target.closest(
+              '.expand-btn'
+            );
+
+
+          if (!button) return;
+
+
+          openViewer(
+
+            button.dataset.image,
+
+            button.dataset.alt,
+
+            button.dataset.caption,
+
+            button.dataset.frame
+
+          );
+
+        }
+      );
+
+
+      /* ---------------------------------------------------------
+         CLOSE BUTTON
+      --------------------------------------------------------- */
+
+      viewerClose.addEventListener(
+        'click',
+        closeViewer
+      );
+
+
+      /* ---------------------------------------------------------
+         CLICK OUTSIDE IMAGE
+      --------------------------------------------------------- */
+
+      imageViewer.addEventListener(
+        'click',
+        (e) => {
+
+          if (
+            e.target === imageViewer
+          ) {
+
+            closeViewer();
+
+          }
+
+        }
+      );
+
+
+      /* ---------------------------------------------------------
+         ESCAPE KEY
+      --------------------------------------------------------- */
+
+      document.addEventListener(
+        'keydown',
+        (e) => {
+
+          if (
+            e.key === 'Escape' &&
+            imageViewer.classList.contains(
+              'active'
+            )
+          ) {
+
+            closeViewer();
+
+          }
+
+        }
+      );
+
+
+      /* =========================================================
+         FILM ROLL AUDIO
+      ========================================================= */
+
+      const rollAudio =
+        document.getElementById(
+          'roll-audio'
+        );
+
+
+      const backBtn =
+        document.querySelector(
+          '.back-btn'
+        );
+
+
+      if (backBtn) {
+
+        backBtn.addEventListener(
+          'click',
+          (e) => {
+
+            if (
+              e.ctrlKey ||
+              e.metaKey ||
+              e.shiftKey ||
+              e.button !== 0
+            ) {
+
+              return;
 
             }
 
 
-            /* =====================================================
-               GALLERY EXISTS
-               ===================================================== */
+            e.preventDefault();
 
-            if (card) {
 
+            const targetUrl =
+              backBtn.href;
 
-                /* -------------------------------------------------
-                   HEADER
-                   ------------------------------------------------- */
 
-                document.title =
-                    `${card.title || 'Gallery'} — Raffoul Traboulsy`;
+            rollAudio.currentTime =
+              0;
 
 
-                $('galTitle').textContent =
-                    card.title ||
-                    'Gallery';
+            rollAudio
+              .play()
+              .catch(
+                err =>
+                  console.log(
+                    "Audio play blocked by browser:",
+                    err
+                  )
+              );
 
 
-                $('galLocation').textContent =
-                    card.location ||
-                    '—';
+            setTimeout(
+              () => {
 
+                window.location.href =
+                  targetUrl;
 
-                $('galFormat').textContent =
-                    card.format ||
-                    '—';
+              },
+              700
+            );
 
+          }
+        );
 
-                $('galYear').textContent =
-                    card.year ||
-                    '—';
+      }
 
+    })();
 
-                $('navCode').textContent =
-                    card.code ||
-                    'Catalogue';
-
-
-                $('footCode').textContent =
-                    card.code ||
-                    'Catalogue';
-
-
-                /* =================================================
-                   SETS
-                   ================================================= */
-
-                let sets =
-                    Array.isArray(card.sets)
-                        ? [...card.sets]
-                        : [];
-
-
-                /* -------------------------------------------------
-                   OLD PHOTO FORMAT SUPPORT
-                   ------------------------------------------------- */
-
-                if (
-                    !sets.length &&
-                    Array.isArray(card.photos)
-                ) {
-
-                    sets = [
-
-                        {
-
-                            id: 'all',
-
-                            title: 'Gallery',
-
-                            photos:
-                                [...card.photos]
-
-                        }
-
-                    ];
-
-                }
-
-
-                /* -------------------------------------------------
-                   FALLBACK TO COVER
-                   ------------------------------------------------- */
-
-                if (
-                    !sets.length &&
-                    card.image
-                ) {
-
-                    sets = [
-
-                        {
-
-                            id: 'all',
-
-                            title: 'Gallery',
-
-                            photos: [
-
-                                {
-
-                                    image:
-                                        card.image,
-
-                                    alt:
-                                        card.alt ||
-                                        card.title ||
-                                        '',
-
-                                    caption:
-                                        card.title ||
-                                        ''
-
-                                }
-
-                            ]
-
-                        }
-
-                    ];
-
-                }
-
-
-                /* =================================================
-                   ELEMENTS
-                   ================================================= */
-
-                const stream =
-                    $('photoStream');
-
-
-                const mainCategories =
-                    $('mainCategories');
-
-
-                const peopleOrientations =
-                    $('peopleOrientations');
-
-
-                const backButton =
-                    $('subcategoryBack');
-
-
-                const currentCategory =
-                    $('currentCategory');
-
-
-                /* =================================================
-                   LIGHTBOX ELEMENTS
-                   ================================================= */
-
-                const lightbox =
-                    $('lightbox');
-
-
-                const lightboxImage =
-                    $('lightboxImage');
-
-
-                const lightboxCaptionMain =
-                    $('lightboxCaptionMain');
-
-
-                const lightboxCaptionMeta =
-                    $('lightboxCaptionMeta');
-
-
-                const lightboxFrame =
-                    $('lightboxFrame');
-
-
-                const lightboxClose =
-                    $('lightboxClose');
-
-
-                const lightboxContent =
-                    $('lightboxContent');
-
-
-                /* =================================================
-                   STATE
-                   ================================================= */
-
-                let currentSet =
-                    getParam('set') || 'all';
-
-
-                let currentOrientation =
-                    getParam('orientation') || 'all';
-
-
-                /* -------------------------------------------------
-                   Validate set
-                   ------------------------------------------------- */
-
-                if (
-                    currentSet !== 'all' &&
-                    !sets.some(
-                        set =>
-                            set.id === currentSet
-                    )
-                ) {
-
-                    currentSet =
-                        'all';
-
-                }
-
-
-                /*
-                 * Orientation ONLY belongs to People.
-                 */
-
-                if (
-                    currentSet !== 'people'
-                ) {
-
-                    currentOrientation =
-                        'all';
-
-                }
-
-
-                /*
-                 * Validate orientation.
-                 */
-
-                if (
-                    ![
-                        'all',
-                        'landscape',
-                        'portrait'
-                    ].includes(
-                        currentOrientation
-                    )
-                ) {
-
-                    currentOrientation =
-                        'all';
-
-                }
-
-
-                /* =================================================
-                   GET PHOTOS
-                   ================================================= */
-
-                function getPhotosForSet(
-                    setId
-                ) {
-
-                    let photos = [];
-
-
-                    /* ALL */
-
-                    if (
-                        setId === 'all'
-                    ) {
-
-                        sets.forEach(
-                            set => {
-
-                                if (
-                                    Array.isArray(
-                                        set.photos
-                                    )
-                                ) {
-
-                                    photos.push(
-
-                                        ...set.photos.map(
-                                            photo => ({
-
-                                                ...photo,
-
-                                                setId:
-                                                    set.id,
-
-                                                setTitle:
-                                                    set.title
-
-                                            })
-                                        )
-
-                                    );
-
-                                }
-
-                            }
-                        );
-
-                    }
-
-
-                    /* SPECIFIC SET */
-
-                    else {
-
-                        const selected =
-                            sets.find(
-                                set =>
-                                    set.id ===
-                                    setId
-                            );
-
-
-                        if (
-                            selected &&
-                            Array.isArray(
-                                selected.photos
-                            )
-                        ) {
-
-                            photos =
-                                selected.photos.map(
-                                    photo => ({
-
-                                        ...photo,
-
-                                        setId:
-                                            selected.id,
-
-                                        setTitle:
-                                            selected.title
-
-                                    })
-                                );
-
-                        }
-
-                    }
-
-
-                    return photos;
-
-                }
-
-
-                /* =================================================
-                   UPDATE URL
-                   ================================================= */
-
-                function updateURL() {
-
-                    const url =
-                        new URL(
-                            window.location.href
-                        );
-
-
-                    if (
-                        currentSet === 'all'
-                    ) {
-
-                        url.searchParams.delete(
-                            'set'
-                        );
-
-                    }
-
-                    else {
-
-                        url.searchParams.set(
-                            'set',
-                            currentSet
-                        );
-
-                    }
-
-
-                    /*
-                     * Only PEOPLE stores orientation.
-                     */
-
-                    if (
-                        currentSet === 'people' &&
-                        currentOrientation !== 'all'
-                    ) {
-
-                        url.searchParams.set(
-                            'orientation',
-                            currentOrientation
-                        );
-
-                    }
-
-                    else {
-
-                        url.searchParams.delete(
-                            'orientation'
-                        );
-
-                    }
-
-
-                    window.history.replaceState(
-                        {},
-                        '',
-                        url
-                    );
-
-                }
-
-
-                /* =================================================
-                   UPDATE NAVIGATION
-                   ================================================= */
-
-                function updateNavigation() {
-
-
-                    /* ---------------------------------------------
-                       ALL
-                       --------------------------------------------- */
-
-                    if (
-                        currentSet === 'all'
-                    ) {
-
-                        mainCategories.classList.remove(
-                            'hidden'
-                        );
-
-
-                        peopleOrientations.classList.add(
-                            'hidden'
-                        );
-
-
-                        backButton.classList.remove(
-                            'visible'
-                        );
-
-
-                        currentCategory.textContent =
-                            'All photographs';
-
-                    }
-
-
-                    /* ---------------------------------------------
-                       PEOPLE
-                       --------------------------------------------- */
-
-                    else if (
-                        currentSet === 'people'
-                    ) {
-
-                        mainCategories.classList.add(
-                            'hidden'
-                        );
-
-
-                        peopleOrientations.classList.remove(
-                            'hidden'
-                        );
-
-
-                        backButton.classList.add(
-                            'visible'
-                        );
-
-
-                        if (
-                            currentOrientation ===
-                            'portrait'
-                        ) {
-
-                            currentCategory.textContent =
-                                'People / Portrait';
-
-                        }
-
-                        else if (
-                            currentOrientation ===
-                            'landscape'
-                        ) {
-
-                            currentCategory.textContent =
-                                'People / Landscape';
-
-                        }
-
-                        else {
-
-                            currentCategory.textContent =
-                                'People / All';
-
-                        }
-
-                    }
-
-
-                    /* ---------------------------------------------
-                       DETAILS
-
-                       No orientation menu.
-                       --------------------------------------------- */
-
-                    else if (
-                        currentSet === 'details'
-                    ) {
-
-                        mainCategories.classList.add(
-                            'hidden'
-                        );
-
-
-                        peopleOrientations.classList.add(
-                            'hidden'
-                        );
-
-
-                        backButton.classList.add(
-                            'visible'
-                        );
-
-
-                        currentCategory.textContent =
-                            'Details';
-
-                    }
-
-
-                    /* ---------------------------------------------
-                       MAIN ACTIVE BUTTON
-                       --------------------------------------------- */
-
-                    mainCategories
-                        .querySelectorAll(
-                            '.filter-btn'
-                        )
-                        .forEach(
-                            button => {
-
-                                button.classList.toggle(
-                                    'active',
-
-                                    button.dataset.set ===
-                                    currentSet
-                                );
-
-                            }
-                        );
-
-
-                    /* ---------------------------------------------
-                       PEOPLE ACTIVE BUTTON
-                       --------------------------------------------- */
-
-                    peopleOrientations
-                        .querySelectorAll(
-                            '.filter-btn'
-                        )
-                        .forEach(
-                            button => {
-
-                                button.classList.toggle(
-                                    'active',
-
-                                    button.dataset.orientation ===
-                                    currentOrientation
-                                );
-
-                            }
-                        );
-
-                }
-
-
-                /* =================================================
-                   OPEN LIGHTBOX
-                   ================================================= */
-
-                function openLightbox(
-                    photo,
-                    frameNumber
-                ) {
-
-                    lightboxImage.src =
-                        photo.image;
-
-
-                    lightboxImage.alt =
-                        photo.alt || '';
-
-
-                    lightboxCaptionMain.textContent =
-                        photo.caption || '';
-
-
-                    lightboxCaptionMeta.textContent =
-                        `${photo.setTitle || ''} • ${card.code || ''}`;
-
-
-                    lightboxFrame.textContent =
-                        `Frame // ${String(
-                            frameNumber
-                        ).padStart(
-                            2,
-                            '0'
-                        )}A`;
-
-
-                    lightbox.classList.add(
-                        'open'
-                    );
-
-
-                    lightbox.setAttribute(
-                        'aria-hidden',
-                        'false'
-                    );
-
-
-                    document.body.classList.add(
-                        'lightbox-open'
-                    );
-
-
-                    /*
-                     * Put focus on close button
-                     * for keyboard accessibility.
-                     */
-
-                    lightboxClose.focus();
-
-                }
-
-
-                /* =================================================
-                   CLOSE LIGHTBOX
-                   ================================================= */
-
-                function closeLightbox() {
-
-                    lightbox.classList.remove(
-                        'open'
-                    );
-
-
-                    lightbox.setAttribute(
-                        'aria-hidden',
-                        'true'
-                    );
-
-
-                    document.body.classList.remove(
-                        'lightbox-open'
-                    );
-
-
-                    /*
-                     * Clear image after closing.
-                     */
-
-                    setTimeout(
-                        () => {
-
-                            if (
-                                !lightbox.classList.contains(
-                                    'open'
-                                )
-                            ) {
-
-                                lightboxImage.src =
-                                    '';
-
-                            }
-
-                        },
-                        200
-                    );
-
-                }
-
-
-                /* =================================================
-                   RENDER GALLERY
-                   ================================================= */
-
-                function renderGallery() {
-
-                    const photos =
-                        getPhotosForSet(
-                            currentSet
-                        );
-
-
-                    if (!photos.length) {
-
-                        stream.innerHTML =
-                            '<div class="empty">' +
-                            'No photos have been added to this category yet.' +
-                            '</div>';
-
-                        return;
-
-                    }
-
-
-                    /* =================================================
-                       CREATE PHOTO CARDS
-                       ================================================= */
-
-                    stream.innerHTML =
-
-                        photos.map(
-                            (p, i) => {
-
-
-                                const frameLabel =
-                                    `Frame // ${String(
-                                        i + 1
-                                    ).padStart(
-                                        2,
-                                        '0'
-                                    )}A`;
-
-
-                                return `
-
-                                    <div
-                                        class="film-frame"
-                                        data-set-id="${escapeHtml(
-                                            p.setId || ''
-                                        )}"
-
-                                        data-orientation="unknown"
-                                    >
-
-                                        <button
-                                            type="button"
-                                            class="photo-trigger"
-                                            aria-label="Open photograph fullscreen"
-                                            data-photo-index="${i}"
-                                        >
-
-                                            <div
-                                                class="sprocket-wrapper"
-                                            >
-
-                                                <img
-                                                    src="${escapeHtml(
-                                                        p.image
-                                                    )}"
-
-                                                    alt="${escapeHtml(
-                                                        p.alt || ''
-                                                    )}"
-
-                                                    class="gallery-photo"
-                                                >
-
-                                            </div>
-
-                                        </button>
-
-
-                                        <div class="caption">
-
-                                            <span>
-                                                ${escapeHtml(
-                                                    frameLabel
-                                                )}
-                                            </span>
-
-
-                                            <span>
-                                                ${escapeHtml(
-                                                    p.caption || ''
-                                                )}
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                `;
-
-                            }
-
-                        ).join('');
-
-
-                    /* =================================================
-                       ORIENTATION DETECTION
-                       ================================================= */
-
-                    const images =
-                        stream.querySelectorAll(
-                            '.gallery-photo'
-                        );
-
-
-                    images.forEach(
-                        img => {
-
-
-                            const applyOrientation =
-                                () => {
-
-
-                                    const wrapper =
-                                        img.closest(
-                                            '.sprocket-wrapper'
-                                        );
-
-
-                                    const frame =
-                                        img.closest(
-                                            '.film-frame'
-                                        );
-
-
-                                    if (
-                                        !wrapper ||
-                                        !frame
-                                    ) {
-
-                                        return;
-
-                                    }
-
-
-                                    let orientation;
-
-
-                                    /*
-                                     * Portrait
-                                     */
-
-                                    if (
-                                        img.naturalHeight >
-                                        img.naturalWidth
-                                    ) {
-
-                                        orientation =
-                                            'portrait';
-
-
-                                        wrapper.classList.add(
-                                            'portrait'
-                                        );
-
-                                    }
-
-
-                                    /*
-                                     * Landscape
-                                     */
-
-                                    else {
-
-                                        orientation =
-                                            'landscape';
-
-
-                                        wrapper.classList.remove(
-                                            'portrait'
-                                        );
-
-                                    }
-
-
-                                    frame.dataset.orientation =
-                                        orientation;
-
-
-                                    /*
-                                     * Filter ONLY PEOPLE.
-                                     */
-
-                                    if (
-                                        currentSet ===
-                                        'people' &&
-                                        currentOrientation !==
-                                        'all'
-                                    ) {
-
-                                        frame.style.display =
-
-                                            orientation ===
-                                            currentOrientation
-
-                                                ? ''
-
-                                                : 'none';
-
-                                    }
-
-                                    else {
-
-                                        frame.style.display =
-                                            '';
-
-                                    }
-
-                                };
-
-
-                            if (
-                                img.complete &&
-                                img.naturalWidth > 0
-                            ) {
-
-                                applyOrientation();
-
-                            }
-
-
-                            img.addEventListener(
-                                'load',
-                                applyOrientation
-                            );
-
-                        }
-                    );
-
-
-                    /* =================================================
-                       PHOTO CLICK EVENTS
-                       ================================================= */
-
-                    const triggers =
-                        stream.querySelectorAll(
-                            '.photo-trigger'
-                        );
-
-
-                    triggers.forEach(
-                        trigger => {
-
-
-                            trigger.addEventListener(
-                                'click',
-                                () => {
-
-
-                                    const photoIndex =
-                                        parseInt(
-                                            trigger.dataset.photoIndex,
-                                            10
-                                        );
-
-
-                                    const visiblePhotos =
-                                        getPhotosForSet(
-                                            currentSet
-                                        );
-
-
-                                    const photo =
-                                        visiblePhotos[
-                                            photoIndex
-                                        ];
-
-
-                                    if (!photo) {
-
-                                        return;
-
-                                    }
-
-
-                                    openLightbox(
-                                        photo,
-                                        photoIndex + 1
-                                    );
-
-                                }
-                            );
-
-                        }
-                    );
-
-                }
-
-
-                /* =================================================
-                   MAIN CATEGORY BUTTONS
-                   ================================================= */
-
-                mainCategories
-                    .querySelectorAll(
-                        '.filter-btn'
-                    )
-                    .forEach(
-                        button => {
-
-
-                            button.addEventListener(
-                                'click',
-                                () => {
-
-
-                                    currentSet =
-                                        button.dataset.set;
-
-
-                                    currentOrientation =
-                                        'all';
-
-
-                                    updateURL();
-
-                                    updateNavigation();
-
-                                    renderGallery();
-
-                                }
-                            );
-
-                        }
-                    );
-
-
-                /* =================================================
-                   PEOPLE ORIENTATION BUTTONS
-                   ================================================= */
-
-                peopleOrientations
-                    .querySelectorAll(
-                        '.filter-btn'
-                    )
-                    .forEach(
-                        button => {
-
-
-                            button.addEventListener(
-                                'click',
-                                () => {
-
-
-                                    currentSet =
-                                        'people';
-
-
-                                    currentOrientation =
-                                        button.dataset.orientation;
-
-
-                                    updateURL();
-
-                                    updateNavigation();
-
-                                    renderGallery();
-
-                                }
-                            );
-
-                        }
-                    );
-
-
-                /* =================================================
-                   BACK BUTTON
-                   ================================================= */
-
-                backButton.addEventListener(
-                    'click',
-                    () => {
-
-
-                        currentSet =
-                            'all';
-
-
-                        currentOrientation =
-                            'all';
-
-
-                        updateURL();
-
-                        updateNavigation();
-
-                        renderGallery();
-
-                    }
-                );
-
-
-                /* =================================================
-                   LIGHTBOX CLOSE
-                   ================================================= */
-
-                lightboxClose.addEventListener(
-                    'click',
-                    closeLightbox
-                );
-
-
-                /* =================================================
-                   CLICK OUTSIDE IMAGE TO CLOSE
-                   ================================================= */
-
-                lightbox.addEventListener(
-                    'click',
-                    (event) => {
-
-
-                        /*
-                         * If the click is directly on
-                         * the dark background, close it.
-                         */
-
-                        if (
-                            event.target ===
-                            lightbox
-                        ) {
-
-                            closeLightbox();
-
-                        }
-
-                    }
-                );
-
-
-                /* =================================================
-                   ALSO CLOSE WHEN CLICKING THE EMPTY AREA
-                   INSIDE LIGHTBOX CONTENT
-
-                   BUT NOT WHEN CLICKING THE IMAGE/CAPTION.
-                   ================================================= */
-
-                lightboxContent.addEventListener(
-                    'click',
-                    (event) => {
-
-
-                        if (
-                            event.target ===
-                            lightboxContent
-                        ) {
-
-                            closeLightbox();
-
-                        }
-
-                    }
-                );
-
-
-                /* =================================================
-                   ESCAPE KEY
-                   ================================================= */
-
-                document.addEventListener(
-                    'keydown',
-                    (event) => {
-
-
-                        if (
-                            event.key ===
-                            'Escape' &&
-                            lightbox.classList.contains(
-                                'open'
-                            )
-                        ) {
-
-                            closeLightbox();
-
-                        }
-
-                    }
-                );
-
-
-                /* =================================================
-                   INITIALIZE
-                   ================================================= */
-
-                updateNavigation();
-
-                renderGallery();
-
-            }
-
-
-            /* =====================================================
-               GALLERY NOT FOUND
-               ===================================================== */
-
-            else {
-
-                $('galTitle').textContent =
-                    'Gallery not found';
-
-
-                $('photoStream').innerHTML =
-                    '<div class="empty">' +
-                    'This gallery link is missing or the card no longer exists.' +
-                    '</div>';
-
-            }
-
-
-            /* =====================================================
-               AUDIO NAVIGATION
-               ===================================================== */
-
-            const rollAudio =
-                document.getElementById(
-                    'roll-audio'
-                );
-
-
-            const backBtn =
-                document.querySelector(
-                    '.back-btn'
-                );
-
-
-            if (backBtn) {
-
-                backBtn.addEventListener(
-                    'click',
-                    (e) => {
-
-
-                        if (
-                            e.ctrlKey ||
-                            e.metaKey ||
-                            e.shiftKey ||
-                            e.button !== 0
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        e.preventDefault();
-
-
-                        const targetUrl =
-                            backBtn.href;
-
-
-                        rollAudio.currentTime =
-                            0;
-
-
-                        rollAudio
-                            .play()
-                            .catch(
-                                err =>
-                                    console.log(
-                                        'Audio play blocked by browser:',
-                                        err
-                                    )
-                            );
-
-
-                        setTimeout(
-                            () => {
-
-                                window.location.href =
-                                    targetUrl;
-
-                            },
-                            700
-                        );
-
-                    }
-                );
-
-            }
-
-        })();
-
-    </script>
+  </script>
 
 </body>
 
