@@ -31,24 +31,20 @@
       --radius: 2px;
     }
 
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-
     html {
       scroll-behavior: smooth;
     }
-
 
     html,
     body {
       overflow-x: hidden;
     }
-
 
     body {
       background: var(--paper);
@@ -69,22 +65,20 @@
       line-height: 1.55;
     }
 
-
     .wrap {
       max-width: 1180px;
       margin: 0 auto;
       padding: 0 1.75rem;
     }
 
-
     .mono {
       font-family: 'IBM Plex Mono', monospace;
     }
 
 
-    /* =========================================================
+    /* =====================================================
        NAVIGATION
-    ========================================================= */
+       ===================================================== */
 
     .gallery-nav {
       border-bottom: 2px solid var(--ink);
@@ -93,13 +87,12 @@
 
       font-family: 'IBM Plex Mono', monospace;
 
-      font-size: 0.75rem;
+      font-size: .75rem;
 
       letter-spacing: .1em;
 
       text-transform: uppercase;
     }
-
 
     .nav-flex {
       display: flex;
@@ -109,7 +102,6 @@
       align-items: center;
     }
 
-
     .back-btn {
       text-decoration: none;
 
@@ -118,22 +110,20 @@
       font-weight: 600;
     }
 
-
     .back-btn:hover {
       text-decoration: underline;
     }
 
 
-    /* =========================================================
+    /* =====================================================
        HEADER
-    ========================================================= */
+       ===================================================== */
 
     .gallery-header {
       padding: 4rem 0 3rem;
 
       text-align: center;
     }
-
 
     .gallery-header h1 {
       font-family: 'Archivo Black', sans-serif;
@@ -147,11 +137,10 @@
       margin-bottom: 1rem;
     }
 
-
     .gallery-meta {
       font-family: 'IBM Plex Mono', monospace;
 
-      font-size: 0.8rem;
+      font-size: .8rem;
 
       color: var(--ink-muted);
 
@@ -164,15 +153,14 @@
       flex-wrap: wrap;
     }
 
-
     .gallery-meta span strong {
       color: var(--ink);
     }
 
 
-    /* =========================================================
+    /* =====================================================
        GALLERY GRID
-    ========================================================= */
+       ===================================================== */
 
     .photo-stream {
       display: grid;
@@ -185,9 +173,9 @@
     }
 
 
-    /* =========================================================
-       FILM FRAME
-    ========================================================= */
+    /* =====================================================
+       FILM FRAME CARD
+       ===================================================== */
 
     .film-frame {
       background: var(--paper-card);
@@ -200,14 +188,13 @@
 
       box-shadow:
         0 8px 20px -10px
-        rgba(0, 0, 0, 0.15);
+        rgba(0, 0, 0, .15);
     }
 
 
-    /* =========================================================
-       HORIZONTAL FILM STRIP
-       Default orientation
-    ========================================================= */
+    /* =====================================================
+       FILM STRIP
+    ===================================================== */
 
     .sprocket-wrapper {
       position: relative;
@@ -221,26 +208,36 @@
       border: 1px solid var(--ink);
 
       overflow: hidden;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
     }
 
 
-    /*
-     * Horizontal film strip:
-     * sprocket holes across the top and bottom.
-     */
+    /* Horizontal film strip */
+
+    .sprocket-wrapper.landscape {
+      aspect-ratio: 4 / 3;
+    }
+
+
+    /* Vertical film strip */
+
+    .sprocket-wrapper.portrait {
+      aspect-ratio: 3 / 4;
+    }
+
 
     .sprocket-wrapper::before,
     .sprocket-wrapper::after {
-
       content: '';
 
       position: absolute;
 
-      left: 0;
-
-      right: 0;
-
-      height: 12px;
+      z-index: 2;
 
       background-color: var(--ink);
 
@@ -250,66 +247,31 @@
           var(--paper-card) 0 6px,
           transparent 6px 18px
         );
-
-      z-index: 2;
     }
 
 
-    .sprocket-wrapper::before {
+    /* Horizontal strip sprockets */
+
+    .sprocket-wrapper.landscape::before,
+    .sprocket-wrapper.landscape::after {
+
+      left: 0;
+
+      right: 0;
+
+      height: 12px;
+    }
+
+    .sprocket-wrapper.landscape::before {
       top: 0;
     }
 
-
-    .sprocket-wrapper::after {
+    .sprocket-wrapper.landscape::after {
       bottom: 0;
     }
 
 
-    /*
-     * Horizontal photograph area.
-     */
-
-    .sprocket-wrapper img {
-      position: absolute;
-
-      inset: 12px 0;
-
-      width: 100%;
-
-      height: calc(100% - 24px);
-
-      object-fit: contain;
-    }
-
-
-    /* =========================================================
-       VERTICAL FILM STRIP
-    ========================================================= */
-
-    /*
-     * JavaScript adds .portrait when:
-
-       naturalHeight > naturalWidth
-
-     * This changes the film strip from horizontal
-     * to vertical automatically.
-     */
-
-    .sprocket-wrapper.portrait {
-      aspect-ratio: 3 / 4;
-
-      max-width: 720px;
-
-      margin-left: auto;
-
-      margin-right: auto;
-    }
-
-
-    /*
-     * Vertical sprocket holes:
-     * holes now run down the left and right sides.
-     */
+    /* Vertical strip sprockets */
 
     .sprocket-wrapper.portrait::before,
     .sprocket-wrapper.portrait::after {
@@ -318,62 +280,76 @@
 
       bottom: 0;
 
-      left: auto;
-
-      right: auto;
-
       width: 12px;
 
-      height: 100%;
+      height: auto;
 
       background-image:
         repeating-linear-gradient(
-          180deg,
+          0deg,
           var(--paper-card) 0 6px,
           transparent 6px 18px
         );
     }
 
-
     .sprocket-wrapper.portrait::before {
       left: 0;
     }
-
 
     .sprocket-wrapper.portrait::after {
       right: 0;
     }
 
 
-    /*
-     * Vertical photograph area.
+    /* =====================================================
+       IMAGE
+       ===================================================== */
 
-     * The image is inset from the left/right
-     * sprocket holes rather than top/bottom.
-     */
+    .sprocket-wrapper img {
+      position: absolute;
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: contain;
+
+      display: block;
+    }
+
+
+    /* Horizontal image */
+
+    .sprocket-wrapper.landscape img {
+      inset: 12px 0;
+
+      width: 100%;
+
+      height: calc(100% - 24px);
+    }
+
+
+    /* Vertical image */
 
     .sprocket-wrapper.portrait img {
-
       inset: 0 12px;
 
       width: calc(100% - 24px);
 
       height: 100%;
-
-      object-fit: contain;
     }
 
 
-    /* =========================================================
+    /* =====================================================
        EXPAND BUTTON
-    ========================================================= */
+       ===================================================== */
 
     .expand-btn {
       width: 100%;
 
-      margin-top: 0.8rem;
+      margin-top: .8rem;
 
-      padding: 0.7rem 1rem;
+      padding: .7rem 1rem;
 
       background: transparent;
 
@@ -385,7 +361,7 @@
 
       font-family: 'IBM Plex Mono', monospace;
 
-      font-size: 0.7rem;
+      font-size: .7rem;
 
       letter-spacing: .08em;
 
@@ -400,7 +376,6 @@
         transform .2s ease;
     }
 
-
     .expand-btn:hover {
       background: var(--ink);
 
@@ -411,22 +386,21 @@
       transform: translateY(-1px);
     }
 
-
     .expand-btn:active {
       transform: translateY(0);
     }
 
 
-    /* =========================================================
+    /* =====================================================
        CAPTION
-    ========================================================= */
+       ===================================================== */
 
     .caption {
       margin-top: 1.2rem;
 
       font-family: 'IBM Plex Mono', monospace;
 
-      font-size: 0.8rem;
+      font-size: .8rem;
 
       color: var(--ink-muted);
 
@@ -438,9 +412,13 @@
 
       border-top: 1px dotted var(--line);
 
-      padding-top: 0.8rem;
+      padding-top: .8rem;
     }
 
+
+    /* =====================================================
+       EMPTY STATE
+       ===================================================== */
 
     .empty {
       text-align: center;
@@ -453,9 +431,9 @@
     }
 
 
-    /* =========================================================
-       FULLSCREEN IMAGE VIEWER
-    ========================================================= */
+    /* =====================================================
+       FULLSCREEN VIEWER
+       ===================================================== */
 
     .image-viewer {
       position: fixed;
@@ -464,7 +442,7 @@
 
       z-index: 9999;
 
-      background: rgba(20, 17, 13, 0.96);
+      background: rgba(20, 17, 13, .96);
 
       display: flex;
 
@@ -483,13 +461,11 @@
         visibility .25s ease;
     }
 
-
     .image-viewer.active {
       opacity: 1;
 
       visibility: visible;
     }
-
 
     .viewer-content {
       position: relative;
@@ -507,7 +483,6 @@
       justify-content: center;
     }
 
-
     .viewer-image {
       max-width: 100%;
 
@@ -519,16 +494,13 @@
 
       object-fit: contain;
 
-      border: 1px solid rgba(243, 237, 220, 0.25);
+      border: 1px solid
+        rgba(243, 237, 220, .25);
 
       box-shadow:
         0 25px 60px
-        rgba(0, 0, 0, 0.55);
-
-      transition:
-        transform .25s ease;
+        rgba(0, 0, 0, .55);
     }
-
 
     .viewer-caption {
       margin-top: 1rem;
@@ -546,7 +518,6 @@
       letter-spacing: .04em;
     }
 
-
     .viewer-frame {
       color: var(--line);
 
@@ -560,7 +531,6 @@
 
       margin-bottom: .3rem;
     }
-
 
     .viewer-close {
       position: absolute;
@@ -594,7 +564,6 @@
         color .2s ease;
     }
 
-
     .viewer-close:hover {
       background: var(--stamp);
 
@@ -604,9 +573,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        FOOTER
-    ========================================================= */
+       ===================================================== */
 
     footer {
       border-top: 2px solid var(--ink);
@@ -623,9 +592,9 @@
     }
 
 
-    /* =========================================================
+    /* =====================================================
        MOBILE
-    ========================================================= */
+       ===================================================== */
 
     @media (max-width: 600px) {
 
@@ -633,31 +602,25 @@
         padding: 0 1rem;
       }
 
-
       .nav-flex {
         gap: 1rem;
       }
-
 
       .gallery-header {
         padding: 3rem 0 2.5rem;
       }
 
-
       .gallery-meta {
         gap: .8rem 1.2rem;
       }
-
 
       .film-frame {
         padding: 1rem;
       }
 
-
       .photo-stream {
         gap: 2rem;
       }
-
 
       .caption {
         flex-direction: column;
@@ -665,11 +628,9 @@
         gap: .3rem;
       }
 
-
       .image-viewer {
         padding: 1rem;
       }
-
 
       .viewer-content {
         width: 100%;
@@ -677,13 +638,11 @@
         height: 100%;
       }
 
-
       .viewer-image {
         max-width: 100%;
 
         max-height: calc(100% - 80px);
       }
-
 
       .viewer-close {
         top: .5rem;
@@ -691,27 +650,16 @@
         right: .5rem;
       }
 
-
       .viewer-caption {
         font-size: .7rem;
-      }
-
-
-      /*
-       * Give portrait strips a little more
-       * room on smaller screens.
-       */
-
-      .sprocket-wrapper.portrait {
-        max-width: 90%;
       }
 
     }
 
 
-    /* =========================================================
+    /* =====================================================
        REDUCED MOTION
-    ========================================================= */
+       ===================================================== */
 
     @media (prefers-reduced-motion: reduce) {
 
@@ -728,9 +676,9 @@
 
 <body>
 
-  <!-- =======================================================
+  <!-- =====================================================
        NAVIGATION
-  ======================================================= -->
+       ===================================================== -->
 
   <nav class="gallery-nav">
 
@@ -757,9 +705,9 @@
 
   </nav>
 
-  <!-- =======================================================
+  <!-- =====================================================
        GALLERY HEADER
-  ======================================================= -->
+       ===================================================== -->
 
   <header class="gallery-header">
 
@@ -814,9 +762,9 @@
 
   </header>
 
-  <!-- =======================================================
+  <!-- =====================================================
        GALLERY
-  ======================================================= -->
+       ===================================================== -->
 
   <main class="wrap">
 
@@ -825,16 +773,14 @@
   class="photo-stream"
   id="photoStream">
 
-  <!-- Rendered by JavaScript -->
-
 </div>
 
 
   </main>
 
-  <!-- =======================================================
+  <!-- =====================================================
        FOOTER
-  ======================================================= -->
+       ===================================================== -->
 
   <footer>
 
@@ -846,9 +792,7 @@
     All photographs captured on location in Lebanon •
 
     <span id="footCode">
-
       Catalogue No. 001
-
     </span>
 
   </p>
@@ -858,9 +802,9 @@
 
   </footer>
 
-  <!-- =======================================================
+  <!-- =====================================================
        FULLSCREEN IMAGE VIEWER
-  ======================================================= -->
+       ===================================================== -->
 
   <div
     class="image-viewer"
@@ -898,8 +842,7 @@
     </div>
 
 
-    <div
-      id="viewerCaption">
+    <div id="viewerCaption">
     </div>
 
   </div>
@@ -909,131 +852,22 @@
 
   </div>
 
-   <!-- =========================================================
-       FILM ROLL AUDIO + SFX SETTING
-  ========================================================= -->
+  <!-- =====================================================
+       AUDIO
+       
+       preload="none" is intentional.
+       The browser will not preload the sound.
+       JavaScript only calls play() when SFX is ON.
+       ===================================================== -->
 
-  <audio
-    id="roll-audio"
-    src="audio/film-roll.mp3"
-    preload="auto">
-  </audio>
+<audio
+ id="roll-audio"
+ src="audio/film-roll.mp3"
+ preload="none"> </audio>
 
-  <script>
-
-    (() => {
-
-      'use strict';
-
-      /* =========================================================
-         SFX SETTING
-         Uses the same localStorage key as index.html
-      ========================================================= */
-
-      const soundEnabled =
-        localStorage.getItem('sfxEnabled') !== 'false';
-
-
-      /* =========================================================
-         FILM ROLL AUDIO
-      ========================================================= */
-
-      const rollAudio =
-        document.getElementById('roll-audio');
-
-
-      const backBtn =
-        document.querySelector('.back-btn');
-
-
-      if (backBtn) {
-
-        backBtn.addEventListener(
-          'click',
-          (e) => {
-
-            /*
-             * Keep normal behaviour for
-             * Ctrl/Cmd/Middle click.
-             */
-
-            if (
-              e.ctrlKey ||
-              e.metaKey ||
-              e.shiftKey ||
-              e.button !== 0
-            ) {
-
-              return;
-
-            }
-
-
-            e.preventDefault();
-
-
-            const targetUrl =
-              backBtn.href;
-
-
-            /*
-             * Only play the film-roll sound
-             * if SFX is enabled in index.html.
-             */
-
-            if (soundEnabled) {
-
-              rollAudio.currentTime = 0;
-
-
-              rollAudio
-                .play()
-                .catch(
-                  err =>
-                    console.log(
-                      'Audio play blocked by browser:',
-                      err
-                    )
-                );
-
-
-              /*
-               * Wait for the sound before
-               * returning to the catalogue.
-               */
-
-              setTimeout(
-                () => {
-
-                  window.location.href =
-                    targetUrl;
-
-                },
-                700
-              );
-
-            } else {
-
-              /*
-               * If SFX is OFF, go back immediately.
-               */
-
-              window.location.href =
-                targetUrl;
-
-            }
-
-          }
-        );
-
-      }
-
-    })();
-
-  </script>
-  <!-- =======================================================
+  <!-- =====================================================
        JAVASCRIPT
-  ======================================================= -->
+       ===================================================== -->
 
   <script>
 
@@ -1042,40 +876,44 @@
       'use strict';
 
 
-      /* =========================================================
+      /* =====================================================
          BASIC HELPERS
-      ========================================================= */
+         ===================================================== */
 
-      const STORAGE_KEY = 'rtCatalogCards';
-
-
-      const $ = id =>
-        document.getElementById(id);
+      const STORAGE_KEY =
+        'rtCatalogCards';
 
 
-      const escapeHtml = (s) => {
+      const SFX_KEY =
+        'sfxEnabled';
+
+
+      const $ =
+        id =>
+          document.getElementById(id);
+
+
+      const escapeHtml = (value) => {
 
         return String(
-          s == null ? '' : s
+          value == null ? '' : value
         )
 
           .replace(/&/g, '&amp;')
-
           .replace(/</g, '&lt;')
-
           .replace(/>/g, '&gt;')
-
           .replace(/"/g, '&quot;')
-
           .replace(/'/g, '&#39;');
 
       };
 
 
-
-      /* =========================================================
-         DEFAULT CARD
-      ========================================================= */
+      /* =====================================================
+         DEFAULT DATA
+         
+         Used only if localStorage is unavailable.
+         Normal operation loads cards.json.
+         ===================================================== */
 
       const DEFAULT_CARDS = [
 
@@ -1087,17 +925,22 @@
 
           title: 'Gold 200',
 
-          image: 'images/kodak-gold-200.avif',
+          image:
+            'images/kodak-gold-200.avif',
 
-          alt: 'Kodak Gold 200 film retail package',
+          alt:
+            'Kodak Gold 200 film retail package',
 
           frameNum: '14A',
 
-          location: 'Beirut, LB',
+          location:
+            'Beirut, LB',
 
-          year: '2026',
+          year:
+            '2026',
 
-          format: '35mm Film',
+          format:
+            '35mm Film',
 
           description:
             'Quiet Shelves Hiding a lot of treasures.',
@@ -1108,49 +951,59 @@
           linkText:
             'View gallery →',
 
-
           photos: [
 
             {
               image: 'images/a-9.avif',
               alt: 'CEOs picture',
-              caption: 'The Madman Behind the Lens'
+              caption:
+                'The Madman Behind the Lens'
             },
 
             {
               image: 'images/a-4.avif',
               alt: 'jen',
-              caption: '10452 km² of heart.'
+              caption:
+                '10452 km² of heart.',
+              orientation: 'portrait'
             },
 
             {
               image: 'images/a-14.avif',
               alt: 'Lanlun',
-              caption: 'Wrapped in Babylon blue'
+              caption:
+                'Wrapped in Babylon blue'
             },
 
             {
               image: 'images/Untitled-4.avif',
               alt: 'brrrrrrrrrrrrr',
-              caption: 'Arguing with the wind'
+              caption:
+                'Arguing with the wind'
             },
 
             {
               image: 'images/Untitled-3.avif',
-              alt: 'Music Speaks Louder than Words',
-              caption: 'Music Speaks Louder Than Words'
+              alt:
+                'Music Speaks Louder than Words',
+              caption:
+                'Music Speaks Louder Than Words'
             },
 
             {
               image: 'images/Untitled-2.avif',
-              alt: 'Hidden inside these books are secrets',
-              caption: 'Knowledge hidden within the shelves'
+              alt:
+                'Hidden inside these books are secrets',
+              caption:
+                'Knowledge hidden within the shelves'
             },
 
             {
               image: 'images/Untitled-1.avif',
-              alt: 'Just the exhausts poluting the air',
-              caption: 'Pollution In An Artistic Way'
+              alt:
+                'Just the exhausts poluting the air',
+              caption:
+                'Pollution In An Artistic Way'
             }
 
           ]
@@ -1160,24 +1013,11 @@
       ];
 
 
+      /* =====================================================
+         LOAD CARDS FROM LOCAL STORAGE
+         ===================================================== */
 
-      /* =========================================================
-         LOAD CARDS
-         
-         Priority:
-         1. localStorage admin cards
-         2. cards.json
-         3. built-in fallback
-      ========================================================= */
-
-      const loadCards = async () => {
-
-        /*
-         * First check localStorage.
-         */
-
-        let storedCards = null;
-
+      const loadLocalCards = () => {
 
         try {
 
@@ -1187,514 +1027,518 @@
             );
 
 
-          if (raw) {
+          if (!raw) {
+            return null;
+          }
 
-            const parsed =
-              JSON.parse(raw);
+
+          const parsed =
+            JSON.parse(raw);
 
 
-            if (Array.isArray(parsed)) {
+          return Array.isArray(parsed)
+            ? parsed
+            : null;
 
-              storedCards = parsed;
+        } catch (error) {
+
+          console.warn(
+            'Could not read localStorage cards:',
+            error
+          );
+
+          return null;
+
+        }
+
+      };
+
+
+      /* =====================================================
+         LOAD cards.json
+         
+         Exact external JSON file is preferred.
+         localStorage remains a fallback for compatibility
+         with the existing admin-card system.
+         ===================================================== */
+
+      const loadCards = async () => {
+
+        try {
+
+          const response =
+            await fetch(
+              'cards.json',
+              {
+                cache: 'no-store'
+              }
+            );
+
+
+          if (
+            response.ok
+          ) {
+
+            const json =
+              await response.json();
+
+
+            if (
+              Array.isArray(json)
+            ) {
+
+              return json;
 
             }
 
           }
 
-        } catch (e) {
+        } catch (error) {
 
           console.warn(
-            'Could not read saved catalogue cards.',
-            e
+            'Could not load cards.json:',
+            error
           );
 
         }
 
 
-        /*
-         * If localStorage contains cards,
-         * use them.
-         */
-
-        if (storedCards) {
-
-          return storedCards;
-
-        }
+        const localCards =
+          loadLocalCards();
 
 
-        /*
-         * Otherwise load the exact
-         * cards.json file.
-         */
+        if (localCards) {
 
-        try {
-
-          const response =
-            await fetch('cards.json', {
-              cache: 'no-store'
-            });
-
-
-          if (!response.ok) {
-
-            throw new Error(
-              `HTTP ${response.status}`
-            );
-
-          }
-
-
-          const json =
-            await response.json();
-
-
-          if (Array.isArray(json)) {
-
-            return json;
-
-          }
-
-        } catch (e) {
-
-          console.warn(
-            'Could not load cards.json. Using fallback data.',
-            e
-          );
+          return localCards;
 
         }
 
-
-        /*
-         * Final fallback.
-         */
 
         return JSON.parse(
-          JSON.stringify(DEFAULT_CARDS)
+          JSON.stringify(
+            DEFAULT_CARDS
+          )
         );
 
       };
 
 
-
-      /* =========================================================
+      /* =====================================================
          URL PARAMETER
-      ========================================================= */
+         ===================================================== */
 
-      const getParam = (name) => {
+      const getParam =
+        name => {
 
-        const params =
-          new URLSearchParams(
-            window.location.search
-          );
-
-
-        return params.get(name);
-
-      };
+          const params =
+            new URLSearchParams(
+              window.location.search
+            );
 
 
+          return params.get(name);
 
-      /* =========================================================
-         IMAGE ORIENTATION DETECTION
-      ========================================================= */
-
-      const detectOrientation = (img) => {
-
-        const wrapper =
-          img.closest(
-            '.sprocket-wrapper'
-          );
+        };
 
 
-        if (!wrapper) {
-          return;
-        }
+      /* =====================================================
+         DETERMINE IMAGE ORIENTATION
+         
+         This is based on the actual image dimensions.
 
+         width > height  = landscape
+         height > width  = portrait
+         equal           = square
+         ===================================================== */
 
-        /*
-         * naturalWidth and naturalHeight
-         * represent the REAL dimensions of
-         * the source image.
-         */
-
-        if (
-          img.naturalWidth > 0 &&
-          img.naturalHeight > 0
-        ) {
+      const getImageOrientation =
+        (img) => {
 
           if (
-            img.naturalHeight >
-            img.naturalWidth
+            img.naturalWidth > 0 &&
+            img.naturalHeight > 0
           ) {
 
-            wrapper.classList.add(
-              'portrait'
-            );
+            if (
+              img.naturalHeight >
+              img.naturalWidth
+            ) {
 
-          } else {
+              return 'portrait';
 
-            wrapper.classList.remove(
-              'portrait'
-            );
+            }
+
+
+            if (
+              img.naturalWidth >
+              img.naturalHeight
+            ) {
+
+              return 'landscape';
+
+            }
+
+
+            return 'square';
 
           }
 
-        }
 
-      };
+          return 'landscape';
+
+        };
 
 
+      /* =====================================================
+         APPLY CORRECT FILM STRIP ORIENTATION
+         ===================================================== */
 
-      /* =========================================================
-         APPLY IMAGE ORIENTATION DETECTION
-      ========================================================= */
+      const detectOrientation =
+        img => {
 
-      const setupOrientationDetection = () => {
+          const wrapper =
+            img.closest(
+              '.sprocket-wrapper'
+            );
 
-        const images =
-          document.querySelectorAll(
-            '.sprocket-wrapper img'
+
+          if (!wrapper) {
+            return;
+          }
+
+
+          const orientation =
+            getImageOrientation(img);
+
+
+          wrapper.classList.remove(
+            'portrait',
+            'landscape',
+            'square'
           );
 
 
-        images.forEach((img) => {
+          wrapper.classList.add(
+            orientation
+          );
 
-          /*
-           * If the browser already knows the
-           * dimensions, detect immediately.
-           */
+        };
 
-          if (img.complete) {
 
-            detectOrientation(img);
+      /* =====================================================
+         GET CURRENT CARD
+         ===================================================== */
+
+      const initialiseGallery =
+        async () => {
+
+          const cards =
+            await loadCards();
+
+
+          let idx =
+            parseInt(
+              getParam('i'),
+              10
+            );
+
+
+          let card =
+            (
+              !isNaN(idx) &&
+              cards[idx]
+            )
+              ? cards[idx]
+              : null;
+
+
+          /* -------------------------------------------------
+             Optional code lookup
+             ------------------------------------------------- */
+
+          if (!card) {
+
+            const code =
+              getParam('code');
+
+
+            if (code) {
+
+              for (
+                let k = 0;
+                k < cards.length;
+                k++
+              ) {
+
+                if (
+                  cards[k].code === code
+                ) {
+
+                  card =
+                    cards[k];
+
+                  idx =
+                    k;
+
+                  break;
+
+                }
+
+              }
+
+            }
 
           }
 
 
-          /*
-           * Otherwise wait until the image
-           * has finished loading.
-           */
+          /* =================================================
+             GALLERY INFORMATION
+             ================================================= */
 
-          img.addEventListener(
-            'load',
-            () => {
+          if (!card) {
+
+            document.title =
+              'Gallery Not Found — Raffoul Traboulsy';
+
+
+            $('galTitle').textContent =
+              'Gallery not found';
+
+
+            $('photoStream').innerHTML =
+              '<div class="empty">' +
+              'This gallery link is missing or the card no longer exists.' +
+              '</div>';
+
+
+            return;
+
+          }
+
+
+          document.title =
+            `${card.title || 'Gallery'} — Raffoul Traboulsy`;
+
+
+          $('galTitle').textContent =
+            card.title || 'Gallery';
+
+
+          $('galLocation').textContent =
+            card.location || '—';
+
+
+          $('galFormat').textContent =
+            card.format || '—';
+
+
+          $('galYear').textContent =
+            card.year || '—';
+
+
+          $('navCode').textContent =
+            card.code || 'Catalogue';
+
+
+          $('footCode').textContent =
+            card.code || 'Catalogue';
+
+
+          let photos =
+            Array.isArray(card.photos)
+              ? [...card.photos]
+              : [];
+
+
+          /* =================================================
+             FALLBACK TO COVER IMAGE
+             ================================================= */
+
+          if (
+            !photos.length &&
+            card.image
+          ) {
+
+            photos = [
+
+              {
+
+                image:
+                  card.image,
+
+                alt:
+                  card.alt ||
+                  card.title ||
+                  '',
+
+                caption:
+                  card.title ||
+                  ''
+
+              }
+
+            ];
+
+          }
+
+
+          const stream =
+            $('photoStream');
+
+
+          /* =================================================
+             NO PHOTOS
+             ================================================= */
+
+          if (!photos.length) {
+
+            stream.innerHTML =
+              '<div class="empty">' +
+              'No photos have been added to this card yet.' +
+              '</div>';
+
+
+            return;
+
+          }
+
+
+          /* =================================================
+             RENDER PHOTOS
+             ================================================= */
+
+          stream.innerHTML =
+            photos
+              .map((photo, i) => {
+
+                const frameLabel =
+                  `Frame // ${String(
+                    i + 1
+                  ).padStart(2, '0')}A`;
+
+
+                return `
+
+                  <article class="film-frame">
+
+                    <div
+                      class="sprocket-wrapper"
+                      data-photo-index="${i}">
+
+                      <img
+                        src="${escapeHtml(photo.image)}"
+                        alt="${escapeHtml(
+                          photo.alt || ''
+                        )}"
+                        loading="lazy">
+
+                    </div>
+
+
+                    <button
+                      type="button"
+                      class="expand-btn"
+
+                      data-image="${escapeHtml(
+                        photo.image
+                      )}"
+
+                      data-alt="${escapeHtml(
+                        photo.alt || ''
+                      )}"
+
+                      data-caption="${escapeHtml(
+                        photo.caption || ''
+                      )}"
+
+                      data-frame="${escapeHtml(
+                        frameLabel
+                      )}">
+
+                      ⛶ Expand
+
+                    </button>
+
+
+                    <div class="caption">
+
+                      <span>
+                        ${escapeHtml(
+                          frameLabel
+                        )}
+                      </span>
+
+                      <span>
+                        ${escapeHtml(
+                          photo.caption || ''
+                        )}
+                      </span>
+
+                    </div>
+
+                  </article>
+
+                `;
+
+              })
+              .join('');
+
+
+          /* =================================================
+             IMAGE DIMENSION DETECTION
+             
+             Each image is inspected after loading.
+             This means orientation does NOT depend on
+             the JSON orientation property.
+             ================================================= */
+
+          const images =
+            Array.from(
+              stream.querySelectorAll(
+                '.sprocket-wrapper img'
+              )
+            );
+
+
+          images.forEach(img => {
+
+            if (
+              img.complete
+            ) {
 
               detectOrientation(img);
 
-            },
-            {
-              once: true
-            }
-          );
+            } else {
 
+              img.addEventListener(
+                'load',
+                () => {
 
-          /*
-           * If an image fails, keep the
-           * default horizontal frame.
-           */
+                  detectOrientation(img);
 
-          img.addEventListener(
-            'error',
-            () => {
-
-              const wrapper =
-                img.closest(
-                  '.sprocket-wrapper'
-                );
-
-
-              if (wrapper) {
-
-                wrapper.classList.remove(
-                  'portrait'
-                );
-
-              }
-
-            },
-            {
-              once: true
-            }
-          );
-
-        });
-
-      };
-
-
-
-      /* =========================================================
-         MAIN GALLERY INITIALIZATION
-      ========================================================= */
-
-      const initGallery = async () => {
-
-        const cards =
-          await loadCards();
-
-
-        let idx =
-          parseInt(
-            getParam('i'),
-            10
-          );
-
-
-        let card =
-          (!isNaN(idx) && cards[idx])
-            ? cards[idx]
-            : null;
-
-
-
-        /* -------------------------------------------------------
-           LOOKUP BY CODE
-        ------------------------------------------------------- */
-
-        if (!card) {
-
-          const code =
-            getParam('code');
-
-
-          if (code) {
-
-            for (
-              let k = 0;
-              k < cards.length;
-              k++
-            ) {
-
-              if (
-                cards[k].code === code
-              ) {
-
-                card = cards[k];
-
-                idx = k;
-
-                break;
-
-              }
+                },
+                {
+                  once: true
+                }
+              );
 
             }
 
-          }
+          });
 
-        }
+        };
 
 
+      /* =====================================================
+         START GALLERY
+         ===================================================== */
 
-        /* -------------------------------------------------------
-           GALLERY NOT FOUND
-        ------------------------------------------------------- */
+      initialiseGallery();
 
-        if (!card) {
 
-          $('galTitle').textContent =
-            'Gallery not found';
-
-
-          $('photoStream').innerHTML =
-            '<div class="empty">This gallery link is missing or the card no longer exists.</div>';
-
-
-          return;
-
-        }
-
-
-
-        /* -------------------------------------------------------
-           GALLERY INFORMATION
-        ------------------------------------------------------- */
-
-        document.title =
-          `${card.title || 'Gallery'} — Raffoul Traboulsy`;
-
-
-        $('galTitle').textContent =
-          card.title || 'Gallery';
-
-
-        $('galLocation').textContent =
-          card.location || '—';
-
-
-        $('galFormat').textContent =
-          card.format || '—';
-
-
-        $('galYear').textContent =
-          card.year || '—';
-
-
-        $('navCode').textContent =
-          card.code || 'Catalogue';
-
-
-        $('footCode').textContent =
-          card.code || 'Catalogue';
-
-
-
-        /* -------------------------------------------------------
-           PHOTOS
-        ------------------------------------------------------- */
-
-        let photos =
-          Array.isArray(card.photos)
-            ? [...card.photos]
-            : [];
-
-
-
-        /*
-         * Fallback to the card's cover image
-         * if there are no photos.
-         */
-
-        if (
-          !photos.length &&
-          card.image
-        ) {
-
-          photos = [
-
-            {
-
-              image: card.image,
-
-              alt:
-                card.alt ||
-                card.title ||
-                '',
-
-              caption:
-                card.title ||
-                ''
-
-            }
-
-          ];
-
-        }
-
-
-
-        const stream =
-          $('photoStream');
-
-
-
-        /* -------------------------------------------------------
-           NO PHOTOS
-        ------------------------------------------------------- */
-
-        if (!photos.length) {
-
-          stream.innerHTML =
-            '<div class="empty">No photos have been added to this card yet.</div>';
-
-
-          return;
-
-        }
-
-
-
-        /* -------------------------------------------------------
-           RENDER PHOTOS
-        ------------------------------------------------------- */
-
-        stream.innerHTML =
-          photos.map((p, i) => {
-
-            const frameLabel =
-              `Frame // ${String(
-                i + 1
-              ).padStart(2, '0')}A`;
-
-
-            return `
-
-              <div class="film-frame">
-
-                <div class="sprocket-wrapper">
-
-                  <img
-                    src="${escapeHtml(p.image)}"
-                    alt="${escapeHtml(p.alt || '')}"
-                    loading="lazy">
-
-                </div>
-
-
-                <button
-                  type="button"
-                  class="expand-btn"
-
-                  data-image="${escapeHtml(
-                    p.image
-                  )}"
-
-                  data-alt="${escapeHtml(
-                    p.alt || ''
-                  )}"
-
-                  data-caption="${escapeHtml(
-                    p.caption || ''
-                  )}"
-
-                  data-frame="${escapeHtml(
-                    frameLabel
-                  )}">
-
-                  ⛶ Expand
-
-                </button>
-
-
-                <div class="caption">
-
-                  <span>
-                    ${escapeHtml(
-                      frameLabel
-                    )}
-                  </span>
-
-                  <span>
-                    ${escapeHtml(
-                      p.caption || ''
-                    )}
-                  </span>
-
-                </div>
-
-              </div>
-
-            `;
-
-          }).join('');
-
-
-
-        /*
-         * Start automatic orientation detection
-         * after rendering the images.
-         */
-
-        setupOrientationDetection();
-
-      };
-
-
-
-      /* =========================================================
+      /* =====================================================
          FULLSCREEN IMAGE VIEWER
-      ========================================================= */
+         ===================================================== */
 
       const imageViewer =
         $('imageViewer');
@@ -1716,89 +1560,92 @@
         $('viewerClose');
 
 
-
-      /* ---------------------------------------------------------
+      /* =====================================================
          OPEN VIEWER
-      --------------------------------------------------------- */
+         ===================================================== */
 
-      const openViewer = (
-        image,
-        alt,
-        caption,
-        frame
-      ) => {
+      const openViewer =
+        (
+          image,
+          alt,
+          caption,
+          frame
+        ) => {
 
-        viewerImage.src =
-          image;
-
-
-        viewerImage.alt =
-          alt || '';
+          viewerImage.src =
+            image;
 
 
-        viewerCaption.textContent =
-          caption || '';
+          viewerImage.alt =
+            alt || '';
 
 
-        viewerFrame.textContent =
-          frame || '';
+          viewerCaption.textContent =
+            caption || '';
 
 
-        imageViewer.classList.add(
-          'active'
-        );
+          viewerFrame.textContent =
+            frame || '';
 
 
-        document.body.style.overflow =
-          'hidden';
+          imageViewer.classList.add(
+            'active'
+          );
 
 
-        viewerClose.focus();
-
-      };
-
+          document.body.style.overflow =
+            'hidden';
 
 
-      /* ---------------------------------------------------------
+          viewerClose.focus();
+
+        };
+
+
+      /* =====================================================
          CLOSE VIEWER
-      --------------------------------------------------------- */
+         ===================================================== */
 
-      const closeViewer = () => {
+      const closeViewer =
+        () => {
 
-        imageViewer.classList.remove(
-          'active'
-        );
-
-
-        document.body.style.overflow =
-          '';
+          imageViewer.classList.remove(
+            'active'
+          );
 
 
-        setTimeout(() => {
-
-          if (
-            !imageViewer.classList.contains(
-              'active'
-            )
-          ) {
-
-            viewerImage.src = '';
-
-          }
-
-        }, 250);
-
-      };
+          document.body.style.overflow =
+            '';
 
 
+          setTimeout(
+            () => {
 
-      /* ---------------------------------------------------------
+              if (
+                !imageViewer.classList.contains(
+                  'active'
+                )
+              ) {
+
+                viewerImage.src =
+                  '';
+
+              }
+
+            },
+            250
+          );
+
+        };
+
+
+      /* =====================================================
          EXPAND BUTTON
-      --------------------------------------------------------- */
+         ===================================================== */
 
       document.addEventListener(
         'click',
-        (e) => {
+        e => {
 
           const button =
             e.target.closest(
@@ -1827,10 +1674,9 @@
       );
 
 
-
-      /* ---------------------------------------------------------
-         CLOSE BUTTON
-      --------------------------------------------------------- */
+      /* =====================================================
+         CLOSE VIEWER
+         ===================================================== */
 
       viewerClose.addEventListener(
         'click',
@@ -1838,14 +1684,13 @@
       );
 
 
-
-      /* ---------------------------------------------------------
+      /* =====================================================
          CLICK OUTSIDE IMAGE
-      --------------------------------------------------------- */
+         ===================================================== */
 
       imageViewer.addEventListener(
         'click',
-        (e) => {
+        e => {
 
           if (
             e.target === imageViewer
@@ -1859,14 +1704,13 @@
       );
 
 
-
-      /* ---------------------------------------------------------
+      /* =====================================================
          ESCAPE KEY
-      --------------------------------------------------------- */
+         ===================================================== */
 
       document.addEventListener(
         'keydown',
-        (e) => {
+        e => {
 
           if (
             e.key === 'Escape' &&
@@ -1883,16 +1727,34 @@
       );
 
 
+      /* =====================================================
+         SFX SETTING
+         
+         IMPORTANT:
+         This uses the exact same localStorage key
+         used by index.html:
 
-      /* =========================================================
-         FILM ROLL AUDIO
-      ========================================================= */
+             sfxEnabled
 
-      const rollAudio =
-        document.getElementById(
-          'roll-audio'
-        );
+         When the value is "false", NO .play()
+         call is made.
+         ===================================================== */
 
+      const isSoundEnabled =
+        () => {
+
+          return (
+            localStorage.getItem(
+              SFX_KEY
+            ) !== 'false'
+          );
+
+        };
+
+
+      /* =====================================================
+         BACK TO CATALOGUE
+         ===================================================== */
 
       const backBtn =
         document.querySelector(
@@ -1904,11 +1766,11 @@
 
         backBtn.addEventListener(
           'click',
-          (e) => {
+          e => {
 
             /*
-             * Preserve browser behaviour for
-             * Ctrl/Cmd/middle-click.
+             * Preserve normal browser behaviour
+             * for Ctrl/Cmd/Shift/middle click.
              */
 
             if (
@@ -1930,43 +1792,102 @@
               backBtn.href;
 
 
+            /* ===============================================
+               SFX OFF
+               
+               IMPORTANT:
+               We immediately navigate.
+
+               No audio element is accessed.
+               No currentTime is changed.
+               No play() is called.
+               =============================================== */
+
+            if (
+              !isSoundEnabled()
+            ) {
+
+              window.location.replace(
+                targetUrl
+              );
+
+              return;
+
+            }
+
+
+            /* ===============================================
+               SFX ON
+               =============================================== */
+
+            const rollAudio =
+              $('roll-audio');
+
+
+            if (!rollAudio) {
+
+              window.location.replace(
+                targetUrl
+              );
+
+              return;
+
+            }
+
+
             rollAudio.currentTime =
               0;
 
 
-            rollAudio
-              .play()
-              .catch(
-                err =>
-                  console.log(
-                    'Audio play blocked by browser:',
-                    err
-                  )
+            const playPromise =
+              rollAudio.play();
+
+
+            /*
+             * Give the film-roll sound time to play
+             * before returning to the catalogue.
+             */
+
+            if (
+              playPromise !== undefined
+            ) {
+
+              playPromise
+                .catch(() => {})
+                .finally(() => {
+
+                  setTimeout(
+                    () => {
+
+                      window.location.replace(
+                        targetUrl
+                      );
+
+                    },
+                    700
+                  );
+
+                });
+
+            } else {
+
+              setTimeout(
+                () => {
+
+                  window.location.replace(
+                    targetUrl
+                  );
+
+                },
+                700
               );
 
-
-            setTimeout(
-              () => {
-
-                window.location.href =
-                  targetUrl;
-
-              },
-              700
-            );
+            }
 
           }
         );
 
       }
-
-
-
-      /* =========================================================
-         START GALLERY
-      ========================================================= */
-
-      initGallery();
 
     })();
 
