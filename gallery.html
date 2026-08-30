@@ -909,15 +909,128 @@
 
   </div>
 
-  <!-- =======================================================
-       AUDIO
-  ======================================================= -->
+   <!-- =========================================================
+       FILM ROLL AUDIO + SFX SETTING
+  ========================================================= -->
 
-<audio
- id="roll-audio"
- src="audio/film-roll.mp3"
- preload="auto"> </audio>
+  <audio
+    id="roll-audio"
+    src="audio/film-roll.mp3"
+    preload="auto">
+  </audio>
 
+  <script>
+
+    (() => {
+
+      'use strict';
+
+      /* =========================================================
+         SFX SETTING
+         Uses the same localStorage key as index.html
+      ========================================================= */
+
+      const soundEnabled =
+        localStorage.getItem('sfxEnabled') !== 'false';
+
+
+      /* =========================================================
+         FILM ROLL AUDIO
+      ========================================================= */
+
+      const rollAudio =
+        document.getElementById('roll-audio');
+
+
+      const backBtn =
+        document.querySelector('.back-btn');
+
+
+      if (backBtn) {
+
+        backBtn.addEventListener(
+          'click',
+          (e) => {
+
+            /*
+             * Keep normal behaviour for
+             * Ctrl/Cmd/Middle click.
+             */
+
+            if (
+              e.ctrlKey ||
+              e.metaKey ||
+              e.shiftKey ||
+              e.button !== 0
+            ) {
+
+              return;
+
+            }
+
+
+            e.preventDefault();
+
+
+            const targetUrl =
+              backBtn.href;
+
+
+            /*
+             * Only play the film-roll sound
+             * if SFX is enabled in index.html.
+             */
+
+            if (soundEnabled) {
+
+              rollAudio.currentTime = 0;
+
+
+              rollAudio
+                .play()
+                .catch(
+                  err =>
+                    console.log(
+                      'Audio play blocked by browser:',
+                      err
+                    )
+                );
+
+
+              /*
+               * Wait for the sound before
+               * returning to the catalogue.
+               */
+
+              setTimeout(
+                () => {
+
+                  window.location.href =
+                    targetUrl;
+
+                },
+                700
+              );
+
+            } else {
+
+              /*
+               * If SFX is OFF, go back immediately.
+               */
+
+              window.location.href =
+                targetUrl;
+
+            }
+
+          }
+        );
+
+      }
+
+    })();
+
+  </script>
   <!-- =======================================================
        JAVASCRIPT
   ======================================================= -->
