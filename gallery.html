@@ -161,10 +161,17 @@
 
 
         /* =========================================================
-           CATEGORY FILTERS
+           CATEGORY NAVIGATION
            ========================================================= */
 
-        .gallery-filters {
+        .gallery-navigation {
+            margin-bottom: 3rem;
+
+            text-align: center;
+        }
+
+
+        .category-level {
             display: flex;
 
             justify-content: center;
@@ -173,9 +180,12 @@
 
             gap: 0.75rem;
 
-            margin-bottom: 3rem;
-
             flex-wrap: wrap;
+        }
+
+
+        .category-level.hidden {
+            display: none;
         }
 
 
@@ -215,6 +225,62 @@
 
 
         /* =========================================================
+           CURRENT CATEGORY LABEL
+           ========================================================= */
+
+        .current-category {
+            margin-top: 1rem;
+
+            font-family: 'IBM Plex Mono', monospace;
+
+            font-size: 0.7rem;
+
+            color: var(--ink-muted);
+
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           BACK TO MAIN CATEGORIES
+           ========================================================= */
+
+        .subcategory-back {
+            display: none;
+
+            margin-bottom: 1rem;
+
+            border: 0;
+
+            background: none;
+
+            color: var(--stamp);
+
+            font-family: 'IBM Plex Mono', monospace;
+
+            font-size: 0.7rem;
+
+            letter-spacing: 0.08em;
+
+            cursor: pointer;
+
+            text-transform: uppercase;
+        }
+
+
+        .subcategory-back.visible {
+            display: inline-block;
+        }
+
+
+        .subcategory-back:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
            PHOTO STREAM
            ========================================================= */
 
@@ -249,7 +315,6 @@
 
         /* =========================================================
            HORIZONTAL FILM STRIP
-           Default for landscape images
            ========================================================= */
 
         .sprocket-wrapper {
@@ -320,7 +385,6 @@
 
         /* =========================================================
            VERTICAL FILM STRIP
-           Automatically used for portrait photos
            ========================================================= */
 
         .sprocket-wrapper.portrait {
@@ -333,8 +397,6 @@
         }
 
 
-        /* Move sprocket holes from top/bottom to left/right */
-
         .sprocket-wrapper.portrait::before,
         .sprocket-wrapper.portrait::after {
 
@@ -345,6 +407,7 @@
             right: auto;
 
             width: 12px;
+
             height: 100%;
 
             background-image:
@@ -460,13 +523,13 @@
             }
 
 
-            .gallery-filters {
-                margin-bottom: 2rem;
+            .filter-btn {
+                padding: 0.6rem 1rem;
             }
 
 
-            .filter-btn {
-                padding: 0.6rem 1rem;
+            .gallery-navigation {
+                margin-bottom: 2rem;
             }
 
         }
@@ -544,55 +607,140 @@
 
 
     <!-- =========================================================
+         CATEGORY NAVIGATION
+         ========================================================= -->
+
+    <div class="wrap">
+
+        <div class="gallery-navigation">
+
+
+            <!-- =====================================================
+                 MAIN CATEGORIES
+
+                 ALL
+                 PEOPLE
+                 DETAILS
+                 ===================================================== -->
+
+            <div
+                class="category-level"
+                id="mainCategories"
+            >
+
+                <button
+                    type="button"
+                    class="filter-btn active"
+                    data-set="all"
+                >
+                    ALL
+                </button>
+
+
+                <button
+                    type="button"
+                    class="filter-btn"
+                    data-set="people"
+                >
+                    PEOPLE
+                </button>
+
+
+                <button
+                    type="button"
+                    class="filter-btn"
+                    data-set="details"
+                >
+                    DETAILS
+                </button>
+
+            </div>
+
+
+            <!-- =====================================================
+                 PEOPLE SUB-CATEGORIES
+
+                 ONLY PEOPLE HAS ORIENTATION FILTERING
+
+                 ALL PEOPLE
+                 LANDSCAPE
+                 PORTRAIT
+                 ===================================================== -->
+
+            <div
+                class="category-level hidden"
+                id="peopleOrientations"
+            >
+
+                <button
+                    type="button"
+                    class="filter-btn active"
+                    data-orientation="all"
+                >
+                    ALL PEOPLE
+                </button>
+
+
+                <button
+                    type="button"
+                    class="filter-btn"
+                    data-orientation="landscape"
+                >
+                    LANDSCAPE
+                </button>
+
+
+                <button
+                    type="button"
+                    class="filter-btn"
+                    data-orientation="portrait"
+                >
+                    PORTRAIT
+                </button>
+
+            </div>
+
+
+            <!-- =====================================================
+                 BACK BUTTON
+                 ===================================================== -->
+
+            <button
+                type="button"
+                class="subcategory-back"
+                id="subcategoryBack"
+            >
+                ← Back to Categories
+            </button>
+
+
+            <!-- =====================================================
+                 CURRENT CATEGORY
+                 ===================================================== -->
+
+            <div
+                class="current-category"
+                id="currentCategory"
+            >
+                All photographs
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
          GALLERY
          ========================================================= -->
 
     <main class="wrap">
 
-
-        <!-- Category filters -->
-
-        <div
-            class="gallery-filters"
-            id="galleryFilters"
-        >
-
-            <button
-                type="button"
-                class="filter-btn active"
-                data-set="all"
-            >
-                ALL
-            </button>
-
-
-            <button
-                type="button"
-                class="filter-btn"
-                data-set="people"
-            >
-                PEOPLE
-            </button>
-
-
-            <button
-                type="button"
-                class="filter-btn"
-                data-set="details"
-            >
-                DETAILS
-            </button>
-
-        </div>
-
-
-        <!-- Photos -->
-
         <div
             class="photo-stream"
             id="photoStream"
         >
-            <!-- Rendered by JavaScript -->
+            <!-- Photos generated by JavaScript -->
         </div>
 
     </main>
@@ -692,11 +840,17 @@
 
 
             /* =====================================================
-               DEFAULT CARDS
+               DEFAULT CARD
 
                ROLL 01
-               ├── PEOPLE = first 4
-               └── DETAILS = last 2
+               GOLD 200
+
+               PEOPLE
+               ├── LANDSCAPE
+               └── PORTRAIT
+
+               DETAILS
+               └── NO ORIENTATION FILTER
                ===================================================== */
 
             const DEFAULT_CARDS = [
@@ -738,14 +892,13 @@
 
 
                     /* =================================================
-                       SUB-CATEGORIES
+                       SETS
                        ================================================= */
 
                     sets: [
 
                         /* ---------------------------------------------
                            PEOPLE
-                           First four photographs
                            --------------------------------------------- */
 
                         {
@@ -759,18 +912,6 @@
                                 {
 
                                     image:
-                                        'images/a-4.avif',
-
-                                    alt:
-                                        'Jen',
-
-                                    caption:
-                                        '10452 km² of heart.'
-
-                                },
-                                                                {
-
-                                    image:
                                         'images/a-9.avif',
 
                                     alt:
@@ -781,6 +922,19 @@
 
                                 },
 
+
+                                {
+
+                                    image:
+                                        'images/a-4.avif',
+
+                                    alt:
+                                        'Jen',
+
+                                    caption:
+                                        '10452 km² of heart.'
+
+                                },
 
 
                                 {
@@ -817,7 +971,6 @@
 
                         /* ---------------------------------------------
                            DETAILS
-                           Last two photographs
                            --------------------------------------------- */
 
                         {
@@ -867,7 +1020,7 @@
 
 
             /* =====================================================
-               LOAD CARDS
+               LOAD CATALOGUE
                ===================================================== */
 
             const loadCards = () => {
@@ -891,11 +1044,6 @@
                 }
 
 
-                /*
-                 * No saved catalogue:
-                 * use DEFAULT_CARDS.
-                 */
-
                 if (!raw) {
 
                     return JSON.parse(
@@ -906,11 +1054,6 @@
 
                 }
 
-
-                /*
-                 * Existing saved catalogue:
-                 * use it.
-                 */
 
                 try {
 
@@ -989,11 +1132,9 @@
                     : null;
 
 
-            /*
-             * Also support:
-             *
-             * gallery.html?code=ROLL%20%E2%80%94%2001
-             */
+            /* =====================================================
+               SUPPORT CODE LINKS
+               ===================================================== */
 
             if (!card) {
 
@@ -1031,15 +1172,15 @@
 
 
             /* =====================================================
-               RENDER CURRENT GALLERY
+               GALLERY EXISTS
                ===================================================== */
 
             if (card) {
 
 
-                /* -----------------------------------------------
-                   Header information
-                   ----------------------------------------------- */
+                /* -------------------------------------------------
+                   HEADER INFORMATION
+                   ------------------------------------------------- */
 
                 document.title =
                     `${card.title || 'Gallery'} — Raffoul Traboulsy`;
@@ -1076,7 +1217,7 @@
 
 
                 /* =================================================
-                   PREPARE SETS
+                   GET SETS
                    ================================================= */
 
                 let sets =
@@ -1085,19 +1226,9 @@
                         : [];
 
 
-                /*
-                 * BACKWARD COMPATIBILITY
-                 *
-                 * If a card still has:
-                 *
-                 * photos: [...]
-                 *
-                 * instead of:
-                 *
-                 * sets: [...]
-                 *
-                 * it will still work.
-                 */
+                /* -------------------------------------------------
+                   Backward compatibility
+                   ------------------------------------------------- */
 
                 if (
                     !sets.length &&
@@ -1122,10 +1253,9 @@
                 }
 
 
-                /*
-                 * If there are no sets but there is
-                 * a cover image, show the cover.
-                 */
+                /* -------------------------------------------------
+                   Fallback
+                   ------------------------------------------------- */
 
                 if (
                     !sets.length &&
@@ -1167,33 +1297,111 @@
                 }
 
 
+                /* =================================================
+                   ELEMENTS
+                   ================================================= */
+
                 const stream =
                     $('photoStream');
 
 
-                const filters =
-                    $('galleryFilters');
+                const mainCategories =
+                    $('mainCategories');
+
+
+                const peopleOrientations =
+                    $('peopleOrientations');
+
+
+                const backButton =
+                    $('subcategoryBack');
+
+
+                const currentCategory =
+                    $('currentCategory');
 
 
                 /* =================================================
-                   RENDER GALLERY FUNCTION
+                   STATE
                    ================================================= */
 
-                function renderGallery(
-                    selectedSet = 'all'
+                let currentSet =
+                    getParam('set') || 'all';
+
+
+                let currentOrientation =
+                    getParam('orientation') || 'all';
+
+
+                /* -------------------------------------------------
+                   Validate set
+                   ------------------------------------------------- */
+
+                if (
+                    currentSet !== 'all' &&
+                    !sets.some(
+                        set =>
+                            set.id === currentSet
+                    )
                 ) {
 
+                    currentSet =
+                        'all';
+
+                }
+
+
+                /*
+                 * Orientation is ONLY valid for PEOPLE.
+                 */
+
+                if (
+                    currentSet !== 'people'
+                ) {
+
+                    currentOrientation =
+                        'all';
+
+                }
+
+
+                /*
+                 * Validate orientation.
+                 */
+
+                if (
+                    ![
+                        'all',
+                        'landscape',
+                        'portrait'
+                    ].includes(
+                        currentOrientation
+                    )
+                ) {
+
+                    currentOrientation =
+                        'all';
+
+                }
+
+
+                /* =================================================
+                   GET PHOTOS
+                   ================================================= */
+
+                function getPhotosForSet(
+                    setId
+                ) {
 
                     let photos = [];
 
 
                     /* ---------------------------------------------
                        ALL
-                       Combine every set.
                        --------------------------------------------- */
 
                     if (
-                        selectedSet === 'all'
+                        setId === 'all'
                     ) {
 
                         sets.forEach(
@@ -1212,6 +1420,9 @@
 
                                                 ...photo,
 
+                                                setId:
+                                                    set.id,
+
                                                 setTitle:
                                                     set.title
 
@@ -1229,7 +1440,7 @@
 
 
                     /* ---------------------------------------------
-                       SPECIFIC CATEGORY
+                       SPECIFIC SET
                        --------------------------------------------- */
 
                     else {
@@ -1238,7 +1449,7 @@
                             sets.find(
                                 set =>
                                     set.id ===
-                                    selectedSet
+                                    setId
                             );
 
 
@@ -1255,6 +1466,9 @@
 
                                         ...photo,
 
+                                        setId:
+                                            selected.id,
+
                                         setTitle:
                                             selected.title
 
@@ -1266,9 +1480,256 @@
                     }
 
 
+                    return photos;
+
+                }
+
+
+                /* =================================================
+                   UPDATE URL
+                   ================================================= */
+
+                function updateURL() {
+
+                    const url =
+                        new URL(
+                            window.location.href
+                        );
+
+
+                    if (
+                        currentSet === 'all'
+                    ) {
+
+                        url.searchParams.delete(
+                            'set'
+                        );
+
+                    }
+
+                    else {
+
+                        url.searchParams.set(
+                            'set',
+                            currentSet
+                        );
+
+                    }
+
+
+                    /*
+                     * Orientation is ONLY stored
+                     * when we're inside People.
+                     */
+
+                    if (
+                        currentSet === 'people' &&
+                        currentOrientation !== 'all'
+                    ) {
+
+                        url.searchParams.set(
+                            'orientation',
+                            currentOrientation
+                        );
+
+                    }
+
+                    else {
+
+                        url.searchParams.delete(
+                            'orientation'
+                        );
+
+                    }
+
+
+                    window.history.replaceState(
+                        {},
+                        '',
+                        url
+                    );
+
+                }
+
+
+                /* =================================================
+                   UPDATE NAVIGATION
+                   ================================================= */
+
+                function updateNavigation() {
+
+
                     /* =================================================
-                       EMPTY CATEGORY
+                       TOP LEVEL
                        ================================================= */
+
+                    if (
+                        currentSet === 'all'
+                    ) {
+
+                        mainCategories.classList.remove(
+                            'hidden'
+                        );
+
+
+                        peopleOrientations.classList.add(
+                            'hidden'
+                        );
+
+
+                        backButton.classList.remove(
+                            'visible'
+                        );
+
+
+                        currentCategory.textContent =
+                            'All photographs';
+
+                    }
+
+
+                    /* =================================================
+                       PEOPLE
+                       ================================================= */
+
+                    else if (
+                        currentSet === 'people'
+                    ) {
+
+                        mainCategories.classList.add(
+                            'hidden'
+                        );
+
+
+                        peopleOrientations.classList.remove(
+                            'hidden'
+                        );
+
+
+                        backButton.classList.add(
+                            'visible'
+                        );
+
+
+                        if (
+                            currentOrientation ===
+                            'portrait'
+                        ) {
+
+                            currentCategory.textContent =
+                                'People / Portrait';
+
+                        }
+
+                        else if (
+                            currentOrientation ===
+                            'landscape'
+                        ) {
+
+                            currentCategory.textContent =
+                                'People / Landscape';
+
+                        }
+
+                        else {
+
+                            currentCategory.textContent =
+                                'People / All';
+
+                        }
+
+                    }
+
+
+                    /* =================================================
+                       DETAILS
+
+                       IMPORTANT:
+                       No orientation navigation.
+                       ================================================= */
+
+                    else if (
+                        currentSet === 'details'
+                    ) {
+
+                        mainCategories.classList.add(
+                            'hidden'
+                        );
+
+
+                        peopleOrientations.classList.add(
+                            'hidden'
+                        );
+
+
+                        backButton.classList.add(
+                            'visible'
+                        );
+
+
+                        currentCategory.textContent =
+                            'Details';
+
+                    }
+
+
+                    /* =================================================
+                       MAIN BUTTON ACTIVE STATES
+                       ================================================= */
+
+                    mainCategories
+                        .querySelectorAll(
+                            '.filter-btn'
+                        )
+                        .forEach(
+                            button => {
+
+                                button.classList.toggle(
+                                    'active',
+
+                                    button.dataset.set ===
+                                    currentSet
+                                );
+
+                            }
+                        );
+
+
+                    /* =================================================
+                       PEOPLE ORIENTATION ACTIVE STATES
+                       ================================================= */
+
+                    peopleOrientations
+                        .querySelectorAll(
+                            '.filter-btn'
+                        )
+                        .forEach(
+                            button => {
+
+                                button.classList.toggle(
+                                    'active',
+
+                                    button.dataset.orientation ===
+                                    currentOrientation
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                /* =================================================
+                   RENDER GALLERY
+                   ================================================= */
+
+                function renderGallery() {
+
+                    const photos =
+                        getPhotosForSet(
+                            currentSet
+                        );
+
 
                     if (!photos.length) {
 
@@ -1283,7 +1744,7 @@
 
 
                     /* =================================================
-                       BUILD PHOTO HTML
+                       CREATE PHOTO CARDS
                        ================================================= */
 
                     stream.innerHTML =
@@ -1303,7 +1764,14 @@
 
                                 return `
 
-                                    <div class="film-frame">
+                                    <div
+                                        class="film-frame"
+                                        data-set-id="${escapeHtml(
+                                            p.setId || ''
+                                        )}"
+
+                                        data-orientation="unknown"
+                                    >
 
                                         <div
                                             class="sprocket-wrapper"
@@ -1351,7 +1819,7 @@
 
 
                     /* =================================================
-                       AUTOMATIC IMAGE ORIENTATION
+                       AUTOMATIC ORIENTATION DETECTION
                        ================================================= */
 
                     const images =
@@ -1374,23 +1842,37 @@
                                         );
 
 
-                                    if (!wrapper) {
+                                    const frame =
+                                        img.closest(
+                                            '.film-frame'
+                                        );
+
+
+                                    if (
+                                        !wrapper ||
+                                        !frame
+                                    ) {
 
                                         return;
 
                                     }
 
 
-                                    /*
-                                     * Portrait:
-                                     *
-                                     * height > width
-                                     */
+                                    let orientation;
+
+
+                                    /* ---------------------------------
+                                       PORTRAIT
+                                       --------------------------------- */
 
                                     if (
                                         img.naturalHeight >
                                         img.naturalWidth
                                     ) {
+
+                                        orientation =
+                                            'portrait';
+
 
                                         wrapper.classList.add(
                                             'portrait'
@@ -1399,11 +1881,15 @@
                                     }
 
 
-                                    /*
-                                     * Landscape or square
-                                     */
+                                    /* ---------------------------------
+                                       LANDSCAPE
+                                       --------------------------------- */
 
                                     else {
+
+                                        orientation =
+                                            'landscape';
+
 
                                         wrapper.classList.remove(
                                             'portrait'
@@ -1411,15 +1897,56 @@
 
                                     }
 
+
+                                    frame.dataset.orientation =
+                                        orientation;
+
+
+                                    /*
+                                     * Orientation filtering ONLY
+                                     * happens inside PEOPLE.
+                                     */
+
+                                    if (
+                                        currentSet ===
+                                        'people' &&
+                                        currentOrientation !==
+                                        'all'
+                                    ) {
+
+                                        frame.style.display =
+
+                                            orientation ===
+                                            currentOrientation
+
+                                                ? ''
+
+                                                : 'none';
+
+                                    }
+
+                                    else {
+
+                                        /*
+                                         * DETAILS NEVER gets
+                                         * filtered by orientation.
+                                         */
+
+                                        frame.style.display =
+                                            '';
+
+                                    }
+
                                 };
 
 
-                            /*
-                             * Cached image
-                             */
+                            /* -----------------------------------------
+                               Cached image
+                               ----------------------------------------- */
 
                             if (
-                                img.complete
+                                img.complete &&
+                                img.naturalWidth > 0
                             ) {
 
                                 applyOrientation();
@@ -1427,9 +1954,9 @@
                             }
 
 
-                            /*
-                             * Newly loaded image
-                             */
+                            /* -----------------------------------------
+                               Newly loaded image
+                               ----------------------------------------- */
 
                             img.addEventListener(
                                 'load',
@@ -1443,169 +1970,126 @@
 
 
                 /* =================================================
-                   FILTER BUTTONS
+                   MAIN CATEGORY BUTTONS
                    ================================================= */
 
-                if (filters) {
-
-
-                    filters
-                        .querySelectorAll(
-                            '.filter-btn'
-                        )
-                        .forEach(
-                            button => {
-
-
-                                button.addEventListener(
-                                    'click',
-                                    () => {
-
-
-                                        const selectedSet =
-                                            button.dataset.set;
-
-
-                                        /* -------------------------
-                                           Update active button
-                                           ------------------------- */
-
-                                        filters
-                                            .querySelectorAll(
-                                                '.filter-btn'
-                                            )
-                                            .forEach(
-                                                btn => {
-
-                                                    btn.classList.remove(
-                                                        'active'
-                                                    );
-
-                                                }
-                                            );
-
-
-                                        button.classList.add(
-                                            'active'
-                                        );
-
-
-                                        /* -------------------------
-                                           Render selected set
-                                           ------------------------- */
-
-                                        renderGallery(
-                                            selectedSet
-                                        );
-
-
-                                        /* -------------------------
-                                           Update URL
-                                           ------------------------- */
-
-                                        const url =
-                                            new URL(
-                                                window.location.href
-                                            );
-
-
-                                        if (
-                                            selectedSet ===
-                                            'all'
-                                        ) {
-
-                                            url.searchParams.delete(
-                                                'set'
-                                            );
-
-                                        }
-
-                                        else {
-
-                                            url.searchParams.set(
-                                                'set',
-                                                selectedSet
-                                            );
-
-                                        }
-
-
-                                        window.history.replaceState(
-                                            {},
-                                            '',
-                                            url
-                                        );
-
-                                    }
-                                );
-
-                            }
-                        );
-
-                }
-
-
-                /* =================================================
-                   INITIAL CATEGORY
-                   ================================================= */
-
-                const initialSet =
-                    getParam('set') ||
-                    'all';
-
-
-                /*
-                 * Check whether requested set exists.
-                 */
-
-                const validSet =
-
-                    initialSet === 'all' ||
-
-                    sets.some(
-                        set =>
-                            set.id ===
-                            initialSet
+                mainCategories
+                    .querySelectorAll(
+                        '.filter-btn'
                     )
+                    .forEach(
+                        button => {
 
-                        ? initialSet
 
-                        : 'all';
+                            button.addEventListener(
+                                'click',
+                                () => {
+
+
+                                    currentSet =
+                                        button.dataset.set;
+
+
+                                    /*
+                                     * Every time we select
+                                     * a main category,
+                                     * reset orientation.
+                                     */
+
+                                    currentOrientation =
+                                        'all';
+
+
+                                    updateURL();
+
+                                    updateNavigation();
+
+                                    renderGallery();
+
+                                }
+                            );
+
+                        }
+                    );
 
 
                 /* =================================================
-                   ACTIVATE CORRECT BUTTON
+                   PEOPLE ORIENTATION BUTTONS
                    ================================================= */
 
-                if (filters) {
+                peopleOrientations
+                    .querySelectorAll(
+                        '.filter-btn'
+                    )
+                    .forEach(
+                        button => {
 
-                    filters
-                        .querySelectorAll(
-                            '.filter-btn'
-                        )
-                        .forEach(
-                            button => {
 
-                                button.classList.toggle(
-                                    'active',
+                            button.addEventListener(
+                                'click',
+                                () => {
 
-                                    button.dataset.set ===
-                                    validSet
-                                );
 
-                            }
-                        );
+                                    currentOrientation =
+                                        button.dataset.orientation;
 
-                }
+
+                                    /*
+                                     * Orientation buttons
+                                     * always belong to PEOPLE.
+                                     */
+
+                                    currentSet =
+                                        'people';
+
+
+                                    updateURL();
+
+                                    updateNavigation();
+
+                                    renderGallery();
+
+                                }
+                            );
+
+                        }
+                    );
+
+
+                /* =================================================
+                   BACK BUTTON
+                   ================================================= */
+
+                backButton.addEventListener(
+                    'click',
+                    () => {
+
+
+                        currentSet =
+                            'all';
+
+
+                        currentOrientation =
+                            'all';
+
+
+                        updateURL();
+
+                        updateNavigation();
+
+                        renderGallery();
+
+                    }
+                );
 
 
                 /* =================================================
                    INITIAL RENDER
                    ================================================= */
 
-                renderGallery(
-                    validSet
-                );
+                updateNavigation();
+
+                renderGallery();
 
             }
 
@@ -1645,7 +2129,6 @@
 
 
             if (backBtn) {
-
 
                 backBtn.addEventListener(
                     'click',
