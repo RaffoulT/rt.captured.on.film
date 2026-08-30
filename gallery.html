@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Gallery — Raffoul Traboulsy</title>
+
     <link rel="icon" type="image/png" href="images/favicon-mark.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap"
         rel="stylesheet">
+
     <style>
+
         :root {
             --paper: #E9E1CB;
             --paper-card: #F3EDDC;
@@ -32,10 +38,20 @@
 
         body {
             background: var(--paper);
-            background-image: radial-gradient(circle at 1px 1px, rgba(32, 28, 21, 0.045) 1px, transparent 0);
+
+            background-image:
+                radial-gradient(
+                    circle at 1px 1px,
+                    rgba(32, 28, 21, 0.045) 1px,
+                    transparent 0
+                );
+
             background-size: 22px 22px;
+
             color: var(--ink);
+
             font-family: 'IBM Plex Sans', sans-serif;
+
             line-height: 1.55;
         }
 
@@ -49,25 +65,36 @@
             font-family: 'IBM Plex Mono', monospace;
         }
 
+
         /* ---------- Navigation Bar ---------- */
+
         .gallery-nav {
             border-bottom: 2px solid var(--ink);
+
             padding: 1rem 0;
+
             font-family: 'IBM Plex Mono', monospace;
+
             font-size: 0.75rem;
+
             letter-spacing: .1em;
+
             text-transform: uppercase;
         }
 
         .nav-flex {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
         }
 
         .back-btn {
             text-decoration: none;
+
             color: var(--stamp);
+
             font-weight: 600;
         }
 
@@ -75,27 +102,40 @@
             text-decoration: underline;
         }
 
+
         /* ---------- Header ---------- */
+
         .gallery-header {
             padding: 4rem 0 3rem;
+
             text-align: center;
         }
 
         .gallery-header h1 {
             font-family: 'Archivo Black', sans-serif;
+
             font-size: clamp(2rem, 5vw, 3.8rem);
+
             text-transform: uppercase;
+
             line-height: 1.1;
+
             margin-bottom: 1rem;
         }
 
         .gallery-meta {
             font-family: 'IBM Plex Mono', monospace;
+
             font-size: 0.8rem;
+
             color: var(--ink-muted);
+
             display: flex;
+
             justify-content: center;
+
             gap: 2rem;
+
             flex-wrap: wrap;
         }
 
@@ -103,43 +143,81 @@
             color: var(--ink);
         }
 
+
         /* ---------- Gallery Grid ---------- */
+
         .photo-stream {
             display: grid;
+
             grid-template-columns: 1fr;
+
             gap: 3rem;
+
             padding-bottom: 6rem;
         }
 
-        /* Large Analog Film Container */
+
+        /* ---------- Large Analog Film Container ---------- */
+
         .film-frame {
             background: var(--paper-card);
+
             border: 1px solid var(--line);
+
             border-radius: var(--radius);
+
             padding: 1.5rem;
+
             box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.15);
         }
 
+
+        /* =========================================================
+           HORIZONTAL FILM STRIP
+           Used automatically for landscape/square photos
+           ========================================================= */
+
         .sprocket-wrapper {
             position: relative;
+
             width: 100%;
-            aspect-ratio: 4/3;
+
+            aspect-ratio: 4 / 3;
+
             background: #1a1713;
+
             border: 1px solid var(--ink);
+
             overflow: hidden;
         }
 
+
+        /* Top + bottom sprocket strips */
+
         .sprocket-wrapper::before,
         .sprocket-wrapper::after {
+
             content: '';
+
             position: absolute;
+
             left: 0;
             right: 0;
+
             height: 12px;
+
             background-color: var(--ink);
-            background-image: repeating-linear-gradient(90deg, var(--paper-card) 0 6px, transparent 6px 18px);
+
+            background-image:
+                repeating-linear-gradient(
+                    90deg,
+                    var(--paper-card) 0 6px,
+                    transparent 6px 18px
+                );
+
             z-index: 2;
         }
+
 
         .sprocket-wrapper::before {
             top: 0;
@@ -149,209 +227,775 @@
             bottom: 0;
         }
 
+
+        /* Image inside horizontal film */
+
         .sprocket-wrapper img {
+
             position: absolute;
+
             inset: 12px 0;
+
             width: 100%;
+
             height: calc(100% - 24px);
+
             object-fit: contain;
         }
 
+
+        /* =========================================================
+           PORTRAIT FILM STRIP
+           Automatically applied to vertical images
+           ========================================================= */
+
+        .sprocket-wrapper.portrait {
+
+            width: min(100%, 650px);
+
+            aspect-ratio: 2 / 3;
+
+            margin: 0 auto;
+        }
+
+
+        /* Left + right sprocket strips */
+
+        .sprocket-wrapper.portrait::before,
+        .sprocket-wrapper.portrait::after {
+
+            top: 0;
+            bottom: 0;
+
+            left: auto;
+            right: auto;
+
+            width: 12px;
+            height: 100%;
+
+            background-image:
+                repeating-linear-gradient(
+                    180deg,
+                    var(--paper-card) 0 6px,
+                    transparent 6px 18px
+                );
+        }
+
+
+        .sprocket-wrapper.portrait::before {
+            left: 0;
+        }
+
+        .sprocket-wrapper.portrait::after {
+            right: 0;
+        }
+
+
+        /* Image inside vertical film */
+
+        .sprocket-wrapper.portrait img {
+
+            inset: 0 12px;
+
+            width: calc(100% - 24px);
+
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+
+        /* ---------- Caption ---------- */
+
         .caption {
             margin-top: 1.2rem;
+
             font-family: 'IBM Plex Mono', monospace;
+
             font-size: 0.8rem;
+
             color: var(--ink-muted);
+
             display: flex;
+
             justify-content: space-between;
+
             border-top: 1px dotted var(--line);
+
             padding-top: 0.8rem;
         }
 
+
+        /* ---------- Empty State ---------- */
+
         .empty {
             text-align: center;
+
             padding: 4rem 0;
+
             color: var(--ink-muted);
+
             font-family: 'IBM Plex Mono', monospace;
         }
 
+
         /* ---------- Footer ---------- */
+
         footer {
             border-top: 2px solid var(--ink);
+
             padding: 2.5rem 0;
+
             text-align: center;
+
             font-family: 'IBM Plex Mono', monospace;
+
             font-size: .7rem;
+
             color: var(--ink-muted);
         }
+
+
+        /* ---------- Mobile ---------- */
+
+        @media (max-width: 600px) {
+
+            .film-frame {
+                padding: 1rem;
+            }
+
+            .sprocket-wrapper.portrait {
+                width: min(100%, 500px);
+            }
+
+            .caption {
+                flex-direction: column;
+
+                gap: 0.25rem;
+            }
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+    <!-- Navigation -->
+
     <nav class="gallery-nav">
+
         <div class="wrap nav-flex">
-            <a href="index.html" class="back-btn">← Back to Catalogue</a>
-            <span id="navCode">Catalogue No. 001</span>
+
+            <a href="index.html" class="back-btn">
+                ← Back to Catalogue
+            </a>
+
+            <span id="navCode">
+                Catalogue No. 001
+            </span>
+
         </div>
+
     </nav>
 
+
+    <!-- Header -->
+
     <header class="gallery-header">
+
         <div class="wrap">
-            <h1 id="galTitle">Gallery</h1>
+
+            <h1 id="galTitle">
+                Gallery
+            </h1>
+
             <div class="gallery-meta">
-                <span>Location: <strong id="galLocation">—</strong></span>
-                <span>Format: <strong id="galFormat">—</strong></span>
-                <span>Year: <strong id="galYear">—</strong></span>
+
+                <span>
+                    Location:
+                    <strong id="galLocation">—</strong>
+                </span>
+
+                <span>
+                    Format:
+                    <strong id="galFormat">—</strong>
+                </span>
+
+                <span>
+                    Year:
+                    <strong id="galYear">—</strong>
+                </span>
+
             </div>
+
         </div>
+
     </header>
 
+
+    <!-- Gallery -->
+
     <main class="wrap">
-        <div class="photo-stream" id="photoStream">
+
+        <div
+            class="photo-stream"
+            id="photoStream"
+        >
             <!-- Rendered by script -->
         </div>
+
     </main>
 
+
+    <!-- Footer -->
+
     <footer>
+
         <div class="wrap">
-            <p>All photographs captured on location in Lebanon • <span id="footCode">Catalogue No. 001</span></p>
+
+            <p>
+                All photographs captured on location in Lebanon •
+                <span id="footCode">
+                    Catalogue No. 001
+                </span>
+            </p>
+
         </div>
+
     </footer>
 
+
     <!-- Audio -->
-    <audio id="roll-audio" src="audio/film-roll.mp3" preload="auto"></audio>
+
+    <audio
+        id="roll-audio"
+        src="audio/film-roll.mp3"
+        preload="auto"
+    ></audio>
+
 
     <script>
-        (() => {
-            'use strict';
-            const STORAGE_KEY = 'rtCatalogCards';
-            const $ = id => document.getElementById(id);
 
-            // Fixed escapeHtml using &quot; for double quotes
+        (() => {
+
+            'use strict';
+
+
+            const STORAGE_KEY = 'rtCatalogCards';
+
+
+            const $ = id =>
+                document.getElementById(id);
+
+
+            /* ---------- Escape HTML ---------- */
+
             const escapeHtml = (s) => {
+
                 return String(s == null ? '' : s)
+
                     .replace(/&/g, '&amp;')
+
                     .replace(/</g, '&lt;')
+
                     .replace(/>/g, '&gt;')
+
                     .replace(/"/g, '&quot;')
+
                     .replace(/'/g, '&#39;');
+
             };
+
+
+            /* ---------- Default Gallery ---------- */
 
             const DEFAULT_CARDS = [
+
                 {
+
                     code: 'ROLL — 01',
+
                     category: 'series',
+
                     title: 'Gold 200',
+
                     image: 'images/kodak-gold-200.jpg',
+
                     alt: 'Kodak Gold 200 film retail package',
+
                     frameNum: '14A',
+
                     location: 'Beirut, LB',
+
                     year: '2026',
+
                     format: '35mm Film',
-                    description: 'Quiet Shelves Hiding a lot of treasures.',
+
+                    description:
+                        'Quiet Shelves Hiding a lot of treasures.',
+
                     link: 'gallery.html?i=0',
+
                     linkText: 'View gallery →',
+
                     photos: [
-                        { image: 'images/a-9.avif', alt: 'CEO', caption: 'The Madman Behind The Lens' },
-                        { image: 'images/a-4.avif', alt: 'Jen', caption: '10452 km² of heart.' },
-                        { image: 'images/Untitled-4.avif', alt: 'brrrrrrrrrrrrrrr', caption: 'Arguing With The Wind' },
-                        
-                        { image: 'images/Untitled-3.avif', alt: 'Music Speaks Louder than Words', caption: 'Music Speaks Louder Than Words' },
-                        { image: 'images/Untitled-2.avif', alt: 'Hidden inside these books are secrets', caption: 'Knowledge hidden within the shelves' },
-                        { image: 'images/Untitled-1.avif', alt: 'Just the exhausts poluting the air', caption: 'Pollution In An Artistic Way' }
+
+                        {
+                            image: 'images/a-9.avif',
+                            alt: 'CEO',
+                            caption: 'The Madman Behind The Lens'
+                        },
+
+                        {
+                            image: 'images/a-4.avif',
+                            alt: 'Jen',
+                            caption: '10452 km² of heart.'
+                        },
+
+                        {
+                            image: 'images/Untitled-4.avif',
+                            alt: 'brrrrrrrrrrrrrrr',
+                            caption: 'Arguing With The Wind'
+                        },
+
+                        {
+                            image: 'images/Untitled-3.avif',
+                            alt: 'Music Speaks Louder than Words',
+                            caption: 'Music Speaks Louder Than Words'
+                        },
+
+                        {
+                            image: 'images/Untitled-2.avif',
+                            alt: 'Hidden inside these books are secrets',
+                            caption: 'Knowledge hidden within the shelves'
+                        },
+
+                        {
+                            image: 'images/Untitled-1.avif',
+                            alt: 'Just the exhausts poluting the air',
+                            caption: 'Pollution In An Artistic Way'
+                        }
+
                     ]
+
                 }
+
             ];
 
+
+            /* ---------- Load Cards ---------- */
+
             const loadCards = () => {
+
                 let raw;
-                try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { raw = null; }
-                if (!raw) return JSON.parse(JSON.stringify(DEFAULT_CARDS));
+
                 try {
+
+                    raw =
+                        localStorage.getItem(STORAGE_KEY);
+
+                } catch (e) {
+
+                    raw = null;
+
+                }
+
+
+                if (!raw) {
+
+                    return JSON.parse(
+                        JSON.stringify(DEFAULT_CARDS)
+                    );
+
+                }
+
+
+                try {
+
                     const arr = JSON.parse(raw);
-                    return Array.isArray(arr) ? arr : JSON.parse(JSON.stringify(DEFAULT_CARDS));
-                } catch (e) { return JSON.parse(JSON.stringify(DEFAULT_CARDS)); }
+
+                    return Array.isArray(arr)
+                        ? arr
+                        : JSON.parse(
+                            JSON.stringify(DEFAULT_CARDS)
+                        );
+
+                } catch (e) {
+
+                    return JSON.parse(
+                        JSON.stringify(DEFAULT_CARDS)
+                    );
+
+                }
+
             };
+
+
+            /* ---------- URL Parameter ---------- */
 
             const getParam = (name) => {
-                const params = new URLSearchParams(window.location.search);
+
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
                 return params.get(name);
+
             };
 
+
+            /* ---------- Find Gallery ---------- */
+
             const cards = loadCards();
-            let idx = parseInt(getParam('i'), 10);
-            let card = (!isNaN(idx) && cards[idx]) ? cards[idx] : null;
+
+
+            let idx =
+                parseInt(
+                    getParam('i'),
+                    10
+                );
+
+
+            let card =
+                (!isNaN(idx) && cards[idx])
+                    ? cards[idx]
+                    : null;
+
 
             if (!card) {
-                const code = getParam('code');
+
+                const code =
+                    getParam('code');
+
+
                 if (code) {
-                    for (let k = 0; k < cards.length; k++) {
-                        if (cards[k].code === code) { card = cards[k]; idx = k; break; }
+
+                    for (
+                        let k = 0;
+                        k < cards.length;
+                        k++
+                    ) {
+
+                        if (
+                            cards[k].code === code
+                        ) {
+
+                            card = cards[k];
+
+                            idx = k;
+
+                            break;
+
+                        }
+
                     }
+
                 }
+
             }
+
+
+            /* ---------- Render Gallery ---------- */
 
             if (card) {
-                document.title = `${card.title || 'Gallery'} — Raffoul Traboulsy`;
-                $('galTitle').textContent = card.title || 'Gallery';
-                $('galLocation').textContent = card.location || '—';
-                $('galFormat').textContent = card.format || '—';
-                $('galYear').textContent = card.year || '—';
-                $('navCode').textContent = card.code || 'Catalogue';
-                $('footCode').textContent = card.code || 'Catalogue';
 
-                let photos = Array.isArray(card.photos) ? [...card.photos] : [];
-                // Fall back to the card's single cover image if no photos array yet
-                if (!photos.length && card.image) {
-                    photos = [{ image: card.image, alt: card.alt || card.title || '', caption: card.title || '' }];
+                document.title =
+                    `${card.title || 'Gallery'} — Raffoul Traboulsy`;
+
+
+                $('galTitle').textContent =
+                    card.title || 'Gallery';
+
+
+                $('galLocation').textContent =
+                    card.location || '—';
+
+
+                $('galFormat').textContent =
+                    card.format || '—';
+
+
+                $('galYear').textContent =
+                    card.year || '—';
+
+
+                $('navCode').textContent =
+                    card.code || 'Catalogue';
+
+
+                $('footCode').textContent =
+                    card.code || 'Catalogue';
+
+
+                let photos =
+                    Array.isArray(card.photos)
+                        ? [...card.photos]
+                        : [];
+
+
+                /* Fall back to cover image */
+
+                if (
+                    !photos.length &&
+                    card.image
+                ) {
+
+                    photos = [
+
+                        {
+                            image: card.image,
+
+                            alt:
+                                card.alt ||
+                                card.title ||
+                                '',
+
+                            caption:
+                                card.title ||
+                                ''
+                        }
+
+                    ];
+
                 }
 
-                const stream = $('photoStream');
+
+                const stream =
+                    $('photoStream');
+
+
+                /* ---------- Empty Gallery ---------- */
+
                 if (!photos.length) {
-                    stream.innerHTML = '<div class="empty">No photos have been added to this card yet.</div>';
-                } else {
-                    // Refactored to use template literals for clean multi-line HTML string building
-                    stream.innerHTML = photos.map((p, i) => {
-                        const frameLabel = `Frame // ${String(i + 1).padStart(2, '0')}A`;
-                        return `
-                            <div class="film-frame">
-                                <div class="sprocket-wrapper">
-                                    <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.alt || '')}">
-                                </div>
-                                <div class="caption">
-                                    <span>${escapeHtml(frameLabel)}</span>
-                                    <span>${escapeHtml(p.caption || '')}</span>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
+
+                    stream.innerHTML =
+                        '<div class="empty">' +
+                        'No photos have been added to this card yet.' +
+                        '</div>';
+
                 }
-            } else {
-                $('galTitle').textContent = 'Gallery not found';
-                $('photoStream').innerHTML = '<div class="empty">This gallery link is missing or the card no longer exists.</div>';
+
+
+                /* ---------- Render Photos ---------- */
+
+                else {
+
+                    stream.innerHTML =
+                        photos.map((p, i) => {
+
+                            const frameLabel =
+                                `Frame // ${String(i + 1).padStart(2, '0')}A`;
+
+
+                            return `
+
+                                <div class="film-frame">
+
+                                    <div class="sprocket-wrapper">
+
+                                        <img
+                                            src="${escapeHtml(p.image)}"
+                                            alt="${escapeHtml(p.alt || '')}"
+                                            class="gallery-photo"
+                                        >
+
+                                    </div>
+
+
+                                    <div class="caption">
+
+                                        <span>
+                                            ${escapeHtml(frameLabel)}
+                                        </span>
+
+                                        <span>
+                                            ${escapeHtml(p.caption || '')}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        }).join('');
+
+
+                    /*
+                     * Detect image orientation.
+                     *
+                     * Portrait image:
+                     * naturalHeight > naturalWidth
+                     *
+                     * Landscape/square:
+                     * naturalWidth >= naturalHeight
+                     */
+
+                    const images =
+                        stream.querySelectorAll(
+                            '.gallery-photo'
+                        );
+
+
+                    images.forEach(img => {
+
+                        const applyOrientation = () => {
+
+                            const wrapper =
+                                img.closest(
+                                    '.sprocket-wrapper'
+                                );
+
+
+                            if (!wrapper) return;
+
+
+                            if (
+                                img.naturalHeight >
+                                img.naturalWidth
+                            ) {
+
+                                wrapper.classList.add(
+                                    'portrait'
+                                );
+
+                            } else {
+
+                                wrapper.classList.remove(
+                                    'portrait'
+                                );
+
+                            }
+
+                        };
+
+
+                        /*
+                         * If image is already cached,
+                         * naturalWidth/naturalHeight
+                         * are immediately available.
+                         */
+
+                        if (img.complete) {
+
+                            applyOrientation();
+
+                        }
+
+
+                        /*
+                         * Otherwise wait for image
+                         * to finish loading.
+                         */
+
+                        img.addEventListener(
+                            'load',
+                            applyOrientation
+                        );
+
+                    });
+
+                }
+
             }
 
-            // Audio Navigation Logic (merged into the same script block)
-            const rollAudio = document.getElementById('roll-audio');
-            const backBtn = document.querySelector('.back-btn');
+
+            /* ---------- Gallery Not Found ---------- */
+
+            else {
+
+                $('galTitle').textContent =
+                    'Gallery not found';
+
+
+                $('photoStream').innerHTML =
+                    '<div class="empty">' +
+                    'This gallery link is missing or the card no longer exists.' +
+                    '</div>';
+
+            }
+
+
+            /* =====================================================
+               AUDIO NAVIGATION
+               ===================================================== */
+
+            const rollAudio =
+                document.getElementById(
+                    'roll-audio'
+                );
+
+
+            const backBtn =
+                document.querySelector(
+                    '.back-btn'
+                );
+
 
             if (backBtn) {
-                backBtn.addEventListener('click', (e) => {
-                    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
-                    e.preventDefault();
-                    const targetUrl = backBtn.href;
 
-                    rollAudio.currentTime = 0;
-                    rollAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
+                backBtn.addEventListener(
+                    'click',
+                    (e) => {
 
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 700);
-                });
+                        if (
+                            e.ctrlKey ||
+                            e.metaKey ||
+                            e.shiftKey ||
+                            e.button !== 0
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        e.preventDefault();
+
+
+                        const targetUrl =
+                            backBtn.href;
+
+
+                        rollAudio.currentTime =
+                            0;
+
+
+                        rollAudio
+                            .play()
+                            .catch(
+                                err =>
+                                    console.log(
+                                        "Audio play blocked by browser:",
+                                        err
+                                    )
+                            );
+
+
+                        setTimeout(
+                            () => {
+
+                                window.location.href =
+                                    targetUrl;
+
+                            },
+                            700
+                        );
+
+                    }
+                );
+
             }
+
         })();
+
     </script>
+
 </body>
 
 </html>
