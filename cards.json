@@ -13,6 +13,11 @@
     "link": "gallery.html?i=0",
     "linkText": "View gallery →",
     "photos": [
+       {
+        "image": "images/A (9).avif",
+        "alt": "CEOs picture",
+        "caption": "The Madman Behind the Lens"
+      },
       {
         "image": "images/Untitled-1.avif",
         "alt": "Just the exhausts poluting the air",
@@ -32,6 +37,11 @@
         "image": "images/Untitled-4.avif",
         "alt": "brrrrrrrrrrrrr",
         "caption": "Arguing with the wind"
+      },
+       {
+        "image": "images/A (7).avif",
+        "alt": "jen",
+        "caption": "10452 km² of heart."
       }
     ]
   }
