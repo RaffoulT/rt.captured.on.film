@@ -174,40 +174,46 @@
        SOUND TOGGLE
        ===================================================== */
 
-    .sound-toggle {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .68rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-      background: none;
-      border: 1px solid var(--line);
-      padding: .45rem .7rem;
-      cursor: pointer;
-      border-radius: var(--radius);
-      white-space: nowrap;
-    }
+   .sound-toggle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
 
-    .sound-toggle:hover {
-      color: var(--stamp);
-      border-color: var(--stamp);
-      background: var(--paper-card);
-    }
+  color: var(--ink-muted);
+  background: none;
 
-    .sound-toggle.muted {
-      color: var(--stamp);
-      border-color: var(--stamp);
-    }
+  border: 1px solid var(--line);
 
-    @media (prefers-reduced-motion: no-preference) {
-      .sound-toggle {
-        transition:
-          color .2s ease,
-          border-color .2s ease,
-          background .2s ease;
-      }
-    }
+  padding: .35rem .5rem;
 
+  cursor: pointer;
+  border-radius: var(--radius);
+
+  white-space: nowrap;
+  width: fit-content;
+  justify-self: end;
+}
+
+.sound-toggle:hover {
+  color: var(--stamp);
+  border-color: var(--stamp);
+  background: var(--paper-card);
+}
+
+.sound-toggle.muted {
+  color: var(--stamp);
+  border-color: var(--stamp);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sound-toggle {
+    transition:
+      color .2s ease,
+      border-color .2s ease,
+      background .2s ease;
+  }
+}
     /* =====================================================
        HERO
        ===================================================== */
