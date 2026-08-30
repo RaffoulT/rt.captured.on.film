@@ -219,19 +219,26 @@
         </div>
     </footer>
 
+    <!-- Audio -->
+    <audio id="roll-audio" src="audio/film-roll.mp3" preload="auto"></audio>
+
     <script>
-        (function () {
+        (() => {
             'use strict';
-            var STORAGE_KEY = 'rtCatalogCards';
-            var $ = function (id) { return document.getElementById(id); };
+            const STORAGE_KEY = 'rtCatalogCards';
+            const $ = id => document.getElementById(id);
 
-            function escapeHtml(s) {
+            // Fixed escapeHtml using &quot; for double quotes
+            const escapeHtml = (s) => {
                 return String(s == null ? '' : s)
-                    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                    .replace(/"/g, '"').replace(/'/g, '&#39;');
-            }
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            };
 
-            var DEFAULT_CARDS = [
+            const DEFAULT_CARDS = [
                 {
                     code: 'ROLL — 01',
                     category: 'series',
@@ -256,36 +263,36 @@
                 }
             ];
 
-            function loadCards() {
-                var raw;
+            const loadCards = () => {
+                let raw;
                 try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { raw = null; }
                 if (!raw) return JSON.parse(JSON.stringify(DEFAULT_CARDS));
                 try {
-                    var arr = JSON.parse(raw);
+                    const arr = JSON.parse(raw);
                     return Array.isArray(arr) ? arr : JSON.parse(JSON.stringify(DEFAULT_CARDS));
                 } catch (e) { return JSON.parse(JSON.stringify(DEFAULT_CARDS)); }
-            }
+            };
 
-            function getParam(name) {
-                var params = new URLSearchParams(window.location.search);
+            const getParam = (name) => {
+                const params = new URLSearchParams(window.location.search);
                 return params.get(name);
-            }
+            };
 
-            var cards = loadCards();
-            var idx = parseInt(getParam('i'), 10);
-            var card = (!isNaN(idx) && cards[idx]) ? cards[idx] : null;
+            const cards = loadCards();
+            let idx = parseInt(getParam('i'), 10);
+            let card = (!isNaN(idx) && cards[idx]) ? cards[idx] : null;
 
             if (!card) {
-                var code = getParam('code');
+                const code = getParam('code');
                 if (code) {
-                    for (var k = 0; k < cards.length; k++) {
+                    for (let k = 0; k < cards.length; k++) {
                         if (cards[k].code === code) { card = cards[k]; idx = k; break; }
                     }
                 }
             }
 
             if (card) {
-                document.title = (card.title || 'Gallery') + ' — Raffoul Traboulsy';
+                document.title = `${card.title || 'Gallery'} — Raffoul Traboulsy`;
                 $('galTitle').textContent = card.title || 'Gallery';
                 $('galLocation').textContent = card.location || '—';
                 $('galFormat').textContent = card.format || '—';
@@ -293,54 +300,57 @@
                 $('navCode').textContent = card.code || 'Catalogue';
                 $('footCode').textContent = card.code || 'Catalogue';
 
-                var photos = Array.isArray(card.photos) ? card.photos.slice() : [];
+                let photos = Array.isArray(card.photos) ? [...card.photos] : [];
                 // Fall back to the card's single cover image if no photos array yet
                 if (!photos.length && card.image) {
                     photos = [{ image: card.image, alt: card.alt || card.title || '', caption: card.title || '' }];
                 }
 
-                var stream = $('photoStream');
+                const stream = $('photoStream');
                 if (!photos.length) {
                     stream.innerHTML = '<div class="empty">No photos have been added to this card yet.</div>';
                 } else {
-                    stream.innerHTML = photos.map(function (p, i) {
-                        var frameLabel = 'Frame // ' + String(i + 1).padStart(2, '0') + 'A';
-                        return '<div class="film-frame">' +
-                            '<div class="sprocket-wrapper"><img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.alt || '') + '"></div>' +
-                            '<div class="caption"><span>' + escapeHtml(frameLabel) + '</span><span>' + escapeHtml(p.caption || '') + '</span></div>' +
-                            '</div>';
+                    // Refactored to use template literals for clean multi-line HTML string building
+                    stream.innerHTML = photos.map((p, i) => {
+                        const frameLabel = `Frame // ${String(i + 1).padStart(2, '0')}A`;
+                        return `
+                            <div class="film-frame">
+                                <div class="sprocket-wrapper">
+                                    <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.alt || '')}">
+                                </div>
+                                <div class="caption">
+                                    <span>${escapeHtml(frameLabel)}</span>
+                                    <span>${escapeHtml(p.caption || '')}</span>
+                                </div>
+                            </div>
+                        `;
                     }).join('');
                 }
             } else {
                 $('galTitle').textContent = 'Gallery not found';
                 $('photoStream').innerHTML = '<div class="empty">This gallery link is missing or the card no longer exists.</div>';
             }
+
+            // Audio Navigation Logic (merged into the same script block)
+            const rollAudio = document.getElementById('roll-audio');
+            const backBtn = document.querySelector('.back-btn');
+
+            if (backBtn) {
+                backBtn.addEventListener('click', (e) => {
+                    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+                    e.preventDefault();
+                    const targetUrl = backBtn.href;
+
+                    rollAudio.currentTime = 0;
+                    rollAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
+
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 700);
+                });
+            }
         })();
     </script>
-
-    <!-- Audio -->
-    <audio id="roll-audio" src="audio/film-roll.mp3" preload="auto"></audio>
-
-    <script>
-        const rollAudio = document.getElementById('roll-audio');
-        const backBtn = document.querySelector('.back-btn');
-
-        if (backBtn) {
-            backBtn.addEventListener('click', (e) => {
-                if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
-                e.preventDefault();
-                const targetUrl = backBtn.href;
-
-                rollAudio.currentTime = 0;
-                rollAudio.play().catch(err => console.log("Audio play blocked by browser:", err));
-
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 700);
-            });
-        }
-    </script>
-
 </body>
 
 </html>
