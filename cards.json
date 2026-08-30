@@ -14,14 +14,15 @@
     "linkText": "View gallery →",
     "photos": [
        {
-        "image": "images/A (9).avif",
+        "image": "images/a-9.avif",
         "alt": "CEOs picture",
         "caption": "The Madman Behind the Lens"
       },
       {
-        "image": "images/Untitled-1.avif",
-        "alt": "Just the exhausts poluting the air",
-        "caption": "Pollution In An Artistic Way"
+        "image": "images/a-4.avif",
+        "alt": "jen",
+        "caption": "10452 km² of heart."
+       
       },
       {
         "image": "images/Untitled-2.avif",
@@ -38,10 +39,9 @@
         "alt": "brrrrrrrrrrrrr",
         "caption": "Arguing with the wind"
       },
-       {
-        "image": "images/A (7).avif",
-        "alt": "jen",
-        "caption": "10452 km² of heart."
+       { "image": "images/Untitled-1.avif",
+        "alt": "Just the exhausts poluting the air",
+        "caption": "Pollution In An Artistic Way"
       }
     ]
   }
