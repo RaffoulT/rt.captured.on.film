@@ -26,8 +26,8 @@
 }, 
       {
               "image": "images/a-14.avif",
-              alt: "Lanlun",
-              caption: "Wrapped in Babylon blue"
+              "alt": "Lanlun",
+              "caption": "Wrapped in Babylon blue"
             },
       
       {
