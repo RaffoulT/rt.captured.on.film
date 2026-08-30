@@ -30,11 +30,13 @@
             --radius: 2px;
         }
 
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
 
         body {
             background: var(--paper);
@@ -55,18 +57,24 @@
             line-height: 1.55;
         }
 
+
         .wrap {
             max-width: 1180px;
+
             margin: 0 auto;
+
             padding: 0 1.75rem;
         }
+
 
         .mono {
             font-family: 'IBM Plex Mono', monospace;
         }
 
 
-        /* ---------- Navigation Bar ---------- */
+        /* =========================================================
+           NAVIGATION
+           ========================================================= */
 
         .gallery-nav {
             border-bottom: 2px solid var(--ink);
@@ -82,6 +90,7 @@
             text-transform: uppercase;
         }
 
+
         .nav-flex {
             display: flex;
 
@@ -89,6 +98,7 @@
 
             align-items: center;
         }
+
 
         .back-btn {
             text-decoration: none;
@@ -98,18 +108,22 @@
             font-weight: 600;
         }
 
+
         .back-btn:hover {
             text-decoration: underline;
         }
 
 
-        /* ---------- Header ---------- */
+        /* =========================================================
+           HEADER
+           ========================================================= */
 
         .gallery-header {
             padding: 4rem 0 3rem;
 
             text-align: center;
         }
+
 
         .gallery-header h1 {
             font-family: 'Archivo Black', sans-serif;
@@ -122,6 +136,7 @@
 
             margin-bottom: 1rem;
         }
+
 
         .gallery-meta {
             font-family: 'IBM Plex Mono', monospace;
@@ -139,12 +154,69 @@
             flex-wrap: wrap;
         }
 
+
         .gallery-meta span strong {
             color: var(--ink);
         }
 
 
-        /* ---------- Gallery Grid ---------- */
+        /* =========================================================
+           CATEGORY FILTERS
+           ========================================================= */
+
+        .gallery-filters {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 0.75rem;
+
+            margin-bottom: 3rem;
+
+            flex-wrap: wrap;
+        }
+
+
+        .filter-btn {
+            appearance: none;
+
+            background: transparent;
+
+            border: 1px solid var(--ink);
+
+            color: var(--ink);
+
+            padding: 0.65rem 1.25rem;
+
+            font-family: 'IBM Plex Mono', monospace;
+
+            font-size: 0.7rem;
+
+            font-weight: 600;
+
+            letter-spacing: 0.08em;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--ink);
+
+            color: var(--paper);
+        }
+
+
+        /* =========================================================
+           PHOTO STREAM
+           ========================================================= */
 
         .photo-stream {
             display: grid;
@@ -157,7 +229,9 @@
         }
 
 
-        /* ---------- Large Analog Film Container ---------- */
+        /* =========================================================
+           FILM FRAME
+           ========================================================= */
 
         .film-frame {
             background: var(--paper-card);
@@ -168,13 +242,14 @@
 
             padding: 1.5rem;
 
-            box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.15);
+            box-shadow:
+                0 8px 20px -10px rgba(0, 0, 0, 0.15);
         }
 
 
         /* =========================================================
            HORIZONTAL FILM STRIP
-           Used automatically for landscape/square photos
+           Default for landscape images
            ========================================================= */
 
         .sprocket-wrapper {
@@ -191,8 +266,6 @@
             overflow: hidden;
         }
 
-
-        /* Top + bottom sprocket strips */
 
         .sprocket-wrapper::before,
         .sprocket-wrapper::after {
@@ -223,12 +296,11 @@
             top: 0;
         }
 
+
         .sprocket-wrapper::after {
             bottom: 0;
         }
 
-
-        /* Image inside horizontal film */
 
         .sprocket-wrapper img {
 
@@ -241,12 +313,14 @@
             height: calc(100% - 24px);
 
             object-fit: contain;
+
+            display: block;
         }
 
 
         /* =========================================================
-           PORTRAIT FILM STRIP
-           Automatically applied to vertical images
+           VERTICAL FILM STRIP
+           Automatically used for portrait photos
            ========================================================= */
 
         .sprocket-wrapper.portrait {
@@ -259,7 +333,7 @@
         }
 
 
-        /* Left + right sprocket strips */
+        /* Move sprocket holes from top/bottom to left/right */
 
         .sprocket-wrapper.portrait::before,
         .sprocket-wrapper.portrait::after {
@@ -286,12 +360,11 @@
             left: 0;
         }
 
+
         .sprocket-wrapper.portrait::after {
             right: 0;
         }
 
-
-        /* Image inside vertical film */
 
         .sprocket-wrapper.portrait img {
 
@@ -305,7 +378,9 @@
         }
 
 
-        /* ---------- Caption ---------- */
+        /* =========================================================
+           CAPTION
+           ========================================================= */
 
         .caption {
             margin-top: 1.2rem;
@@ -320,13 +395,17 @@
 
             justify-content: space-between;
 
+            gap: 1rem;
+
             border-top: 1px dotted var(--line);
 
             padding-top: 0.8rem;
         }
 
 
-        /* ---------- Empty State ---------- */
+        /* =========================================================
+           EMPTY STATE
+           ========================================================= */
 
         .empty {
             text-align: center;
@@ -339,7 +418,9 @@
         }
 
 
-        /* ---------- Footer ---------- */
+        /* =========================================================
+           FOOTER
+           ========================================================= */
 
         footer {
             border-top: 2px solid var(--ink);
@@ -356,7 +437,9 @@
         }
 
 
-        /* ---------- Mobile ---------- */
+        /* =========================================================
+           MOBILE
+           ========================================================= */
 
         @media (max-width: 600px) {
 
@@ -364,14 +447,26 @@
                 padding: 1rem;
             }
 
+
             .sprocket-wrapper.portrait {
                 width: min(100%, 500px);
             }
+
 
             .caption {
                 flex-direction: column;
 
                 gap: 0.25rem;
+            }
+
+
+            .gallery-filters {
+                margin-bottom: 2rem;
+            }
+
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
             }
 
         }
@@ -384,15 +479,21 @@
 <body>
 
 
-    <!-- Navigation -->
+    <!-- =========================================================
+         NAVIGATION
+         ========================================================= -->
 
     <nav class="gallery-nav">
 
         <div class="wrap nav-flex">
 
-            <a href="index.html" class="back-btn">
+            <a
+                href="index.html"
+                class="back-btn"
+            >
                 ← Back to Catalogue
             </a>
+
 
             <span id="navCode">
                 Catalogue No. 001
@@ -403,7 +504,9 @@
     </nav>
 
 
-    <!-- Header -->
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
 
     <header class="gallery-header">
 
@@ -413,6 +516,7 @@
                 Gallery
             </h1>
 
+
             <div class="gallery-meta">
 
                 <span>
@@ -420,10 +524,12 @@
                     <strong id="galLocation">—</strong>
                 </span>
 
+
                 <span>
                     Format:
                     <strong id="galFormat">—</strong>
                 </span>
+
 
                 <span>
                     Year:
@@ -437,28 +543,72 @@
     </header>
 
 
-    <!-- Gallery -->
+    <!-- =========================================================
+         GALLERY
+         ========================================================= -->
 
     <main class="wrap">
+
+
+        <!-- Category filters -->
+
+        <div
+            class="gallery-filters"
+            id="galleryFilters"
+        >
+
+            <button
+                type="button"
+                class="filter-btn active"
+                data-set="all"
+            >
+                ALL
+            </button>
+
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-set="people"
+            >
+                PEOPLE
+            </button>
+
+
+            <button
+                type="button"
+                class="filter-btn"
+                data-set="details"
+            >
+                DETAILS
+            </button>
+
+        </div>
+
+
+        <!-- Photos -->
 
         <div
             class="photo-stream"
             id="photoStream"
         >
-            <!-- Rendered by script -->
+            <!-- Rendered by JavaScript -->
         </div>
 
     </main>
 
 
-    <!-- Footer -->
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
 
     <footer>
 
         <div class="wrap">
 
             <p>
-                All photographs captured on location in Lebanon •
+                All photographs captured on location in Lebanon
+                •
                 <span id="footCode">
                     Catalogue No. 001
                 </span>
@@ -469,7 +619,9 @@
     </footer>
 
 
-    <!-- Audio -->
+    <!-- =========================================================
+         AUDIO
+         ========================================================= -->
 
     <audio
         id="roll-audio"
@@ -478,6 +630,10 @@
     ></audio>
 
 
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
     <script>
 
         (() => {
@@ -485,33 +641,63 @@
             'use strict';
 
 
-            const STORAGE_KEY = 'rtCatalogCards';
+            /* =====================================================
+               STORAGE
+               ===================================================== */
+
+            const STORAGE_KEY =
+                'rtCatalogCards';
 
 
-            const $ = id =>
-                document.getElementById(id);
+            const $ =
+                id => document.getElementById(id);
 
 
-            /* ---------- Escape HTML ---------- */
+            /* =====================================================
+               HTML ESCAPING
+               ===================================================== */
 
             const escapeHtml = (s) => {
 
-                return String(s == null ? '' : s)
+                return String(
+                    s == null ? '' : s
+                )
 
-                    .replace(/&/g, '&amp;')
+                    .replace(
+                        /&/g,
+                        '&amp;'
+                    )
 
-                    .replace(/</g, '&lt;')
+                    .replace(
+                        /</g,
+                        '&lt;'
+                    )
 
-                    .replace(/>/g, '&gt;')
+                    .replace(
+                        />/g,
+                        '&gt;'
+                    )
 
-                    .replace(/"/g, '&quot;')
+                    .replace(
+                        /"/g,
+                        '&quot;'
+                    )
 
-                    .replace(/'/g, '&#39;');
+                    .replace(
+                        /'/g,
+                        '&#39;'
+                    );
 
             };
 
 
-            /* ---------- Default Gallery ---------- */
+            /* =====================================================
+               DEFAULT CARDS
+
+               ROLL 01
+               ├── PEOPLE = first 4
+               └── DETAILS = last 2
+               ===================================================== */
 
             const DEFAULT_CARDS = [
 
@@ -523,61 +709,155 @@
 
                     title: 'Gold 200',
 
-                    image: 'images/kodak-gold-200.jpg',
+                    image:
+                        'images/kodak-gold-200.jpg',
 
-                    alt: 'Kodak Gold 200 film retail package',
+                    alt:
+                        'Kodak Gold 200 film retail package',
 
-                    frameNum: '14A',
+                    frameNum:
+                        '14A',
 
-                    location: 'Beirut, LB',
+                    location:
+                        'Beirut, LB',
 
-                    year: '2026',
+                    year:
+                        '2026',
 
-                    format: '35mm Film',
+                    format:
+                        '35mm Film',
 
                     description:
                         'Quiet Shelves Hiding a lot of treasures.',
 
-                    link: 'gallery.html?i=0',
+                    link:
+                        'gallery.html?i=0',
 
-                    linkText: 'View gallery →',
+                    linkText:
+                        'View gallery →',
 
-                    photos: [
+
+                    /* =================================================
+                       SUB-CATEGORIES
+                       ================================================= */
+
+                    sets: [
+
+                        /* ---------------------------------------------
+                           PEOPLE
+                           First four photographs
+                           --------------------------------------------- */
 
                         {
-                            image: 'images/a-9.avif',
-                            alt: 'CEO',
-                            caption: 'The Madman Behind The Lens'
+
+                            id: 'people',
+
+                            title: 'People',
+
+                            photos: [
+
+                                {
+
+                                    image:
+                                        'images/a-9.avif',
+
+                                    alt:
+                                        'CEO',
+
+                                    caption:
+                                        'The Madman Behind The Lens'
+
+                                },
+
+
+                                {
+
+                                    image:
+                                        'images/a-4.avif',
+
+                                    alt:
+                                        'Jen',
+
+                                    caption:
+                                        '10452 km² of heart.'
+
+                                },
+
+
+                                {
+
+                                    image:
+                                        'images/Untitled-4.avif',
+
+                                    alt:
+                                        'Brrrrrrrrrrrrrrr',
+
+                                    caption:
+                                        'Arguing With The Wind'
+
+                                },
+
+
+                                {
+
+                                    image:
+                                        'images/Untitled-3.avif',
+
+                                    alt:
+                                        'Music Speaks Louder Than Words',
+
+                                    caption:
+                                        'Music Speaks Louder Than Words'
+
+                                }
+
+                            ]
+
                         },
 
-                        {
-                            image: 'images/a-4.avif',
-                            alt: 'Jen',
-                            caption: '10452 km² of heart.'
-                        },
+
+                        /* ---------------------------------------------
+                           DETAILS
+                           Last two photographs
+                           --------------------------------------------- */
 
                         {
-                            image: 'images/Untitled-4.avif',
-                            alt: 'brrrrrrrrrrrrrrr',
-                            caption: 'Arguing With The Wind'
-                        },
 
-                        {
-                            image: 'images/Untitled-3.avif',
-                            alt: 'Music Speaks Louder than Words',
-                            caption: 'Music Speaks Louder Than Words'
-                        },
+                            id: 'details',
 
-                        {
-                            image: 'images/Untitled-2.avif',
-                            alt: 'Hidden inside these books are secrets',
-                            caption: 'Knowledge hidden within the shelves'
-                        },
+                            title: 'Details',
 
-                        {
-                            image: 'images/Untitled-1.avif',
-                            alt: 'Just the exhausts poluting the air',
-                            caption: 'Pollution In An Artistic Way'
+                            photos: [
+
+                                {
+
+                                    image:
+                                        'images/Untitled-2.avif',
+
+                                    alt:
+                                        'Hidden inside these books are secrets',
+
+                                    caption:
+                                        'Knowledge hidden within the shelves'
+
+                                },
+
+
+                                {
+
+                                    image:
+                                        'images/Untitled-1.avif',
+
+                                    alt:
+                                        'Just the exhausts polluting the air',
+
+                                    caption:
+                                        'Pollution In An Artistic Way'
+
+                                }
+
+                            ]
+
                         }
 
                     ]
@@ -587,47 +867,81 @@
             ];
 
 
-            /* ---------- Load Cards ---------- */
+            /* =====================================================
+               LOAD CARDS
+               ===================================================== */
 
             const loadCards = () => {
 
                 let raw;
 
+
                 try {
 
                     raw =
-                        localStorage.getItem(STORAGE_KEY);
+                        localStorage.getItem(
+                            STORAGE_KEY
+                        );
 
-                } catch (e) {
+                }
+
+                catch (e) {
 
                     raw = null;
 
                 }
 
 
+                /*
+                 * No saved catalogue:
+                 * use DEFAULT_CARDS.
+                 */
+
                 if (!raw) {
 
                     return JSON.parse(
-                        JSON.stringify(DEFAULT_CARDS)
+                        JSON.stringify(
+                            DEFAULT_CARDS
+                        )
                     );
 
                 }
 
 
+                /*
+                 * Existing saved catalogue:
+                 * use it.
+                 */
+
                 try {
 
-                    const arr = JSON.parse(raw);
+                    const arr =
+                        JSON.parse(raw);
 
-                    return Array.isArray(arr)
-                        ? arr
-                        : JSON.parse(
-                            JSON.stringify(DEFAULT_CARDS)
-                        );
 
-                } catch (e) {
+                    if (
+                        Array.isArray(arr)
+                    ) {
+
+                        return arr;
+
+                    }
+
 
                     return JSON.parse(
-                        JSON.stringify(DEFAULT_CARDS)
+                        JSON.stringify(
+                            DEFAULT_CARDS
+                        )
+                    );
+
+                }
+
+                catch (e) {
+
+                    return JSON.parse(
+                        JSON.stringify(
+                            DEFAULT_CARDS
+                        )
                     );
 
                 }
@@ -635,7 +949,9 @@
             };
 
 
-            /* ---------- URL Parameter ---------- */
+            /* =====================================================
+               URL PARAMETERS
+               ===================================================== */
 
             const getParam = (name) => {
 
@@ -644,14 +960,18 @@
                         window.location.search
                     );
 
+
                 return params.get(name);
 
             };
 
 
-            /* ---------- Find Gallery ---------- */
+            /* =====================================================
+               LOAD CURRENT CARD
+               ===================================================== */
 
-            const cards = loadCards();
+            const cards =
+                loadCards();
 
 
             let idx =
@@ -662,10 +982,19 @@
 
 
             let card =
-                (!isNaN(idx) && cards[idx])
+                (
+                    !isNaN(idx) &&
+                    cards[idx]
+                )
                     ? cards[idx]
                     : null;
 
+
+            /*
+             * Also support:
+             *
+             * gallery.html?code=ROLL%20%E2%80%94%2001
+             */
 
             if (!card) {
 
@@ -685,9 +1014,11 @@
                             cards[k].code === code
                         ) {
 
-                            card = cards[k];
+                            card =
+                                cards[k];
 
-                            idx = k;
+                            idx =
+                                k;
 
                             break;
 
@@ -700,64 +1031,136 @@
             }
 
 
-            /* ---------- Render Gallery ---------- */
+            /* =====================================================
+               RENDER CURRENT GALLERY
+               ===================================================== */
 
             if (card) {
+
+
+                /* -----------------------------------------------
+                   Header information
+                   ----------------------------------------------- */
 
                 document.title =
                     `${card.title || 'Gallery'} — Raffoul Traboulsy`;
 
 
                 $('galTitle').textContent =
-                    card.title || 'Gallery';
+                    card.title ||
+                    'Gallery';
 
 
                 $('galLocation').textContent =
-                    card.location || '—';
+                    card.location ||
+                    '—';
 
 
                 $('galFormat').textContent =
-                    card.format || '—';
+                    card.format ||
+                    '—';
 
 
                 $('galYear').textContent =
-                    card.year || '—';
+                    card.year ||
+                    '—';
 
 
                 $('navCode').textContent =
-                    card.code || 'Catalogue';
+                    card.code ||
+                    'Catalogue';
 
 
                 $('footCode').textContent =
-                    card.code || 'Catalogue';
+                    card.code ||
+                    'Catalogue';
 
 
-                let photos =
-                    Array.isArray(card.photos)
-                        ? [...card.photos]
+                /* =================================================
+                   PREPARE SETS
+                   ================================================= */
+
+                let sets =
+                    Array.isArray(card.sets)
+                        ? [...card.sets]
                         : [];
 
 
-                /* Fall back to cover image */
+                /*
+                 * BACKWARD COMPATIBILITY
+                 *
+                 * If a card still has:
+                 *
+                 * photos: [...]
+                 *
+                 * instead of:
+                 *
+                 * sets: [...]
+                 *
+                 * it will still work.
+                 */
 
                 if (
-                    !photos.length &&
+                    !sets.length &&
+                    Array.isArray(card.photos)
+                ) {
+
+                    sets = [
+
+                        {
+
+                            id: 'all',
+
+                            title: 'Gallery',
+
+                            photos:
+                                [...card.photos]
+
+                        }
+
+                    ];
+
+                }
+
+
+                /*
+                 * If there are no sets but there is
+                 * a cover image, show the cover.
+                 */
+
+                if (
+                    !sets.length &&
                     card.image
                 ) {
 
-                    photos = [
+                    sets = [
 
                         {
-                            image: card.image,
 
-                            alt:
-                                card.alt ||
-                                card.title ||
-                                '',
+                            id: 'all',
 
-                            caption:
-                                card.title ||
-                                ''
+                            title: 'Gallery',
+
+                            photos: [
+
+                                {
+
+                                    image:
+                                        card.image,
+
+                                    alt:
+                                        card.alt ||
+                                        card.title ||
+                                        '',
+
+                                    caption:
+                                        card.title ||
+                                        ''
+
+                                }
+
+                            ]
+
                         }
 
                     ];
@@ -769,72 +1172,188 @@
                     $('photoStream');
 
 
-                /* ---------- Empty Gallery ---------- */
+                const filters =
+                    $('galleryFilters');
 
-                if (!photos.length) {
+
+                /* =================================================
+                   RENDER GALLERY FUNCTION
+                   ================================================= */
+
+                function renderGallery(
+                    selectedSet = 'all'
+                ) {
+
+
+                    let photos = [];
+
+
+                    /* ---------------------------------------------
+                       ALL
+                       Combine every set.
+                       --------------------------------------------- */
+
+                    if (
+                        selectedSet === 'all'
+                    ) {
+
+                        sets.forEach(
+                            set => {
+
+                                if (
+                                    Array.isArray(
+                                        set.photos
+                                    )
+                                ) {
+
+                                    photos.push(
+
+                                        ...set.photos.map(
+                                            photo => ({
+
+                                                ...photo,
+
+                                                setTitle:
+                                                    set.title
+
+                                            })
+                                        )
+
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+
+
+                    /* ---------------------------------------------
+                       SPECIFIC CATEGORY
+                       --------------------------------------------- */
+
+                    else {
+
+                        const selected =
+                            sets.find(
+                                set =>
+                                    set.id ===
+                                    selectedSet
+                            );
+
+
+                        if (
+                            selected &&
+                            Array.isArray(
+                                selected.photos
+                            )
+                        ) {
+
+                            photos =
+                                selected.photos.map(
+                                    photo => ({
+
+                                        ...photo,
+
+                                        setTitle:
+                                            selected.title
+
+                                    })
+                                );
+
+                        }
+
+                    }
+
+
+                    /* =================================================
+                       EMPTY CATEGORY
+                       ================================================= */
+
+                    if (!photos.length) {
+
+                        stream.innerHTML =
+                            '<div class="empty">' +
+                            'No photos have been added to this category yet.' +
+                            '</div>';
+
+                        return;
+
+                    }
+
+
+                    /* =================================================
+                       BUILD PHOTO HTML
+                       ================================================= */
 
                     stream.innerHTML =
-                        '<div class="empty">' +
-                        'No photos have been added to this card yet.' +
-                        '</div>';
 
-                }
+                        photos.map(
+                            (p, i) => {
 
 
-                /* ---------- Render Photos ---------- */
-
-                else {
-
-                    stream.innerHTML =
-                        photos.map((p, i) => {
-
-                            const frameLabel =
-                                `Frame // ${String(i + 1).padStart(2, '0')}A`;
+                                const frameLabel =
+                                    `Frame // ${String(
+                                        i + 1
+                                    ).padStart(
+                                        2,
+                                        '0'
+                                    )}A`;
 
 
-                            return `
+                                return `
 
-                                <div class="film-frame">
+                                    <div class="film-frame">
 
-                                    <div class="sprocket-wrapper">
-
-                                        <img
-                                            src="${escapeHtml(p.image)}"
-                                            alt="${escapeHtml(p.alt || '')}"
-                                            class="gallery-photo"
+                                        <div
+                                            class="sprocket-wrapper"
                                         >
 
+                                            <img
+                                                src="${escapeHtml(
+                                                    p.image
+                                                )}"
+
+                                                alt="${escapeHtml(
+                                                    p.alt || ''
+                                                )}"
+
+                                                class="gallery-photo"
+                                            >
+
+                                        </div>
+
+
+                                        <div class="caption">
+
+                                            <span>
+                                                ${escapeHtml(
+                                                    frameLabel
+                                                )}
+                                            </span>
+
+
+                                            <span>
+                                                ${escapeHtml(
+                                                    p.caption || ''
+                                                )}
+                                            </span>
+
+                                        </div>
+
                                     </div>
 
+                                `;
 
-                                    <div class="caption">
+                            }
 
-                                        <span>
-                                            ${escapeHtml(frameLabel)}
-                                        </span>
-
-                                        <span>
-                                            ${escapeHtml(p.caption || '')}
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                            `;
-
-                        }).join('');
+                        ).join('');
 
 
-                    /*
-                     * Detect image orientation.
-                     *
-                     * Portrait image:
-                     * naturalHeight > naturalWidth
-                     *
-                     * Landscape/square:
-                     * naturalWidth >= naturalHeight
-                     */
+                    /* =================================================
+                       AUTOMATIC IMAGE ORIENTATION
+                       ================================================= */
 
                     const images =
                         stream.querySelectorAll(
@@ -842,70 +1361,259 @@
                         );
 
 
-                    images.forEach(img => {
-
-                        const applyOrientation = () => {
-
-                            const wrapper =
-                                img.closest(
-                                    '.sprocket-wrapper'
-                                );
+                    images.forEach(
+                        img => {
 
 
-                            if (!wrapper) return;
+                            const applyOrientation =
+                                () => {
 
+
+                                    const wrapper =
+                                        img.closest(
+                                            '.sprocket-wrapper'
+                                        );
+
+
+                                    if (!wrapper) {
+
+                                        return;
+
+                                    }
+
+
+                                    /*
+                                     * Portrait:
+                                     *
+                                     * height > width
+                                     */
+
+                                    if (
+                                        img.naturalHeight >
+                                        img.naturalWidth
+                                    ) {
+
+                                        wrapper.classList.add(
+                                            'portrait'
+                                        );
+
+                                    }
+
+
+                                    /*
+                                     * Landscape or square
+                                     */
+
+                                    else {
+
+                                        wrapper.classList.remove(
+                                            'portrait'
+                                        );
+
+                                    }
+
+                                };
+
+
+                            /*
+                             * Cached image
+                             */
 
                             if (
-                                img.naturalHeight >
-                                img.naturalWidth
+                                img.complete
                             ) {
 
-                                wrapper.classList.add(
-                                    'portrait'
-                                );
-
-                            } else {
-
-                                wrapper.classList.remove(
-                                    'portrait'
-                                );
+                                applyOrientation();
 
                             }
 
-                        };
 
+                            /*
+                             * Newly loaded image
+                             */
 
-                        /*
-                         * If image is already cached,
-                         * naturalWidth/naturalHeight
-                         * are immediately available.
-                         */
-
-                        if (img.complete) {
-
-                            applyOrientation();
+                            img.addEventListener(
+                                'load',
+                                applyOrientation
+                            );
 
                         }
-
-
-                        /*
-                         * Otherwise wait for image
-                         * to finish loading.
-                         */
-
-                        img.addEventListener(
-                            'load',
-                            applyOrientation
-                        );
-
-                    });
+                    );
 
                 }
+
+
+                /* =================================================
+                   FILTER BUTTONS
+                   ================================================= */
+
+                if (filters) {
+
+
+                    filters
+                        .querySelectorAll(
+                            '.filter-btn'
+                        )
+                        .forEach(
+                            button => {
+
+
+                                button.addEventListener(
+                                    'click',
+                                    () => {
+
+
+                                        const selectedSet =
+                                            button.dataset.set;
+
+
+                                        /* -------------------------
+                                           Update active button
+                                           ------------------------- */
+
+                                        filters
+                                            .querySelectorAll(
+                                                '.filter-btn'
+                                            )
+                                            .forEach(
+                                                btn => {
+
+                                                    btn.classList.remove(
+                                                        'active'
+                                                    );
+
+                                                }
+                                            );
+
+
+                                        button.classList.add(
+                                            'active'
+                                        );
+
+
+                                        /* -------------------------
+                                           Render selected set
+                                           ------------------------- */
+
+                                        renderGallery(
+                                            selectedSet
+                                        );
+
+
+                                        /* -------------------------
+                                           Update URL
+                                           ------------------------- */
+
+                                        const url =
+                                            new URL(
+                                                window.location.href
+                                            );
+
+
+                                        if (
+                                            selectedSet ===
+                                            'all'
+                                        ) {
+
+                                            url.searchParams.delete(
+                                                'set'
+                                            );
+
+                                        }
+
+                                        else {
+
+                                            url.searchParams.set(
+                                                'set',
+                                                selectedSet
+                                            );
+
+                                        }
+
+
+                                        window.history.replaceState(
+                                            {},
+                                            '',
+                                            url
+                                        );
+
+                                    }
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                /* =================================================
+                   INITIAL CATEGORY
+                   ================================================= */
+
+                const initialSet =
+                    getParam('set') ||
+                    'all';
+
+
+                /*
+                 * Check whether requested set exists.
+                 */
+
+                const validSet =
+
+                    initialSet === 'all' ||
+
+                    sets.some(
+                        set =>
+                            set.id ===
+                            initialSet
+                    )
+
+                        ? initialSet
+
+                        : 'all';
+
+
+                /* =================================================
+                   ACTIVATE CORRECT BUTTON
+                   ================================================= */
+
+                if (filters) {
+
+                    filters
+                        .querySelectorAll(
+                            '.filter-btn'
+                        )
+                        .forEach(
+                            button => {
+
+                                button.classList.toggle(
+                                    'active',
+
+                                    button.dataset.set ===
+                                    validSet
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                /* =================================================
+                   INITIAL RENDER
+                   ================================================= */
+
+                renderGallery(
+                    validSet
+                );
 
             }
 
 
-            /* ---------- Gallery Not Found ---------- */
+            /* =====================================================
+               GALLERY NOT FOUND
+               ===================================================== */
 
             else {
 
@@ -939,9 +1647,16 @@
 
             if (backBtn) {
 
+
                 backBtn.addEventListener(
                     'click',
                     (e) => {
+
+
+                        /*
+                         * Don't interfere with
+                         * Ctrl / Cmd / Shift clicks.
+                         */
 
                         if (
                             e.ctrlKey ||
@@ -971,7 +1686,7 @@
                             .catch(
                                 err =>
                                     console.log(
-                                        "Audio play blocked by browser:",
+                                        'Audio play blocked by browser:',
                                         err
                                     )
                             );
