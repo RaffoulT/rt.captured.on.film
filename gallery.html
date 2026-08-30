@@ -58,17 +58,17 @@
         }
 
 
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+
         .wrap {
             max-width: 1180px;
 
             margin: 0 auto;
 
             padding: 0 1.75rem;
-        }
-
-
-        .mono {
-            font-family: 'IBM Plex Mono', monospace;
         }
 
 
@@ -224,10 +224,6 @@
         }
 
 
-        /* =========================================================
-           CURRENT CATEGORY LABEL
-           ========================================================= */
-
         .current-category {
             margin-top: 1rem;
 
@@ -244,7 +240,7 @@
 
 
         /* =========================================================
-           BACK TO MAIN CATEGORIES
+           BACK BUTTON
            ========================================================= */
 
         .subcategory-back {
@@ -310,6 +306,27 @@
 
             box-shadow:
                 0 8px 20px -10px rgba(0, 0, 0, 0.15);
+        }
+
+
+        /* =========================================================
+           CLICKABLE PHOTO AREA
+           ========================================================= */
+
+        .photo-trigger {
+            display: block;
+
+            width: 100%;
+
+            padding: 0;
+
+            border: 0;
+
+            background: transparent;
+
+            cursor: zoom-in;
+
+            text-align: left;
         }
 
 
@@ -380,6 +397,15 @@
             object-fit: contain;
 
             display: block;
+
+            transition:
+                transform 0.35s ease;
+        }
+
+
+        .photo-trigger:hover
+        .sprocket-wrapper img {
+            transform: scale(1.015);
         }
 
 
@@ -501,35 +527,239 @@
 
 
         /* =========================================================
-           MOBILE
+           FULL-SCREEN LIGHTBOX
+           ========================================================= */
+
+        .lightbox {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 2rem;
+
+            background:
+                rgba(20, 17, 13, 0.96);
+        }
+
+
+        .lightbox.open {
+            display: flex;
+        }
+
+
+        .lightbox-content {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 1.25rem;
+        }
+
+
+        .lightbox-image {
+
+            max-width: 92vw;
+
+            max-height: 78vh;
+
+            width: auto;
+
+            height: auto;
+
+            object-fit: contain;
+
+            display: block;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.45);
+        }
+
+
+        .lightbox-caption {
+
+            max-width: 800px;
+
+            width: 100%;
+
+            text-align: center;
+
+            color: var(--paper);
+
+            font-family: 'IBM Plex Mono', monospace;
+
+            font-size: 0.8rem;
+
+            line-height: 1.6;
+
+            padding: 0 1rem;
+        }
+
+
+        .lightbox-caption-main {
+
+            display: block;
+
+            font-size: 0.9rem;
+
+            margin-bottom: 0.25rem;
+
+            color: #fff;
+        }
+
+
+        .lightbox-caption-meta {
+
+            display: block;
+
+            color: rgba(233, 225, 203, 0.65);
+
+            font-size: 0.7rem;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+        }
+
+
+        /* =========================================================
+           LIGHTBOX CLOSE BUTTON
+           ========================================================= */
+
+        .lightbox-close {
+
+            position: fixed;
+
+            top: 1.5rem;
+
+            right: 1.75rem;
+
+            z-index: 10001;
+
+            width: 42px;
+
+            height: 42px;
+
+            border: 1px solid rgba(233, 225, 203, 0.7);
+
+            background: transparent;
+
+            color: var(--paper);
+
+            font-family: 'IBM Plex Mono', monospace;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        .lightbox-close:hover {
+
+            background: var(--paper);
+
+            color: var(--ink);
+        }
+
+
+        /* =========================================================
+           LIGHTBOX FRAME NUMBER
+           ========================================================= */
+
+        .lightbox-frame {
+
+            position: fixed;
+
+            top: 1.75rem;
+
+            left: 1.75rem;
+
+            color: rgba(233, 225, 203, 0.65);
+
+            font-family: 'IBM Plex Mono', monospace;
+
+            font-size: 0.65rem;
+
+            letter-spacing: 0.1em;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           LIGHTBOX MOBILE
            ========================================================= */
 
         @media (max-width: 600px) {
 
-            .film-frame {
+            .lightbox {
+
                 padding: 1rem;
             }
 
 
-            .sprocket-wrapper.portrait {
-                width: min(100%, 500px);
+            .lightbox-image {
+
+                max-width: 94vw;
+
+                max-height: 75vh;
             }
 
 
-            .caption {
-                flex-direction: column;
+            .lightbox-caption {
 
-                gap: 0.25rem;
+                font-size: 0.7rem;
             }
 
 
-            .filter-btn {
-                padding: 0.6rem 1rem;
+            .lightbox-caption-main {
+
+                font-size: 0.8rem;
             }
 
 
-            .gallery-navigation {
-                margin-bottom: 2rem;
+            .lightbox-close {
+
+                top: 1rem;
+
+                right: 1rem;
+            }
+
+
+            .lightbox-frame {
+
+                top: 1.25rem;
+
+                left: 1rem;
             }
 
         }
@@ -615,13 +845,7 @@
         <div class="gallery-navigation">
 
 
-            <!-- =====================================================
-                 MAIN CATEGORIES
-
-                 ALL
-                 PEOPLE
-                 DETAILS
-                 ===================================================== -->
+            <!-- MAIN CATEGORIES -->
 
             <div
                 class="category-level"
@@ -657,15 +881,7 @@
             </div>
 
 
-            <!-- =====================================================
-                 PEOPLE SUB-CATEGORIES
-
-                 ONLY PEOPLE HAS ORIENTATION FILTERING
-
-                 ALL PEOPLE
-                 LANDSCAPE
-                 PORTRAIT
-                 ===================================================== -->
+            <!-- PEOPLE ORIENTATION SUB-CATEGORIES -->
 
             <div
                 class="category-level hidden"
@@ -701,9 +917,7 @@
             </div>
 
 
-            <!-- =====================================================
-                 BACK BUTTON
-                 ===================================================== -->
+            <!-- BACK -->
 
             <button
                 type="button"
@@ -713,10 +927,6 @@
                 ← Back to Categories
             </button>
 
-
-            <!-- =====================================================
-                 CURRENT CATEGORY
-                 ===================================================== -->
 
             <div
                 class="current-category"
@@ -740,7 +950,6 @@
             class="photo-stream"
             id="photoStream"
         >
-            <!-- Photos generated by JavaScript -->
         </div>
 
     </main>
@@ -765,6 +974,72 @@
         </div>
 
     </footer>
+
+
+    <!-- =========================================================
+         FULL-SCREEN LIGHTBOX
+         ========================================================= -->
+
+    <div
+        class="lightbox"
+        id="lightbox"
+        aria-hidden="true"
+    >
+
+        <div
+            class="lightbox-frame"
+            id="lightboxFrame"
+        >
+            Frame // 01A
+        </div>
+
+
+        <button
+            type="button"
+            class="lightbox-close"
+            id="lightboxClose"
+            aria-label="Close photo viewer"
+        >
+            ×
+        </button>
+
+
+        <div
+            class="lightbox-content"
+            id="lightboxContent"
+        >
+
+            <img
+                src=""
+                alt=""
+                class="lightbox-image"
+                id="lightboxImage"
+            >
+
+
+            <div
+                class="lightbox-caption"
+                id="lightboxCaption"
+            >
+
+                <span
+                    class="lightbox-caption-main"
+                    id="lightboxCaptionMain"
+                >
+                </span>
+
+
+                <span
+                    class="lightbox-caption-meta"
+                    id="lightboxCaptionMeta"
+                >
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!-- =========================================================
@@ -841,16 +1116,6 @@
 
             /* =====================================================
                DEFAULT CARD
-
-               ROLL 01
-               GOLD 200
-
-               PEOPLE
-               ├── LANDSCAPE
-               └── PORTRAIT
-
-               DETAILS
-               └── NO ORIENTATION FILTER
                ===================================================== */
 
             const DEFAULT_CARDS = [
@@ -890,10 +1155,6 @@
                     linkText:
                         'View gallery →',
 
-
-                    /* =================================================
-                       SETS
-                       ================================================= */
 
                     sets: [
 
@@ -1020,7 +1281,7 @@
 
 
             /* =====================================================
-               LOAD CATALOGUE
+               LOAD CARDS
                ===================================================== */
 
             const loadCards = () => {
@@ -1133,7 +1394,7 @@
 
 
             /* =====================================================
-               SUPPORT CODE LINKS
+               CODE FALLBACK
                ===================================================== */
 
             if (!card) {
@@ -1179,7 +1440,7 @@
 
 
                 /* -------------------------------------------------
-                   HEADER INFORMATION
+                   HEADER
                    ------------------------------------------------- */
 
                 document.title =
@@ -1217,7 +1478,7 @@
 
 
                 /* =================================================
-                   GET SETS
+                   SETS
                    ================================================= */
 
                 let sets =
@@ -1227,7 +1488,7 @@
 
 
                 /* -------------------------------------------------
-                   Backward compatibility
+                   OLD PHOTO FORMAT SUPPORT
                    ------------------------------------------------- */
 
                 if (
@@ -1254,7 +1515,7 @@
 
 
                 /* -------------------------------------------------
-                   Fallback
+                   FALLBACK TO COVER
                    ------------------------------------------------- */
 
                 if (
@@ -1322,6 +1583,38 @@
 
 
                 /* =================================================
+                   LIGHTBOX ELEMENTS
+                   ================================================= */
+
+                const lightbox =
+                    $('lightbox');
+
+
+                const lightboxImage =
+                    $('lightboxImage');
+
+
+                const lightboxCaptionMain =
+                    $('lightboxCaptionMain');
+
+
+                const lightboxCaptionMeta =
+                    $('lightboxCaptionMeta');
+
+
+                const lightboxFrame =
+                    $('lightboxFrame');
+
+
+                const lightboxClose =
+                    $('lightboxClose');
+
+
+                const lightboxContent =
+                    $('lightboxContent');
+
+
+                /* =================================================
                    STATE
                    ================================================= */
 
@@ -1352,7 +1645,7 @@
 
 
                 /*
-                 * Orientation is ONLY valid for PEOPLE.
+                 * Orientation ONLY belongs to People.
                  */
 
                 if (
@@ -1396,9 +1689,7 @@
                     let photos = [];
 
 
-                    /* ---------------------------------------------
-                       ALL
-                       --------------------------------------------- */
+                    /* ALL */
 
                     if (
                         setId === 'all'
@@ -1439,9 +1730,7 @@
                     }
 
 
-                    /* ---------------------------------------------
-                       SPECIFIC SET
-                       --------------------------------------------- */
+                    /* SPECIFIC SET */
 
                     else {
 
@@ -1518,8 +1807,7 @@
 
 
                     /*
-                     * Orientation is ONLY stored
-                     * when we're inside People.
+                     * Only PEOPLE stores orientation.
                      */
 
                     if (
@@ -1559,9 +1847,9 @@
                 function updateNavigation() {
 
 
-                    /* =================================================
-                       TOP LEVEL
-                       ================================================= */
+                    /* ---------------------------------------------
+                       ALL
+                       --------------------------------------------- */
 
                     if (
                         currentSet === 'all'
@@ -1588,9 +1876,9 @@
                     }
 
 
-                    /* =================================================
+                    /* ---------------------------------------------
                        PEOPLE
-                       ================================================= */
+                       --------------------------------------------- */
 
                     else if (
                         currentSet === 'people'
@@ -1641,12 +1929,11 @@
                     }
 
 
-                    /* =================================================
+                    /* ---------------------------------------------
                        DETAILS
 
-                       IMPORTANT:
-                       No orientation navigation.
-                       ================================================= */
+                       No orientation menu.
+                       --------------------------------------------- */
 
                     else if (
                         currentSet === 'details'
@@ -1673,9 +1960,9 @@
                     }
 
 
-                    /* =================================================
-                       MAIN BUTTON ACTIVE STATES
-                       ================================================= */
+                    /* ---------------------------------------------
+                       MAIN ACTIVE BUTTON
+                       --------------------------------------------- */
 
                     mainCategories
                         .querySelectorAll(
@@ -1695,9 +1982,9 @@
                         );
 
 
-                    /* =================================================
-                       PEOPLE ORIENTATION ACTIVE STATES
-                       ================================================= */
+                    /* ---------------------------------------------
+                       PEOPLE ACTIVE BUTTON
+                       --------------------------------------------- */
 
                     peopleOrientations
                         .querySelectorAll(
@@ -1715,6 +2002,113 @@
 
                             }
                         );
+
+                }
+
+
+                /* =================================================
+                   OPEN LIGHTBOX
+                   ================================================= */
+
+                function openLightbox(
+                    photo,
+                    frameNumber
+                ) {
+
+                    lightboxImage.src =
+                        photo.image;
+
+
+                    lightboxImage.alt =
+                        photo.alt || '';
+
+
+                    lightboxCaptionMain.textContent =
+                        photo.caption || '';
+
+
+                    lightboxCaptionMeta.textContent =
+                        `${photo.setTitle || ''} • ${card.code || ''}`;
+
+
+                    lightboxFrame.textContent =
+                        `Frame // ${String(
+                            frameNumber
+                        ).padStart(
+                            2,
+                            '0'
+                        )}A`;
+
+
+                    lightbox.classList.add(
+                        'open'
+                    );
+
+
+                    lightbox.setAttribute(
+                        'aria-hidden',
+                        'false'
+                    );
+
+
+                    document.body.classList.add(
+                        'lightbox-open'
+                    );
+
+
+                    /*
+                     * Put focus on close button
+                     * for keyboard accessibility.
+                     */
+
+                    lightboxClose.focus();
+
+                }
+
+
+                /* =================================================
+                   CLOSE LIGHTBOX
+                   ================================================= */
+
+                function closeLightbox() {
+
+                    lightbox.classList.remove(
+                        'open'
+                    );
+
+
+                    lightbox.setAttribute(
+                        'aria-hidden',
+                        'true'
+                    );
+
+
+                    document.body.classList.remove(
+                        'lightbox-open'
+                    );
+
+
+                    /*
+                     * Clear image after closing.
+                     */
+
+                    setTimeout(
+                        () => {
+
+                            if (
+                                !lightbox.classList.contains(
+                                    'open'
+                                )
+                            ) {
+
+                                lightboxImage.src =
+                                    '';
+
+                            }
+
+                        },
+                        200
+                    );
 
                 }
 
@@ -1773,23 +2167,32 @@
                                         data-orientation="unknown"
                                     >
 
-                                        <div
-                                            class="sprocket-wrapper"
+                                        <button
+                                            type="button"
+                                            class="photo-trigger"
+                                            aria-label="Open photograph fullscreen"
+                                            data-photo-index="${i}"
                                         >
 
-                                            <img
-                                                src="${escapeHtml(
-                                                    p.image
-                                                )}"
-
-                                                alt="${escapeHtml(
-                                                    p.alt || ''
-                                                )}"
-
-                                                class="gallery-photo"
+                                            <div
+                                                class="sprocket-wrapper"
                                             >
 
-                                        </div>
+                                                <img
+                                                    src="${escapeHtml(
+                                                        p.image
+                                                    )}"
+
+                                                    alt="${escapeHtml(
+                                                        p.alt || ''
+                                                    )}"
+
+                                                    class="gallery-photo"
+                                                >
+
+                                            </div>
+
+                                        </button>
 
 
                                         <div class="caption">
@@ -1819,7 +2222,7 @@
 
 
                     /* =================================================
-                       AUTOMATIC ORIENTATION DETECTION
+                       ORIENTATION DETECTION
                        ================================================= */
 
                     const images =
@@ -1861,9 +2264,9 @@
                                     let orientation;
 
 
-                                    /* ---------------------------------
-                                       PORTRAIT
-                                       --------------------------------- */
+                                    /*
+                                     * Portrait
+                                     */
 
                                     if (
                                         img.naturalHeight >
@@ -1881,9 +2284,9 @@
                                     }
 
 
-                                    /* ---------------------------------
-                                       LANDSCAPE
-                                       --------------------------------- */
+                                    /*
+                                     * Landscape
+                                     */
 
                                     else {
 
@@ -1903,8 +2306,7 @@
 
 
                                     /*
-                                     * Orientation filtering ONLY
-                                     * happens inside PEOPLE.
+                                     * Filter ONLY PEOPLE.
                                      */
 
                                     if (
@@ -1927,11 +2329,6 @@
 
                                     else {
 
-                                        /*
-                                         * DETAILS NEVER gets
-                                         * filtered by orientation.
-                                         */
-
                                         frame.style.display =
                                             '';
 
@@ -1939,10 +2336,6 @@
 
                                 };
 
-
-                            /* -----------------------------------------
-                               Cached image
-                               ----------------------------------------- */
 
                             if (
                                 img.complete &&
@@ -1954,13 +2347,66 @@
                             }
 
 
-                            /* -----------------------------------------
-                               Newly loaded image
-                               ----------------------------------------- */
-
                             img.addEventListener(
                                 'load',
                                 applyOrientation
+                            );
+
+                        }
+                    );
+
+
+                    /* =================================================
+                       PHOTO CLICK EVENTS
+                       ================================================= */
+
+                    const triggers =
+                        stream.querySelectorAll(
+                            '.photo-trigger'
+                        );
+
+
+                    triggers.forEach(
+                        trigger => {
+
+
+                            trigger.addEventListener(
+                                'click',
+                                () => {
+
+
+                                    const photoIndex =
+                                        parseInt(
+                                            trigger.dataset.photoIndex,
+                                            10
+                                        );
+
+
+                                    const visiblePhotos =
+                                        getPhotosForSet(
+                                            currentSet
+                                        );
+
+
+                                    const photo =
+                                        visiblePhotos[
+                                            photoIndex
+                                        ];
+
+
+                                    if (!photo) {
+
+                                        return;
+
+                                    }
+
+
+                                    openLightbox(
+                                        photo,
+                                        photoIndex + 1
+                                    );
+
+                                }
                             );
 
                         }
@@ -1989,12 +2435,6 @@
                                     currentSet =
                                         button.dataset.set;
 
-
-                                    /*
-                                     * Every time we select
-                                     * a main category,
-                                     * reset orientation.
-                                     */
 
                                     currentOrientation =
                                         'all';
@@ -2030,17 +2470,12 @@
                                 () => {
 
 
-                                    currentOrientation =
-                                        button.dataset.orientation;
-
-
-                                    /*
-                                     * Orientation buttons
-                                     * always belong to PEOPLE.
-                                     */
-
                                     currentSet =
                                         'people';
+
+
+                                    currentOrientation =
+                                        button.dataset.orientation;
 
 
                                     updateURL();
@@ -2084,7 +2519,94 @@
 
 
                 /* =================================================
-                   INITIAL RENDER
+                   LIGHTBOX CLOSE
+                   ================================================= */
+
+                lightboxClose.addEventListener(
+                    'click',
+                    closeLightbox
+                );
+
+
+                /* =================================================
+                   CLICK OUTSIDE IMAGE TO CLOSE
+                   ================================================= */
+
+                lightbox.addEventListener(
+                    'click',
+                    (event) => {
+
+
+                        /*
+                         * If the click is directly on
+                         * the dark background, close it.
+                         */
+
+                        if (
+                            event.target ===
+                            lightbox
+                        ) {
+
+                            closeLightbox();
+
+                        }
+
+                    }
+                );
+
+
+                /* =================================================
+                   ALSO CLOSE WHEN CLICKING THE EMPTY AREA
+                   INSIDE LIGHTBOX CONTENT
+
+                   BUT NOT WHEN CLICKING THE IMAGE/CAPTION.
+                   ================================================= */
+
+                lightboxContent.addEventListener(
+                    'click',
+                    (event) => {
+
+
+                        if (
+                            event.target ===
+                            lightboxContent
+                        ) {
+
+                            closeLightbox();
+
+                        }
+
+                    }
+                );
+
+
+                /* =================================================
+                   ESCAPE KEY
+                   ================================================= */
+
+                document.addEventListener(
+                    'keydown',
+                    (event) => {
+
+
+                        if (
+                            event.key ===
+                            'Escape' &&
+                            lightbox.classList.contains(
+                                'open'
+                            )
+                        ) {
+
+                            closeLightbox();
+
+                        }
+
+                    }
+                );
+
+
+                /* =================================================
+                   INITIALIZE
                    ================================================= */
 
                 updateNavigation();
@@ -2134,11 +2656,6 @@
                     'click',
                     (e) => {
 
-
-                        /*
-                         * Don't interfere with
-                         * Ctrl / Cmd / Shift clicks.
-                         */
 
                         if (
                             e.ctrlKey ||
