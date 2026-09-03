@@ -13,42 +13,13 @@
     "link": "gallery.html?i=0",
     "linkText": "View gallery →",
     "photos": [
-      {
-        "image": "images/a-9.avif",
-        "alt": "CEOs picture",
-        "caption": "The Madman Behind the Lens"
-      },
-      {
-        "image": "images/a-4.avif",
-        "alt": "jen",
-        "caption": "10452 km² of heart.",
-        "orientation": "portrait"
-      },
-      {
-        "image": "images/a-14.avif",
-        "alt": "Lanlun",
-        "caption": "Wrapped in Babylon blue"
-      },
-      {
-        "image": "images/Untitled-4.avif",
-        "alt": "brrrrrrrrrrrrr",
-        "caption": "Arguing with the wind"
-      },
-      {
-        "image": "images/Untitled-3.avif",
-        "alt": "Music Speaks Louder than Words",
-        "caption": "Music Speaks Louder Than Words"
-      },
-      {
-        "image": "images/Untitled-2.avif",
-        "alt": "Hidden inside these books are secrets",
-        "caption": "Knowledge hidden within the shelves"
-      },
-      {
-        "image": "images/Untitled-1.avif",
-        "alt": "Just the exhausts poluting the air",
-        "caption": "Pollution In An Artistic Way"
-      }
+      {"image":"images/a-9.avif","alt":"CEOs picture","caption":"The Madman Behind the Lens"},
+      {"image":"images/a-4.avif","alt":"jen","caption":"10452 km² of heart.","orientation":"portrait"},
+      {"image":"images/a-14.avif","alt":"Lanlun","caption":"Wrapped in Babylon blue"},
+      {"image":"images/Untitled-4.avif","alt":"brrrrrrrrrrrrr","caption":"Arguing with the wind"},
+      {"image":"images/Untitled-3.avif","alt":"Music Speaks Louder than Words","caption":"Music Speaks Louder Than Words"},
+      {"image":"images/Untitled-2.avif","alt":"Hidden inside these books are secrets","caption":"Knowledge hidden within the shelves"},
+      {"image":"images/Untitled-1.avif","alt":"Just the exhausts poluting the air","caption":"Pollution In An Artistic Way"}
     ]
   },
   {
@@ -62,7 +33,7 @@
     "year": "2026",
     "format": "110 Film",
     "description": "A test roll for the Lomography 110 format.",
-    "link": "gallery-00.html",
+    "link": "gallery.html?i=1",
     "linkText": "View gallery →",
     "photos": []
   }
