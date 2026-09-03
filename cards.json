@@ -4,7 +4,6 @@
     "category": "series",
     "title": "Gold 200",
     "image": "images/kodak-gold-200.avif",
-    
     "alt": "Kodak Gold 200 film retail package",
     "frameNum": "14A",
     "location": "Beirut, LB",
@@ -63,7 +62,7 @@
     "year": "2026",
     "format": "110 Film",
     "description": "A test roll for the Lomography 110 format.",
-    "link": "gallery.html?i=1",
+    "link": "gallery-00.html",
     "linkText": "View gallery →",
     "photos": []
   }
