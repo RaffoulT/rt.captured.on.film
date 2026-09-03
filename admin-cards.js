@@ -17,7 +17,7 @@
         },
         {
             code: 'ROLL — 00 (TEST)', category: 'series', title: 'Lomography 110',
-            image: 'https://wsrv.nl/?url=cdn.shop.lomography.com/media/catalog/product/cache/d48ee8365af56e523deee8f9725f2022/t/i/tiger-110-film_box_and_roll_front.jpg&output=avif',
+            image: 'images/lomo.avif',
             alt: 'Lomography Color Tiger 110 film cartridge and box', frameNum: '00T',
             location: 'Beirut, LB', year: '2026', format: '110 Film',
             description: 'A test roll for the Lomography 110 format.',
@@ -52,14 +52,27 @@
          * from hiding the newer Lomography 110 card.
          */
         DEFAULTS.forEach(function (defaultCard) {
-            var exists = cards.some(function (card) {
+            var existing = cards.find(function (card) {
                 return card && (
                     card.code === defaultCard.code ||
                     card.title === defaultCard.title
                 );
             });
 
-            if (!exists) cards.push(clone(defaultCard));
+            if (!existing) {
+                cards.push(clone(defaultCard));
+                return;
+            }
+
+            /*
+             * Roll 00 must always use the repository image.
+             * Older localStorage versions used an external wsrv.nl URL,
+             * which could fail to load. Replace that stale cover path.
+             */
+            if (defaultCard.code === 'ROLL — 00 (TEST)') {
+                existing.image = defaultCard.image;
+                existing.alt = defaultCard.alt;
+            }
         });
 
         return cards;
