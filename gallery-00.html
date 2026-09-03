@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lomography 110 — Raffoul Traboulsy</title>
+  <link rel="icon" type="image/png" href="images/favicon-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--paper:#E9E1CB;--paper-card:#F3EDDC;--ink:#201C15;--ink-muted:#6E6353;--stamp:#AC3B2C;--line:#B7A97F}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--paper);background-image:radial-gradient(circle at 1px 1px,rgba(32,28,21,.045) 1px,transparent 0);background-size:22px 22px;color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.55;overflow-x:hidden}
+    .wrap{max-width:1180px;margin:auto;padding:0 1.75rem}
+    .mono{font-family:'IBM Plex Mono',monospace}
+    nav{border-bottom:2px solid var(--ink);padding:1rem 0;font:600 .75rem 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+    .nav-flex{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+    .back{color:var(--stamp);text-decoration:none}.back:hover{text-decoration:underline}
+    header{text-align:center;padding:4rem 0 3rem}
+    h1{font-family:'Archivo Black',sans-serif;font-size:clamp(2rem,5vw,3.8rem);text-transform:uppercase;line-height:1.1;margin-bottom:1rem}
+    .meta{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;color:var(--ink-muted);font:.8rem 'IBM Plex Mono',monospace}.meta strong{color:var(--ink)}
+    .stream{padding-bottom:6rem;display:grid;gap:3rem}
+    .frame{background:var(--paper-card);border:1px solid var(--line);padding:1.5rem;box-shadow:0 8px 20px -10px rgba(0,0,0,.15)}
+    .film{position:relative;width:100%;aspect-ratio:4/3;background:#1a1713;border:1px solid var(--ink);overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .film:before,.film:after{content:'';position:absolute;z-index:2;left:0;right:0;height:12px;background:#201C15;background-image:repeating-linear-gradient(90deg,var(--paper-card) 0 6px,transparent 6px 18px)}
+    .film:before{top:0}.film:after{bottom:0}
+    .film img{position:absolute;inset:12px 0;width:100%;height:calc(100% - 24px);object-fit:contain;display:block}
+    .expand{width:100%;margin-top:.8rem;padding:.7rem 1rem;background:transparent;color:var(--ink);border:1px solid var(--line);font:500 .7rem 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.expand:hover{background:var(--ink);color:var(--paper-card)}
+    .caption{margin-top:1.2rem;padding-top:.8rem;border-top:1px dotted var(--line);display:flex;justify-content:space-between;gap:1rem;color:var(--ink-muted);font:.8rem 'IBM Plex Mono',monospace}
+    .empty{text-align:center;padding:4rem 0;color:var(--ink-muted);font:.8rem 'IBM Plex Mono',monospace}
+    footer{border-top:2px solid var(--ink);padding:2.5rem 0;text-align:center;color:var(--ink-muted);font:.7rem 'IBM Plex Mono',monospace}
+    .viewer{position:fixed;inset:0;z-index:9999;background:rgba(20,17,13,.96);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;visibility:hidden;transition:.25s}.viewer.active{opacity:1;visibility:visible}.viewer-content{position:relative;width:min(94vw,1400px);height:min(94vh,1000px);display:flex;flex-direction:column;align-items:center;justify-content:center}.viewer img{max-width:100%;max-height:calc(100% - 70px);width:auto;height:auto;object-fit:contain;border:1px solid rgba(243,237,220,.25);box-shadow:0 25px 60px rgba(0,0,0,.55)}.viewer-caption{margin-top:1rem;max-width:90%;color:var(--paper-card);font:.8rem 'IBM Plex Mono',monospace;text-align:center}.close{position:absolute;top:0;right:0;border:1px solid var(--line);background:var(--paper-card);color:var(--ink);padding:.55rem .8rem;font:.7rem 'IBM Plex Mono',monospace;text-transform:uppercase;cursor:pointer}.close:hover{background:var(--stamp);color:#fff;border-color:var(--stamp)}
+    @media(max-width:600px){.wrap{padding:0 1rem}.nav-flex{align-items:flex-start}.meta{gap:.8rem 1.2rem}header{padding:3rem 0 2.5rem}.frame{padding:1rem}.caption{flex-direction:column;gap:.3rem}.viewer{padding:1rem}.close{top:.5rem;right:.5rem}}
+  </style>
+</head>
+<body>
+  <nav><div class="wrap nav-flex"><a class="back" href="index.html">← Back to Catalogue</a><span id="navCode">ROLL — 00 (TEST)</span></div></nav>
+  <header><div class="wrap"><h1 id="title">Lomography 110</h1><div class="meta"><span>Location: <strong id="location">—</strong></span><span>Format: <strong id="format">—</strong></span><span>Year: <strong id="year">—</strong></span></div></div></header>
+  <main class="wrap"><div class="stream" id="stream"></div></main>
+  <footer><div class="wrap">All photographs captured on location in Lebanon • <span>ROLL — 00 (TEST)</span></div></footer>
+  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Image viewer"><div class="viewer-content"><button class="close" id="close">Close</button><img id="viewerImage" alt=""><div class="viewer-caption" id="viewerCaption"></div></div></div>
+  <script>
+    const CARD_CODE='ROLL — 00 (TEST)';
+    const FALLBACK={code:CARD_CODE,title:'Lomography 110',image:'images/lomo.avif',alt:'Lomography Color Tiger 110 film cartridge and box',location:'Beirut, LB',year:'2026',format:'110 Film',description:'A test roll for the Lomography 110 format.',photos:[]};
+    const $=id=>document.getElementById(id);
+    function openViewer(image,caption){$('viewerImage').src=image;$('viewerImage').alt=caption||'';$('viewerCaption').textContent=caption||'';$('viewer').classList.add('active');document.body.style.overflow='hidden'}
+    function closeViewer(){$('viewer').classList.remove('active');document.body.style.overflow=''}
+    $('close').addEventListener('click',closeViewer);$('viewer').addEventListener('click',e=>{if(e.target===$('viewer'))closeViewer()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeViewer()});
+    function render(card){
+      $('navCode').textContent=card.code||CARD_CODE;$('title').textContent=card.title||'Lomography 110';$('location').textContent=card.location||'—';$('format').textContent=card.format||'110 Film';$('year').textContent=card.year||'2026';
+      const photos=Array.isArray(card.photos)&&card.photos.length?card.photos:[{image:card.image||'images/lomo.avif',alt:card.alt||card.title,caption:card.description||card.title}];
+      const stream=$('stream');stream.innerHTML='';
+      photos.forEach((photo,index)=>{const frame=document.createElement('article');frame.className='frame';const film=document.createElement('div');film.className='film';const img=document.createElement('img');img.src=photo.image;img.alt=photo.alt||'';film.appendChild(img);frame.appendChild(film);const button=document.createElement('button');button.className='expand';button.textContent='Expand image';button.addEventListener('click',()=>openViewer(photo.image,photo.caption||photo.alt||''));frame.appendChild(button);const caption=document.createElement('div');caption.className='caption';caption.innerHTML='<span>'+((photo.caption||card.description||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])))+'</span><span>FRAME '+String(index+1).padStart(2,'0')+'</span>';frame.appendChild(caption);stream.appendChild(frame)})
+    }
+    fetch('cards.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('cards.json unavailable');return r.json()}).then(cards=>{const card=cards.find(c=>c.code===CARD_CODE||c.title==='Lomography 110');render(card||FALLBACK)}).catch(()=>render(FALLBACK));
+  </script>
+</body>
+</html>
