@@ -1175,6 +1175,14 @@
     }
 
 
+    window.addEventListener(
+      'pagehide',
+      () => {
+        stopAllSounds();
+      }
+    );
+
+
     /* =====================================================
        PAGE LOAD SHUTTER
        ===================================================== */
@@ -1754,7 +1762,10 @@
 
            <a
         href="#"
-        class="tiny-camera-space hidden">
+        class="tiny-camera-space hidden"
+        data-camera-image="images/ektra.avif"
+        data-camera-name="Kodak Ektra 100"
+        data-camera-description="16mm wide Film Camera">
 
         <div class="tiny-camera-thumb">
 
@@ -1780,7 +1791,10 @@
       </a>
       <a
         href="#"
-        class="tiny-camera-space hidden">
+        class="tiny-camera-space hidden"
+        data-camera-image="images/cam.avif"
+        data-camera-name="Canon EOS 300"
+        data-camera-description="35mm SLR Film Camera">
 
         <div class="tiny-camera-thumb">
 
@@ -2338,8 +2352,8 @@
        AUDIO + MODAL ELEMENTS
        ===================================================== */
 
-    const cameraBadge =
-      document.querySelector(
+    const cameraBadges =
+      document.querySelectorAll(
         '.tiny-camera-space'
       );
 
@@ -2353,6 +2367,24 @@
     const closeModalBtn =
       document.querySelector(
         '.close-modal'
+      );
+
+
+    const cameraModalImage =
+      document.querySelector(
+        '.camera-modal-content img'
+      );
+
+
+    const cameraModalName =
+      document.querySelector(
+        '.camera-modal-details h3'
+      );
+
+
+    const cameraModalDescription =
+      document.querySelector(
+        '.camera-modal-details p'
       );
 
 
@@ -2501,38 +2533,27 @@
        SAFE AUDIO PLAY
        ===================================================== */
 
+    function stopAllSounds() {
+      [shutterAudio, rollAudio].forEach((audio) => {
+        if (!audio) return;
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    }
+
+
     function playSound(audio) {
-
-      if (
-        !soundEnabled ||
-        !audio
-      ) {
-
+      if (!soundEnabled || !audio) {
         return;
-
       }
-
 
       audio.currentTime = 0;
 
-
-      const playPromise =
-        audio.play();
-
+      const playPromise = audio.play();
 
       if (playPromise !== undefined) {
-
-        playPromise.catch(() => {
-
-          /*
-           * Browser blocked audio.
-           * Nothing else needs to happen.
-           */
-
-        });
-
+        playPromise.catch(() => {});
       }
-
     }
 
 
@@ -2574,7 +2595,7 @@
        CAMERA BADGE / MODAL
        ===================================================== */
 
-    if (cameraBadge) {
+    cameraBadges.forEach((cameraBadge) => {
 
       cameraBadge.addEventListener(
         'click',
@@ -2582,46 +2603,60 @@
 
           e.preventDefault();
 
+          const cameraImage =
+            cameraBadge.dataset.cameraImage;
+
+          const cameraName =
+            cameraBadge.dataset.cameraName;
+
+          const cameraDescription =
+            cameraBadge.dataset.cameraDescription;
+
+          if (cameraModalImage && cameraImage) {
+            cameraModalImage.src = cameraImage;
+            cameraModalImage.alt =
+              `${cameraName || 'Camera'} Enlarged`;
+          }
+
+          if (cameraModalName && cameraName) {
+            cameraModalName.textContent = cameraName;
+          }
+
+          if (cameraModalDescription && cameraDescription) {
+            cameraModalDescription.textContent = cameraDescription;
+          }
 
           cameraModal.classList.remove(
             'shutter-only'
           );
 
-
           cameraModal.classList.add(
             'active'
           );
-
 
           cameraModal.setAttribute(
             'aria-hidden',
             'false'
           );
 
-
           setTimeout(() => {
-
             triggerFlash();
 
-            playSound(
-              shutterAudio
-            );
-
+            // Always check the current SFX state at playback time.
+            playSound(shutterAudio);
           }, 350);
 
-
           setTimeout(() => {
-
             flash.classList.remove(
               'flash-active'
             );
-
           }, 1100);
 
         }
       );
 
-    }
+    });
+
 
 
     /* =====================================================
@@ -2692,6 +2727,7 @@
 
             setTimeout(() => {
 
+              stopAllSounds();
               window.location.href =
                 targetUrl;
 
@@ -2825,6 +2861,8 @@
       'pageshow',
       (e) => {
 
+        stopAllSounds();
+
         if (e.persisted) {
 
           cameraModal.classList.remove(
@@ -2878,15 +2916,6 @@
 
       }
     );
-
-  </script>
-
-
-  <!-- =====================================================
-       ADMIN CARDS
-       ===================================================== -->
-
-  <script src="admin-cards.js"></script>
 
 </body>
 
