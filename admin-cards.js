@@ -23,6 +23,14 @@
             description: 'A test roll for the Lomography 110 format.',
             link: 'gallery.html?i=1', linkText: 'View gallery →',
             photos: []
+        },
+        {
+            code: 'ROLL — 02', category: 'series', title: 'Fujifilm C400',
+            image: 'images/fujifilm-c400.avif', alt: 'Fujifilm C400 film', frameNum: '16A',
+            location: 'Beirut, LB', year: '2026', format: '35mm Film',
+            description: 'Fujifilm C400 roll.',
+            link: 'gallery.html?i=2', linkText: 'View gallery →',
+            photos: []
         }
     ];
 
