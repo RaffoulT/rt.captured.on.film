@@ -4,25 +4,25 @@
     var KEY = 'rtCatalogCards';
     var DEFAULTS = [
         {
-            code: 'ROLL — 01', category: 'series', title: 'Gold 200',
-            image: 'images/kodak-gold-200.avif', alt: 'Kodak Gold 200 film retail package', frameNum: '14A',
-            location: 'Beirut, LB', year: '2026', format: '35mm Film',
-            description: 'Quiet Shelves Hiding a lot of treasures.',
-            link: 'gallery.html?i=0', linkText: 'View gallery →',
-            photos: [
-                { image: 'images/Untitled-1.jpg', alt: 'Just the exhausts poluting the air', caption: 'Pollution In An Artistic Way' },
-                { image: 'images/Untitled-2.jpg', alt: 'Hidden inside these books are secrets', caption: 'Knowledge hidden within the shelves' },
-                { image: 'images/Untitled-3.jpg', alt: 'Music Speaks Louder than Words', caption: 'Music Speaks Louder Than Words' }
-            ]
-        },
-        {
             code: 'ROLL — 00 (TEST)', category: 'series', title: 'Lomography 110',
             image: 'images/lomo.avif',
             alt: 'Lomography Color Tiger 110 film cartridge and box', frameNum: '00T',
             location: 'Beirut, LB', year: '2026', format: '110 Film',
             description: 'A test roll for the Lomography 110 format.',
-            link: 'gallery.html?i=1', linkText: 'View gallery →',
+            link: 'gallery.html?i=0', linkText: 'View gallery →',
             photos: []
+        },
+        {
+            code: 'ROLL — 01', category: 'series', title: 'Gold 200',
+            image: 'images/kodak-gold-200.avif', alt: 'Kodak Gold 200 film retail package', frameNum: '14A',
+            location: 'Beirut, LB', year: '2026', format: '35mm Film',
+            description: 'Quiet Shelves Hiding a lot of treasures.',
+            link: 'gallery.html?i=1', linkText: 'View gallery →',
+            photos: [
+                { image: 'images/Untitled-1.jpg', alt: 'Just the exhausts poluting the air', caption: 'Pollution In An Artistic Way' },
+                { image: 'images/Untitled-2.jpg', alt: 'Hidden inside these books are secrets', caption: 'Knowledge hidden within the shelves' },
+                { image: 'images/Untitled-3.jpg', alt: 'Music Speaks Louder than Words', caption: 'Music Speaks Louder Than Words' }
+            ]
         },
         {
             code: 'ROLL — 02', category: 'series', title: 'Fujifilm C400',
@@ -81,6 +81,13 @@
                 existing.image = defaultCard.image;
                 existing.alt = defaultCard.alt;
             }
+            existing.link = defaultCard.link;
+        });
+
+        cards.sort(function(a, b) {
+            var numA = parseInt((a.code || '').match(/\d+/) || '999', 10);
+            var numB = parseInt((b.code || '').match(/\d+/) || '999', 10);
+            return numA - numB;
         });
 
         return cards;
