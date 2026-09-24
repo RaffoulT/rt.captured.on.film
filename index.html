@@ -762,8 +762,6 @@
 
       width: 100%;
 
-      aspect-ratio: 1 / 1;
-
       border: 1px solid var(--ink);
 
       margin-bottom: 1rem;
@@ -774,17 +772,13 @@
     }
 
     .frame {
-      position: absolute;
-
-      inset: 9px 0;
-
-      width: 100%;
-
-      height: calc(100% - 18px);
-
-      object-fit: cover;
-
       display: block;
+
+      width: calc(100% - 24px);
+
+      height: auto;
+
+      margin: 0 12px;
     }
 
     /*
@@ -832,17 +826,6 @@
      * Keep the image between the two vertical
      * film edges.
      */
-
-    .frame {
-      left: 12px;
-      right: 12px;
-
-      width: calc(100% - 24px);
-
-      inset-block: 0;
-
-      height: 100%;
-    }
 
     .frame-num {
       position: absolute;
