@@ -14,7 +14,7 @@
         },
         {
             code: 'ROLL — 01', category: 'series', title: 'Gold 200',
-            image: 'images/kodak-gold-200.avif', alt: 'Kodak Gold 200 film retail package', frameNum: '14A',
+            image: 'images/gold200 thumb.jpg', alt: 'Kodak Gold 200 film retail package', frameNum: '14A',
             location: 'Beirut, LB', year: '2026', format: '35mm Film',
             description: 'Quiet Shelves Hiding a lot of treasures.',
             link: 'gallery.html?i=1', linkText: 'View gallery →',
