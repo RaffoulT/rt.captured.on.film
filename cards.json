@@ -145,6 +145,47 @@
     "description": "Going Outside to test the ISO400 Fuji.",
     "link": "gallery.html?i=2",
     "linkText": "View gallery →",
-    "photos": []
+    "photos": [
+      {
+        "image": "images/c1.jpg",
+        "alt": "Fujifilm C400 frame c1",
+        "caption": "Frame 1"
+      },
+      {
+        "image": "images/c2.jpg",
+        "alt": "Fujifilm C400 frame c2",
+        "caption": "Frame 2"
+      },
+      {
+        "image": "images/c3.jpg",
+        "alt": "Fujifilm C400 frame c3",
+        "caption": "Frame 3"
+      },
+      {
+        "image": "images/c4.jpg",
+        "alt": "Fujifilm C400 frame c4",
+        "caption": "Frame 4"
+      },
+      {
+        "image": "images/c5.jpg",
+        "alt": "Fujifilm C400 frame c5",
+        "caption": "Frame 5"
+      },
+      {
+        "image": "images/c6.jpg",
+        "alt": "Fujifilm C400 frame c6",
+        "caption": "Frame 6"
+      },
+      {
+        "image": "images/c7.jpg",
+        "alt": "Fujifilm C400 frame c7",
+        "caption": "Frame 7"
+      },
+      {
+        "image": "images/c8.jpg",
+        "alt": "Fujifilm C400 frame c8",
+        "caption": "Frame 8"
+      }
+    ]
   }
 ]
